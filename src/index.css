@@ -1,0 +1,167 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark, .dark *));
+
+@theme {
+  --color-cyber-dark: #0c101c;
+  --color-cyber-bg: #060a14;
+}
+
+/* Explicit Bulletproof Dark Mode Rules for All App Cards */
+html.dark .dark-card,
+.dark .dark-card,
+html.dark [class*="dark:bg-[#0c101c]"],
+.dark [class*="dark:bg-[#0c101c]"],
+html.dark [class*="dark:bg-[#0c121e]"],
+.dark [class*="dark:bg-[#0c121e]"],
+html.dark [class*="dark:bg-[#080d19]"],
+.dark [class*="dark:bg-[#080d19]"] {
+  background-color: #0c101c !important;
+  border-color: rgba(30, 41, 59, 0.85) !important;
+  color: #f1f5f9 !important;
+}
+
+html.dark [class*="dark:bg-[#0c101c]/95"],
+.dark [class*="dark:bg-[#0c101c]/95"] {
+  background-color: rgba(12, 16, 28, 0.95) !important;
+}
+
+html.dark .dark-card-inner,
+.dark .dark-card-inner {
+  background-color: #0f172a !important;
+  border-color: rgba(51, 65, 85, 0.6) !important;
+}
+
+@layer base {
+  body {
+    @apply bg-slate-50 text-slate-900 antialiased selection:bg-emerald-500 selection:text-white transition-colors duration-200;
+    font-family: 'Alexandria', 'Cairo', system-ui, -apple-system, sans-serif;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  html.dark body {
+    @apply bg-[#060a14] text-slate-100;
+  }
+}
+
+.font-gaming {
+  font-family: 'Changa', 'Alexandria', sans-serif;
+}
+
+.font-mono-digits {
+  font-family: 'Chakra Petch', 'Rajdhani', 'Courier New', monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Custom Emerald Gaming Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+html.dark ::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+::-webkit-scrollbar-thumb {
+  background: #10b981;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #059669;
+}
+
+/* Subtle Emerald Gaming Glows */
+.emerald-glow {
+  box-shadow: 0 0 25px -5px rgba(16, 185, 129, 0.25);
+}
+
+.emerald-glow-sm {
+  box-shadow: 0 0 15px -3px rgba(16, 185, 129, 0.2);
+}
+
+.emerald-border-glow {
+  border-color: rgba(16, 185, 129, 0.4);
+  box-shadow: 0 0 15px -3px rgba(16, 185, 129, 0.2), inset 0 0 15px -3px rgba(16, 185, 129, 0.05);
+}
+
+/* Breathing Glow Animations for Gaming Stations */
+@keyframes breathingGlowGreen {
+  0%, 100% {
+    box-shadow: 0 0 15px -2px rgba(16, 185, 129, 0.35), inset 0 0 10px rgba(16, 185, 129, 0.05);
+  }
+  50% {
+    box-shadow: 0 0 30px 4px rgba(16, 185, 129, 0.65), inset 0 0 18px rgba(16, 185, 129, 0.15);
+  }
+}
+
+@keyframes breathingGlowRed {
+  0%, 100% {
+    box-shadow: 0 0 15px -2px rgba(244, 63, 94, 0.45), inset 0 0 10px rgba(244, 63, 94, 0.08);
+  }
+  50% {
+    box-shadow: 0 0 32px 5px rgba(244, 63, 94, 0.8), inset 0 0 20px rgba(244, 63, 94, 0.2);
+  }
+}
+
+@keyframes breathingGlowAmber {
+  0%, 100% {
+    box-shadow: 0 0 15px -2px rgba(245, 158, 11, 0.35);
+  }
+  50% {
+    box-shadow: 0 0 28px 4px rgba(245, 158, 11, 0.65);
+  }
+}
+
+.station-glow-active {
+  animation: breathingGlowGreen 2.8s ease-in-out infinite;
+}
+
+.station-glow-alert {
+  animation: breathingGlowRed 1.8s ease-in-out infinite;
+}
+
+.station-glow-reserved {
+  animation: breathingGlowAmber 2.5s ease-in-out infinite;
+}
+
+/* Cyber LED Segment Bezel */
+.led-bezel {
+  background: radial-gradient(circle, #081211 0%, #030708 100%);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8), 0 0 12px rgba(16, 185, 129, 0.2);
+}
+
+.led-bezel-red {
+  background: radial-gradient(circle, #1a080c 0%, #060204 100%);
+  border: 1px solid rgba(244, 63, 94, 0.4);
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8), 0 0 14px rgba(244, 63, 94, 0.3);
+}
+
+/* Ticker marquee animation */
+@keyframes marqueeScroll {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+.animate-marquee {
+  animation: marqueeScroll 32s linear infinite;
+}
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Legacy aliases mapped to Emerald */
+.gold-glow {
+  box-shadow: 0 0 25px -5px rgba(16, 185, 129, 0.25);
+}
+
+.gold-glow-sm {
+  box-shadow: 0 0 15px -3px rgba(16, 185, 129, 0.2);
+}
+
+.gold-border-glow {
+  border-color: rgba(16, 185, 129, 0.4);
+  box-shadow: 0 0 15px -3px rgba(16, 185, 129, 0.2), inset 0 0 15px -3px rgba(16, 185, 129, 0.05);
+}

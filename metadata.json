@@ -1,0 +1,6 @@
+{
+  "name": "dij-tiem",
+  "description": "نظام إدارة ومحاسبة صالات الألعاب والإنترنت مع بطاقات الوقت الحية، ومتابعة اللاعبين ورموز PIN، وتسجيل الألعاب أونلاين وأوفلاين، وبوفيه التسالي والمبالغ بالدينار",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
