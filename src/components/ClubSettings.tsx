@@ -18,7 +18,9 @@ import {
   Radio,
   Clock,
   Receipt,
-  Gamepad2
+  Gamepad2,
+  KeyRound,
+  Lock
 } from 'lucide-react';
 import { ClubSettings as ClubSettingsType, StationType } from '../types';
 import { CyberSectionIcon } from './CyberSectionIcon';
@@ -312,6 +314,71 @@ export const ClubSettings: React.FC<ClubSettingsProps> = ({
                   <span>نغمة الدفع</span>
                 </button>
               </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Security & PIN Codes Configuration */}
+        <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs space-y-4">
+          <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
+            <CyberSectionIcon icon={KeyRound} size="sm" variant="amber" />
+            <h3 className="text-sm font-bold text-slate-900">
+              الأمان ورموز الدخول المزدوجة (PIN Security)
+            </h3>
+          </div>
+
+          <div className="p-3 rounded-xl bg-amber-50/70 border border-amber-200/80 text-xs text-amber-900 flex items-start gap-2">
+            <Sparkles className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+            <div>
+              <strong>نظام الحماية المزدوج:</strong> يتضمن النظام مستويين منفصلين من الأمان؛ رمز رئيسي لفتح واجهة الكلوپ عند فتح المتصفح، ورمز مدير إضافي لحماية تقارير الأرباح المالية وإعدادات النظام.
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-xs font-bold text-slate-700 mb-1">
+                رمز الدخول العام للمتصفح (Master App Entry PIN)
+              </label>
+              <div className="relative">
+                <input
+                  type="text"
+                  maxLength={4}
+                  value={localSettings.appEntryPin || '1234'}
+                  onChange={(e) => {
+                    const val = e.target.value.replace(/\D/g, '');
+                    setLocalSettings({ ...localSettings, appEntryPin: val });
+                  }}
+                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono font-bold text-emerald-600 tracking-widest focus:outline-none focus:border-emerald-500"
+                  placeholder="1234"
+                  dir="ltr"
+                />
+              </div>
+              <span className="text-[10px] text-slate-400 mt-1 block">
+                مطلوب عند فتح المتصفح للدخول لكافة أقسام النظام (الافتراضي: 1234)
+              </span>
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold text-slate-700 mb-1">
+                رمز المدير لتقارير الأرباح والإعدادات (Admin PIN)
+              </label>
+              <div className="relative">
+                <input
+                  type="text"
+                  maxLength={4}
+                  value={localSettings.adminPin || '5858'}
+                  onChange={(e) => {
+                    const val = e.target.value.replace(/\D/g, '');
+                    setLocalSettings({ ...localSettings, adminPin: val });
+                  }}
+                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono font-bold text-amber-600 tracking-widest focus:outline-none focus:border-emerald-500"
+                  placeholder="5858"
+                  dir="ltr"
+                />
+              </div>
+              <span className="text-[10px] text-slate-400 mt-1 block">
+                مطلوب لفتح آخر صفحتين (تقارير النفقات والإعدادات) (الافتراضي: 5858)
+              </span>
             </div>
           </div>
         </div>

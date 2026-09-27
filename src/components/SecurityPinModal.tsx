@@ -7,6 +7,7 @@ interface SecurityPinModalProps {
   onClose: () => void;
   onSuccess: () => void;
   targetSectionName: string;
+  correctPin?: string;
 }
 
 export const SecurityPinModal: React.FC<SecurityPinModalProps> = ({
@@ -14,6 +15,7 @@ export const SecurityPinModal: React.FC<SecurityPinModalProps> = ({
   onClose,
   onSuccess,
   targetSectionName,
+  correctPin = '5858',
 }) => {
   const [pin, setPin] = useState('');
   const [error, setError] = useState(false);
@@ -51,7 +53,7 @@ export const SecurityPinModal: React.FC<SecurityPinModalProps> = ({
     setError(false);
 
     if (newPin.length === 4) {
-      if (newPin === '5858') {
+      if (newPin === correctPin) {
         setIsSuccess(true);
         setTimeout(() => {
           onSuccess();

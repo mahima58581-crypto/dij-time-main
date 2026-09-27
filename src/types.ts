@@ -193,6 +193,8 @@ export interface ClubSettings {
   };
   enableSoundAlerts: boolean;
   autoOvertimeAlert: boolean;
+  appEntryPin?: string; // رمز ورود سراسری به سامانه (پیش‌فرض: 1234)
+  adminPin?: string;    // رمز ورود مدیر ارشد به تنظیمات و گزارشات مالی (پیش‌فرض: 5858)
 }
 
 export type ActiveSidebarTab = 

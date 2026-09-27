@@ -73,6 +73,9 @@ import { CheckoutInvoiceModal } from './components/CheckoutInvoiceModal';
 import { NewCustomerModal } from './components/NewCustomerModal';
 import { EditGamesModal } from './components/EditGamesModal';
 import { SecurityPinModal } from './components/SecurityPinModal';
+import { ActivePlayersLiveModal } from './components/ActivePlayersLiveModal';
+import { AppEntryLockScreen } from './components/AppEntryLockScreen';
+import { QuranicWelcomeScreen } from './components/QuranicWelcomeScreen';
 
 // Icons & Visual Assets
 import { 
@@ -80,7 +83,9 @@ import {
   PlusCircle, 
   UserPlus, 
   Clock, 
+  Timer,
   Gamepad2, 
+  Swords,
   Wifi, 
   Shield, 
   Bell, 
@@ -92,10 +97,17 @@ import {
   Sun,
   Lock,
   Unlock,
+  KeyRound,
+  ShieldAlert,
+  ShieldOff,
+  Plus,
+  Play,
+  Zap,
   ArrowUp,
   Activity,
   Cpu,
   ShieldCheck,
+  UserCheck,
   Users
 } from 'lucide-react';
 import { CyberMarqueeTicker } from './components/CyberMarqueeTicker';
@@ -190,8 +202,33 @@ export default function App() {
   const [activeTab, setActiveTab] = useState<ActiveSidebarTab>('station_management');
   const [isSidebarMobileOpen, setIsSidebarMobileOpen] = useState(false);
 
-  // Security Lock for Financial Reports & Settings (Password / PIN: 5858)
+  // 0. Quranic Welcome Splash Screen (Active for 4 seconds upon opening browser or page reload)
+  const [showQuranicWelcome, setShowQuranicWelcome] = useState<boolean>(true);
+
+  // 1. Master Application Entry Lock (Default PIN: 1234)
+  // When opening browser, operator must enter PIN 1234 to enter the app
+  const [isAppUnlocked, setIsAppUnlocked] = useState<boolean>(false);
+
+  const handleAppEntryUnlock = () => {
+    setIsAppUnlocked(true);
+    // Crucial: Keep the last two pages (expense_reports, settings) locked with their own PIN (5858)
+    setIsSecurityUnlocked(false);
+    try {
+      sessionStorage.setItem('dij_tiem_app_entry_unlocked', 'true');
+    } catch {}
+  };
+
+  const handleLockEntireApp = () => {
+    setIsAppUnlocked(false);
+    setIsSecurityUnlocked(false);
+    try {
+      sessionStorage.removeItem('dij_tiem_app_entry_unlocked');
+    } catch {}
+  };
+
+  // Secondary Security Lock for Financial Reports & Settings (PIN: 5858)
   const [isSecurityUnlocked, setIsSecurityUnlocked] = useState<boolean>(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(false);
   const [securityModalState, setSecurityModalState] = useState<{
     isOpen: boolean;
     targetTab: ActiveSidebarTab;
@@ -239,6 +276,11 @@ export default function App() {
     return () => clearInterval(interval);
   }, []);
 
+  // Active Players & Game Start popup modal state
+  const [isActivePlayersModalOpen, setIsActivePlayersModalOpen] = useState(false);
+  const [recentAudioLogs, setRecentAudioLogs] = useState<SoundLogItem[]>([]);
+  const audioEventTimerRef = React.useRef<NodeJS.Timeout | null>(null);
+
   // Sound and Voice Alerts Engine
   const [lastAudioEvent, setLastAudioEvent] = useState<SoundLogItem | null>(null);
   const warned10MinRef = React.useRef<Set<string>>(new Set());
@@ -254,12 +296,23 @@ export default function App() {
     unlockAudioContext();
     soundFn();
     const timeStr = new Date().toLocaleTimeString('ar-IQ', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-    setLastAudioEvent({
+    const eventItem: SoundLogItem = {
       id: `${Date.now()}-${Math.random()}`,
       type,
       message,
       timestamp: timeStr,
-    });
+    };
+    setLastAudioEvent(eventItem);
+    setRecentAudioLogs((prev) => [eventItem, ...prev.slice(0, 19)]);
+
+    // Ensure the toast slide disappears automatically after exactly 8 seconds
+    if (audioEventTimerRef.current) {
+      clearTimeout(audioEventTimerRef.current);
+    }
+    audioEventTimerRef.current = setTimeout(() => {
+      setLastAudioEvent(null);
+    }, 8000);
+
     if (voiceText) {
       setTimeout(() => {
         speakVoiceAlert(voiceText);
@@ -786,6 +839,25 @@ export default function App() {
       dir="rtl"
       className={`${isDarkMode ? 'dark' : ''} min-h-screen bg-white dark:bg-[#060a14] text-slate-900 dark:text-slate-100 flex flex-col selection:bg-emerald-500 selection:text-white antialiased relative overflow-x-hidden font-['Alexandria','Cairo',sans-serif]`}
     >
+      {/* 0. Quranic Welcome Splash Screen (4 Seconds of Breathtaking Holy Verse in Emerald Theme) */}
+      <AnimatePresence>
+        {showQuranicWelcome && (
+          <QuranicWelcomeScreen
+            durationMs={4000}
+            onComplete={() => setShowQuranicWelcome(false)}
+          />
+        )}
+      </AnimatePresence>
+
+      {/* 1. Fullscreen Master App Entry Lock (Requires PIN 1234 on browser entry) */}
+      {!isAppUnlocked && (
+        <AppEntryLockScreen
+          onUnlock={handleAppEntryUnlock}
+          clubSettings={clubSettings}
+          currentOperator={currentOperator}
+        />
+      )}
+
       {/* Global Ambient Cyber Grid Overlay (Matching Footer Cyber Pattern across entire site) */}
       <div className="fixed inset-0 bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:24px_24px] opacity-10 dark:opacity-15 pointer-events-none z-0" />
       <div className="fixed -top-40 right-1/4 w-[650px] h-[650px] bg-emerald-500/5 dark:bg-emerald-500/10 rounded-full blur-[140px] pointer-events-none z-0" />
@@ -806,10 +878,14 @@ export default function App() {
         setIsOpenMobile={setIsSidebarMobileOpen}
         isSecurityUnlocked={isSecurityUnlocked}
         onRequireUnlock={handleRequireUnlock}
+        isCollapsed={isSidebarCollapsed}
+        setIsCollapsed={setIsSidebarCollapsed}
       />
 
-      {/* Main Content Wrapper (With responsive right margin on desktop to accommodate fixed sidebar) */}
-      <div className="flex-1 flex flex-col transition-all duration-300 lg:mr-72 bg-white/70 dark:bg-[#060a14]/80 backdrop-blur-sm min-h-screen relative z-10">
+      {/* Main Content Wrapper (With responsive right margin on desktop to accommodate fixed or collapsed sidebar) */}
+      <div className={`flex-1 flex flex-col transition-[margin] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+        isSidebarCollapsed ? 'lg:mr-20' : 'lg:mr-72'
+      } bg-white/70 dark:bg-[#060a14]/80 backdrop-blur-sm min-h-screen relative z-10`}>
         
         {/* Top App Header Bar */}
         <header className="sticky top-0 z-30 h-16 sm:h-20 bg-white/95 dark:bg-[#0c101c]/95 backdrop-blur-xl border-b border-emerald-100 dark:border-slate-800/80 px-4 sm:px-6 flex items-center justify-between shadow-sm">
@@ -847,78 +923,132 @@ export default function App() {
             </div>
           </div>
 
-          {/* Left Side (In RTL: End side) */}
-          <div className="flex items-center gap-2 sm:gap-3">
-            {/* Live Clock Display */}
-            <div className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-xs font-mono font-bold text-slate-700 dark:text-slate-300 font-mono-digits">
-              <Clock className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-              <span>{currentTimeStr}</span>
-            </div>
-
-            {/* Smart Sound Effects & Voice Alerts Controller */}
-            <SoundAlertsController lastAudioEvent={lastAudioEvent} />
-
-            {/* Dark Mode Switcher (Option 1: Cyber Dark Mode) */}
-            <motion.button
-              whileTap={{ scale: 0.93 }}
-              type="button"
-              onClick={() => setIsDarkMode(!isDarkMode)}
-              className="p-2 sm:px-3 sm:py-1.5 rounded-xl border transition flex items-center gap-1.5 text-xs font-bold shadow-xs bg-slate-100 hover:bg-slate-200 dark:bg-slate-800/90 dark:border-slate-700 dark:hover:bg-slate-700 text-slate-700 dark:text-amber-300"
-              title={isDarkMode ? 'التحويل للوضع النهاري' : 'تفعيل النمط المظلم السيبراني (Cyber Dark)'}
-            >
-              {isDarkMode ? (
-                <>
-                  <Sun className="w-4 h-4 text-amber-400" />
-                  <span className="hidden xl:inline text-[11px] font-bold">نهاري</span>
-                </>
-              ) : (
-                <>
-                  <Moon className="w-4 h-4 text-slate-600" />
-                  <span className="hidden xl:inline text-[11px] font-bold">نمط ليلي</span>
-                </>
-              )}
-            </motion.button>
-
-            {/* Active Operator Quick Badge */}
-            <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white dark:bg-slate-800/90 border border-emerald-200 dark:border-slate-700 text-xs shadow-xs">
-              <div className="w-6 h-6 rounded-lg bg-emerald-600 text-white flex items-center justify-center font-black text-[11px] font-gaming">
-                {currentOperator.name.slice(0, 1)}
+          {/* Left Side (In RTL: End side) - Sleek, Organized Pro Esports Action Bar */}
+          <div className="flex items-center gap-2 sm:gap-2.5">
+            {/* Group 1: Live Status & Telemetry */}
+            <div className="flex items-center gap-2">
+              {/* Live Clock Display */}
+              <div 
+                className="hidden md:flex items-center gap-2 h-9 px-3 rounded-lg bg-slate-50 dark:bg-slate-900/90 border border-slate-200/80 dark:border-slate-800 text-xs font-mono font-bold text-slate-700 dark:text-slate-200 font-mono-digits shadow-xs"
+                title="توقيت الخادم والمنظومة"
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                <Timer className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+                <span>{currentTimeStr}</span>
               </div>
-              <span className="text-slate-700 dark:text-slate-200 font-bold">{currentOperator.name}</span>
+
+              {/* Active Sessions Quick Trigger (آغاز بازی / جلسات حية) */}
+              <motion.button
+                whileTap={{ scale: 0.94 }}
+                whileHover={{ scale: 1.02 }}
+                type="button"
+                id="btn-active-players-modal"
+                onClick={() => setIsActivePlayersModalOpen(true)}
+                className="h-9 px-2.5 sm:px-3 rounded-lg border border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-800 dark:text-emerald-300 transition flex items-center gap-2 text-xs font-bold shadow-xs cursor-pointer group"
+                title="عرض اللاعبين النشطين وبدء المباريات (الجلسات الحية)"
+              >
+                <div className="relative flex items-center justify-center">
+                  <Gamepad2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform" />
+                  <span className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
+                </div>
+                <span className="hidden sm:inline text-[11px] font-bold font-gaming">
+                  الجلسات الحية
+                </span>
+                <span className="px-1.5 py-0.5 rounded-md bg-emerald-600 text-white text-[10px] font-mono font-black font-mono-digits shadow-xs">
+                  {sessions.filter((s) => s.status === 'active').length}
+                </span>
+              </motion.button>
             </div>
 
-            {/* Quick Lock Button if Protected Sections Unlocked */}
-            {isSecurityUnlocked && (
+            {/* Subtle Divider */}
+            <div className="hidden sm:block h-5 w-px bg-slate-200 dark:bg-slate-800/80 my-auto" />
+
+            {/* Group 2: Utilities & Preferences */}
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              {/* Smart Sound Effects Controller */}
+              <SoundAlertsController lastAudioEvent={lastAudioEvent} />
+
+              {/* Active Operator Quick Badge */}
+              <div 
+                className="hidden lg:flex items-center gap-2 h-9 px-2.5 rounded-lg bg-white dark:bg-slate-900/90 border border-slate-200/80 dark:border-slate-800 text-xs shadow-xs"
+                title={`المشغل الحالي: ${currentOperator.name} (${currentOperator.role})`}
+              >
+                <div className="w-5 h-5 rounded-md bg-emerald-600 text-white flex items-center justify-center font-black text-[10px] font-gaming shadow-xs">
+                  {currentOperator.name.slice(0, 1)}
+                </div>
+                <div className="flex items-center gap-1 text-[11px] font-bold text-slate-700 dark:text-slate-200">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                  <span>{currentOperator.name}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Subtle Divider */}
+            <div className="h-5 w-px bg-slate-200 dark:bg-slate-800/80 my-auto" />
+
+            {/* Group 3: Quick Controls, Security & Launcher */}
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              {/* Dark / Light Mode Switcher (placed side-by-side with lock buttons) */}
+              <motion.button
+                whileTap={{ scale: 0.92 }}
+                whileHover={{ scale: 1.05 }}
+                type="button"
+                onClick={() => setIsDarkMode(!isDarkMode)}
+                className="w-9 h-9 flex items-center justify-center rounded-lg border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900/90 hover:border-amber-400/50 hover:bg-amber-500/10 text-slate-600 dark:text-amber-400 transition cursor-pointer shadow-xs"
+                title={isDarkMode ? 'التحويل للوضع النهاري' : 'التحويل للوضع الليلي السيبراني'}
+              >
+                {isDarkMode ? (
+                  <Sun className="w-4 h-4 text-amber-400 transition-transform rotate-0 hover:rotate-45" />
+                ) : (
+                  <Moon className="w-4 h-4 text-slate-600 transition-transform hover:-rotate-12" />
+                )}
+              </motion.button>
+
+              {/* Master Lock System Button (Locks entire app back to PIN 1234 entry screen) */}
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.92 }}
+                type="button"
+                id="btn-lock-entire-app"
+                onClick={handleLockEntireApp}
+                className="w-9 h-9 flex items-center justify-center rounded-lg border border-rose-200 dark:border-rose-900/60 bg-rose-50/80 hover:bg-rose-100 dark:bg-rose-950/40 dark:hover:bg-rose-900/50 text-rose-600 dark:text-rose-400 transition shadow-xs cursor-pointer"
+                title="قفل فوري لكامل المنظومة (الرجوع لشاشة PIN)"
+              >
+                <Lock className="w-4 h-4 text-rose-500" />
+              </motion.button>
+
+              {/* Quick Lock Button if Protected Sections Unlocked (5858) */}
+              {isSecurityUnlocked && (
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.92 }}
+                  type="button"
+                  onClick={() => {
+                    setIsSecurityUnlocked(false);
+                    if (activeTab === 'expense_reports' || activeTab === 'settings') {
+                      setActiveTab('station_management');
+                    }
+                  }}
+                  className="w-9 h-9 flex items-center justify-center rounded-lg border border-amber-500/40 bg-amber-500/10 hover:bg-rose-500/20 hover:border-rose-500/50 text-amber-600 dark:text-amber-400 hover:text-rose-500 transition shadow-xs cursor-pointer"
+                  title="قفل فوري للأقسام المحمية برمز (5858)"
+                >
+                  <KeyRound className="w-4 h-4" />
+                </motion.button>
+              )}
+
+              {/* Primary Action Button: Launch New Session */}
               <motion.button
                 whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.95 }}
-                type="button"
-                onClick={() => {
-                  setIsSecurityUnlocked(false);
-                  if (activeTab === 'expense_reports' || activeTab === 'settings') {
-                    setActiveTab('station_management');
-                  }
-                }}
-                className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl bg-amber-500/10 hover:bg-rose-500/15 border border-amber-500/30 text-amber-700 dark:text-amber-400 hover:text-rose-600 dark:hover:text-rose-400 text-xs font-bold transition shadow-xs"
-                title="قفل فوري للأقسام المحمية"
+                whileTap={{ scale: 0.96 }}
+                onClick={() => handleOpenStartSession()}
+                className="h-9 px-3 sm:px-3.5 rounded-lg text-xs font-bold text-white bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 hover:brightness-105 shadow-sm shadow-emerald-500/25 transition flex items-center gap-1.5 cursor-pointer font-gaming group"
+                title="بدء تشغيل وتوقيت جلسة جديدة"
               >
-                <Lock className="w-3.5 h-3.5" />
-                <span className="hidden md:inline font-mono text-[11px]">قفل الإدارة (5858)</span>
-                <span className="md:hidden">قفل</span>
+                <Plus className="w-4 h-4 stroke-[2.5] group-hover:rotate-90 transition-transform" />
+                <span className="hidden sm:inline text-[11px] font-bold">بدء جلسة جديدة</span>
+                <span className="sm:hidden text-[11px] font-bold">جلسة</span>
               </motion.button>
-            )}
-
-            {/* Quick Action Buttons */}
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.97 }}
-              onClick={() => handleOpenStartSession()}
-              className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-black text-white bg-gradient-to-r from-emerald-500 to-teal-600 hover:brightness-105 shadow-md shadow-emerald-500/25 transition font-gaming"
-            >
-              <PlusCircle className="w-4 h-4 stroke-[2.5]" />
-              <span className="hidden sm:inline">بدء جلسة جديدة</span>
-              <span className="sm:hidden">جلسة جديدة</span>
-            </motion.button>
+            </div>
           </div>
         </header>
 
@@ -933,8 +1063,8 @@ export default function App() {
         {/* Main Content Body */}
         <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 relative z-10">
           
-          {/* Top Real-time Accounting Bar */}
-          <StatsBar sessions={sessions} stations={stations} />
+          {/* Top Real-time Accounting Bar (Fixed on station_management, collapsible windowed on other pages) */}
+          <StatsBar sessions={sessions} stations={stations} activeTab={activeTab} />
 
           {/* Dynamic Component Rendering based on Selected Sidebar Tab */}
           <AnimatePresence mode="wait">
@@ -1231,125 +1361,16 @@ export default function App() {
         </main>
 
         {/* Cyber Esports Footer */}
-        <footer className="relative mt-16 border-t border-emerald-500/20 dark:border-emerald-500/30 bg-white/95 dark:bg-[#060a14]/95 backdrop-blur-2xl text-slate-600 dark:text-slate-300 z-10 overflow-hidden">
+        <footer className="relative mt-12 border-t border-emerald-500/20 dark:border-emerald-500/30 bg-white/95 dark:bg-[#060a14]/95 backdrop-blur-2xl text-slate-600 dark:text-slate-300 z-10 overflow-hidden">
           {/* Neon Top Glowing Accent Line */}
           <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-emerald-500 to-teal-400 opacity-70 shadow-[0_0_12px_rgba(16,185,129,0.8)]" />
 
           {/* Ambient Cyber Grid Overlay */}
           <div className="absolute inset-0 bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:24px_24px] opacity-10 dark:opacity-15 pointer-events-none" />
 
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-            {/* Main Grid: 3 Sections */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 items-start pb-8 border-b border-emerald-100/70 dark:border-slate-800/80">
-              
-              {/* Brand & Identity (5 cols) */}
-              <div className="lg:col-span-5 space-y-4">
-                <div className="flex items-center gap-3">
-                  <div className="relative p-2.5 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 text-white shadow-lg shadow-emerald-500/30 group">
-                    <Gamepad2 className="w-6 h-6 stroke-[2.5]" />
-                    <span className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-emerald-400 ring-2 ring-white dark:ring-slate-900 animate-ping" />
-                  </div>
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <h2 className="text-lg font-black tracking-wider text-slate-900 dark:text-white font-['Chakra_Petch',sans-serif]">
-                        DIJ-TIEM GAMING
-                      </h2>
-                      <span className="px-2 py-0.5 text-[10px] font-black rounded-md bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-300/60 dark:border-emerald-700/60 font-mono">
-                        v3.8 PRO
-                      </span>
-                    </div>
-                    <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
-                      المنظومة السيبرانية المتطورة لإدارة الصالات والحسابات الذكية
-                    </p>
-                  </div>
-                </div>
-
-                <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed max-w-md">
-                  نظام مركزي متكامل يوفّر توقيتاً دقيقاً بالثواني، حجز الأجهزة، إدارة البوفيه الذكية، مستويات VIP، والتقارير المالية المحمية برمز أمان.
-                </p>
-
-                {/* Operator status */}
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 text-xs">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                  <span className="text-slate-500 dark:text-slate-400">المشغل المناوب:</span>
-                  <span className="font-bold text-slate-800 dark:text-slate-200">{currentOperator.name}</span>
-                  <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">({currentOperator.role})</span>
-                </div>
-              </div>
-
-              {/* Live Bento Telemetry Cards (4 cols) */}
-              <div className="lg:col-span-4 grid grid-cols-2 gap-2.5">
-                <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-900/70 border border-emerald-200/60 dark:border-slate-800/80 hover:border-emerald-500/40 transition">
-                  <div className="flex items-center justify-between text-slate-400 mb-1">
-                    <span className="text-[11px] font-bold">إجمالي الأجهزة</span>
-                    <Monitor className="w-3.5 h-3.5 text-emerald-500" />
-                  </div>
-                  <div className="text-lg font-black font-mono text-slate-900 dark:text-white font-mono-digits">
-                    {stations.length} <span className="text-[10px] font-normal text-slate-400">منصة</span>
-                  </div>
-                </div>
-
-                <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-900/70 border border-emerald-200/60 dark:border-slate-800/80 hover:border-emerald-500/40 transition">
-                  <div className="flex items-center justify-between text-slate-400 mb-1">
-                    <span className="text-[11px] font-bold">الجلسات الحية</span>
-                    <Activity className="w-3.5 h-3.5 text-emerald-500 animate-pulse" />
-                  </div>
-                  <div className="text-lg font-black font-mono text-emerald-600 dark:text-emerald-400 font-mono-digits">
-                    {activeSessions.length} <span className="text-[10px] font-normal text-slate-400">نشطة</span>
-                  </div>
-                </div>
-
-                <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-900/70 border border-emerald-200/60 dark:border-slate-800/80 hover:border-emerald-500/40 transition">
-                  <div className="flex items-center justify-between text-slate-400 mb-1">
-                    <span className="text-[11px] font-bold">قاعدة اللاعبين</span>
-                    <Users className="w-3.5 h-3.5 text-teal-500" />
-                  </div>
-                  <div className="text-lg font-black font-mono text-slate-900 dark:text-white font-mono-digits">
-                    {customers.length} <span className="text-[10px] font-normal text-slate-400">عضو</span>
-                  </div>
-                </div>
-
-                <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-900/70 border border-emerald-200/60 dark:border-slate-800/80 hover:border-emerald-500/40 transition">
-                  <div className="flex items-center justify-between text-slate-400 mb-1">
-                    <span className="text-[11px] font-bold">حماية النظام</span>
-                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
-                  </div>
-                  <div className="text-xs font-black font-mono text-emerald-600 dark:text-emerald-400 pt-1">
-                    {isSecurityUnlocked ? 'مفتوح (5858)' : 'مقفول برمز PIN'}
-                  </div>
-                </div>
-              </div>
-
-              {/* Status & Actions (3 cols) */}
-              <div className="lg:col-span-3 flex flex-col items-start lg:items-end justify-between h-full space-y-4">
-                <div className="space-y-2 w-full lg:w-auto text-right lg:text-left">
-                  <div className="flex items-center lg:justify-end gap-2 text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400">
-                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
-                    <span>خادم الصالة: متصل 100%</span>
-                  </div>
-                  <div className="flex items-center lg:justify-end gap-1.5 text-[11px] text-slate-400 font-mono font-mono-digits">
-                    <Cpu className="w-3 h-3 text-emerald-500" />
-                    <span>Ping: 12ms • Uptime 99.9%</span>
-                  </div>
-                </div>
-
-                {/* Back to top button */}
-                <motion.button
-                  whileHover={{ y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  type="button"
-                  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                  className="w-full lg:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800/90 hover:bg-emerald-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 text-xs font-bold transition shadow-xs group"
-                >
-                  <span>الرجوع لأعلى الصفحة</span>
-                  <ArrowUp className="w-4 h-4 text-emerald-500 group-hover:-translate-y-0.5 transition-transform" />
-                </motion.button>
-              </div>
-
-            </div>
-
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
             {/* Bottom Bar: Copyright & Specs */}
-            <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
               <div className="flex items-center gap-2 text-center sm:text-right">
                 <span className="font-bold text-slate-600 dark:text-slate-300 font-['Chakra_Petch']">
                   DIJ-TIEM GAMING CLUB
@@ -1416,12 +1437,26 @@ export default function App() {
         onUpdateSessionGames={handleUpdateSessionGames}
       />
 
-      {/* Security PIN Modal (Code: 5858) */}
+      {/* Security PIN Modal (Manager Code: 5858) */}
       <SecurityPinModal
         isOpen={securityModalState.isOpen}
         onClose={() => setSecurityModalState((prev) => ({ ...prev, isOpen: false }))}
         onSuccess={handleSecurityUnlockSuccess}
         targetSectionName={securityModalState.label}
+        correctPin={clubSettings.adminPin || '5858'}
+      />
+
+      {/* Active Players & Game Start System Verification Modal */}
+      <ActivePlayersLiveModal
+        isOpen={isActivePlayersModalOpen}
+        onClose={() => setIsActivePlayersModalOpen(false)}
+        sessions={sessions}
+        stations={stations}
+        customers={customers}
+        onOpenNewSession={(stationId) => handleOpenStartSession(stationId)}
+        onAddSnack={(sess) => setSnackModalSession(sess)}
+        onOpenInvoice={(sess) => setInvoiceModalSession(sess)}
+        recentLogs={recentAudioLogs}
       />
 
     </motion.div>

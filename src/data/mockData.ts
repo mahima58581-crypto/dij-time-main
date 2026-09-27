@@ -630,6 +630,8 @@ export const DEFAULT_CLUB_SETTINGS: ClubSettings = {
   },
   enableSoundAlerts: true,
   autoOvertimeAlert: true,
+  appEntryPin: '1234',
+  adminPin: '5858',
 };
 
 export const INITIAL_DESK_ORDERS: DeskSnackOrder[] = [
