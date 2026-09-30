@@ -34,35 +34,35 @@ export const CyberDigitalTimer: React.FC<CyberDigitalTimerProps> = ({
     switch (effectiveVariant) {
       case 'red':
         return {
-          text: 'text-rose-400 drop-shadow-[0_0_8px_rgba(251,113,133,0.85)]',
-          ghost: 'text-rose-950/40',
-          colon: 'text-rose-500',
+          text: 'text-rose-600 dark:text-rose-400 drop-shadow-xs dark:drop-shadow-[0_0_8px_rgba(251,113,133,0.85)]',
+          ghost: 'text-rose-300/40 dark:text-rose-950/40',
+          colon: 'text-rose-600 dark:text-rose-500',
           ring: '#f43f5e',
-          bg: 'bg-[#18080c] border-rose-900/60 shadow-[inset_0_2px_8px_rgba(0,0,0,0.8),0_0_12px_rgba(244,63,94,0.25)]',
+          bg: 'bg-rose-50/90 dark:bg-[#18080c] border-rose-200 dark:border-rose-900/60 shadow-xs dark:shadow-[inset_0_2px_8px_rgba(0,0,0,0.8),0_0_12px_rgba(244,63,94,0.25)]',
         };
       case 'amber':
         return {
-          text: 'text-amber-300 drop-shadow-[0_0_8px_rgba(252,211,77,0.85)]',
-          ghost: 'text-amber-950/40',
-          colon: 'text-amber-400',
+          text: 'text-amber-600 dark:text-amber-300 drop-shadow-xs dark:drop-shadow-[0_0_8px_rgba(252,211,77,0.85)]',
+          ghost: 'text-amber-300/40 dark:text-amber-950/40',
+          colon: 'text-amber-600 dark:text-amber-400',
           ring: '#f59e0b',
-          bg: 'bg-[#170e04] border-amber-900/60 shadow-[inset_0_2px_8px_rgba(0,0,0,0.8),0_0_12px_rgba(245,158,11,0.25)]',
+          bg: 'bg-amber-50/90 dark:bg-[#170e04] border-amber-200 dark:border-amber-900/60 shadow-xs dark:shadow-[inset_0_2px_8px_rgba(0,0,0,0.8),0_0_12px_rgba(245,158,11,0.25)]',
         };
       case 'cyber':
         return {
-          text: 'text-cyan-400 drop-shadow-[0_0_8px_rgba(34,211,238,0.85)]',
-          ghost: 'text-cyan-950/40',
-          colon: 'text-cyan-400',
+          text: 'text-cyan-600 dark:text-cyan-400 drop-shadow-xs dark:drop-shadow-[0_0_8px_rgba(34,211,238,0.85)]',
+          ghost: 'text-cyan-300/40 dark:text-cyan-950/40',
+          colon: 'text-cyan-600 dark:text-cyan-400',
           ring: '#06b6d4',
-          bg: 'bg-[#041017] border-cyan-900/60 shadow-[inset_0_2px_8px_rgba(0,0,0,0.8),0_0_12px_rgba(6,182,212,0.25)]',
+          bg: 'bg-cyan-50/90 dark:bg-[#041017] border-cyan-200 dark:border-cyan-900/60 shadow-xs dark:shadow-[inset_0_2px_8px_rgba(0,0,0,0.8),0_0_12px_rgba(6,182,212,0.25)]',
         };
       default: // emerald
         return {
-          text: 'text-emerald-400 drop-shadow-[0_0_8px_rgba(52,211,153,0.85)]',
-          ghost: 'text-emerald-950/40',
-          colon: 'text-emerald-400',
+          text: 'text-emerald-700 dark:text-emerald-400 drop-shadow-xs dark:drop-shadow-[0_0_8px_rgba(52,211,153,0.85)]',
+          ghost: 'text-emerald-300/40 dark:text-emerald-950/40',
+          colon: 'text-emerald-600 dark:text-emerald-400',
           ring: '#10b981',
-          bg: 'bg-[#04120e] border-emerald-900/60 shadow-[inset_0_2px_8px_rgba(0,0,0,0.8),0_0_12px_rgba(16,185,129,0.25)]',
+          bg: 'bg-emerald-50/90 dark:bg-[#04120e] border-emerald-200 dark:border-emerald-900/60 shadow-xs dark:shadow-[inset_0_2px_8px_rgba(0,0,0,0.8),0_0_12px_rgba(16,185,129,0.25)]',
         };
     }
   };

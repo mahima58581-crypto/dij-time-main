@@ -7,7 +7,7 @@ import {
   Flame, 
   Joystick, 
   Zap, 
-  Trophy,
+  Clock,
   ChevronDown,
   Activity,
   Sparkles,
@@ -22,12 +22,14 @@ interface StatsBarProps {
   sessions: Session[];
   stations: Station[];
   activeTab?: ActiveSidebarTab;
+  embedded?: boolean;
 }
 
 export const StatsBar: React.FC<StatsBarProps> = ({ 
   sessions, 
   stations, 
-  activeTab = 'station_management' 
+  activeTab = 'station_management',
+  embedded = false,
 }) => {
   // Only permanent/fixed on 'station_management'. In all other pages, it becomes a collapsible cyber window/drawer
   const isFixed = activeTab === 'station_management';
@@ -55,26 +57,26 @@ export const StatsBar: React.FC<StatsBarProps> = ({
 
   // The 6 Full Cards Grid - Standardized, Professional, Compact Esports Telemetry
   const renderCardsGrid = () => (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2.5 sm:gap-3">
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2.5 sm:gap-3 items-stretch">
       
       {/* 1. إجمالي إيرادات اليوم */}
       <motion.div 
         variants={cardVariants}
         whileHover="hover"
-        className="bg-white dark:bg-[#0b101c] border border-emerald-500/25 dark:border-emerald-500/20 hover:border-emerald-500/50 dark:hover:border-emerald-500/40 rounded-xl p-3 sm:p-3.5 shadow-xs transition-all relative overflow-hidden group cursor-default"
+        className="bg-white dark:bg-[#0b101c] border-2 border-slate-200/90 dark:border-slate-800/90 hover:border-emerald-500 dark:hover:border-emerald-400 hover:ring-2 hover:ring-emerald-500/40 hover:shadow-lg hover:shadow-emerald-500/20 rounded-xl p-3 sm:p-3.5 shadow-xs transition-all duration-200 relative overflow-hidden group cursor-pointer flex flex-col justify-between h-full min-h-[108px]"
       >
-        <div className="flex items-center justify-between gap-1.5">
-          <span className="text-[11px] font-bold text-slate-600 dark:text-slate-400 truncate">
+        <div className="flex items-center justify-between gap-1 min-w-0">
+          <span className="text-[10px] sm:text-[10.5px] font-black text-slate-900 dark:text-white leading-tight">
             إجمالي الإيرادات
           </span>
-          <div className="w-7 h-7 shrink-0 rounded-md bg-emerald-500/10 dark:bg-emerald-400/10 border border-emerald-500/25 flex items-center justify-center text-emerald-600 dark:text-emerald-400 shadow-xs">
+          <div className="w-6 h-6 shrink-0 rounded-md bg-emerald-500/10 dark:bg-emerald-400/10 border border-emerald-500/25 flex items-center justify-center text-emerald-600 dark:text-emerald-400 shadow-xs group-hover:scale-110 transition-transform">
             <Crown className="w-3.5 h-3.5 stroke-[2.2]" />
           </div>
         </div>
-        <div className="mt-2 text-base sm:text-lg font-black font-mono text-emerald-600 dark:text-emerald-400 font-mono-digits tracking-tight truncate">
+        <div className="my-1 text-base sm:text-lg font-black font-mono text-emerald-600 dark:text-emerald-400 font-mono-digits tracking-tight truncate">
           {formatCurrency(totalRevenue)}
         </div>
-        <div className="mt-1 text-[10px] text-slate-500 dark:text-slate-400 flex items-center gap-1 font-medium truncate">
+        <div className="text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400 flex items-center gap-1.5 font-medium truncate">
           <TrendingUp className="w-3 h-3 text-emerald-500 shrink-0" />
           <span className="truncate">اللعب + البوفيه</span>
         </div>
@@ -84,21 +86,21 @@ export const StatsBar: React.FC<StatsBarProps> = ({
       <motion.div 
         variants={cardVariants}
         whileHover="hover"
-        className="bg-white dark:bg-[#0b101c] border border-slate-200/90 dark:border-slate-800 hover:border-cyan-500/40 rounded-xl p-3 sm:p-3.5 shadow-xs transition-all relative overflow-hidden group cursor-default"
+        className="bg-white dark:bg-[#0b101c] border-2 border-slate-200/90 dark:border-slate-800/90 hover:border-red-500 dark:hover:border-red-400 hover:ring-2 hover:ring-red-500/40 hover:shadow-lg hover:shadow-red-500/20 rounded-xl p-3 sm:p-3.5 shadow-xs transition-all duration-200 relative overflow-hidden group cursor-pointer flex flex-col justify-between h-full min-h-[108px]"
       >
-        <div className="flex items-center justify-between gap-1.5">
-          <span className="text-[11px] font-bold text-slate-600 dark:text-slate-400 truncate">
+        <div className="flex items-center justify-between gap-1 min-w-0">
+          <span className="text-[10px] sm:text-[10.5px] font-black text-slate-900 dark:text-white leading-tight">
             إيراد ساعات اللعب
           </span>
-          <div className="w-7 h-7 shrink-0 rounded-md bg-cyan-500/10 dark:bg-cyan-400/10 border border-cyan-500/25 flex items-center justify-center text-cyan-600 dark:text-cyan-400 shadow-xs">
+          <div className="w-6 h-6 shrink-0 rounded-md bg-red-500/10 dark:bg-red-400/10 border border-red-500/25 flex items-center justify-center text-red-600 dark:text-red-400 shadow-xs group-hover:scale-110 transition-transform">
             <Swords className="w-3.5 h-3.5 stroke-[2.2]" />
           </div>
         </div>
-        <div className="mt-2 text-base sm:text-lg font-black font-mono text-slate-800 dark:text-slate-100 font-mono-digits tracking-tight truncate">
+        <div className="my-1 text-base sm:text-lg font-black font-mono text-red-600 dark:text-red-400 font-mono-digits tracking-tight truncate">
           {formatCurrency(playtimeRevenue)}
         </div>
-        <div className="mt-1 text-[10px] text-slate-500 dark:text-slate-400 flex items-center gap-1 font-medium truncate">
-          <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 shrink-0" />
+        <div className="text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400 flex items-center gap-1.5 font-medium truncate">
+          <span className="w-1.5 h-1.5 rounded-full bg-red-500 shrink-0" />
           <span className="truncate">حساب دقيق بالدقيقة</span>
         </div>
       </motion.div>
@@ -107,20 +109,20 @@ export const StatsBar: React.FC<StatsBarProps> = ({
       <motion.div 
         variants={cardVariants}
         whileHover="hover"
-        className="bg-white dark:bg-[#0b101c] border border-slate-200/90 dark:border-slate-800 hover:border-orange-500/40 rounded-xl p-3 sm:p-3.5 shadow-xs transition-all relative overflow-hidden group cursor-default"
+        className="bg-white dark:bg-[#0b101c] border-2 border-slate-200/90 dark:border-slate-800/90 hover:border-orange-500 dark:hover:border-orange-400 hover:ring-2 hover:ring-orange-500/40 hover:shadow-lg hover:shadow-orange-500/20 rounded-xl p-3 sm:p-3.5 shadow-xs transition-all duration-200 relative overflow-hidden group cursor-pointer flex flex-col justify-between h-full min-h-[108px]"
       >
-        <div className="flex items-center justify-between gap-1.5">
-          <span className="text-[11px] font-bold text-slate-600 dark:text-slate-400 truncate">
+        <div className="flex items-center justify-between gap-1 min-w-0">
+          <span className="text-[10px] sm:text-[10.5px] font-black text-slate-900 dark:text-white leading-tight">
             مبيعات البوفيه
           </span>
-          <div className="w-7 h-7 shrink-0 rounded-md bg-orange-500/10 dark:bg-orange-400/10 border border-orange-500/25 flex items-center justify-center text-orange-600 dark:text-orange-400 shadow-xs">
+          <div className="w-6 h-6 shrink-0 rounded-md bg-orange-500/10 dark:bg-orange-400/10 border border-orange-500/25 flex items-center justify-center text-orange-600 dark:text-orange-400 shadow-xs group-hover:scale-110 transition-transform">
             <Flame className="w-3.5 h-3.5 stroke-[2.2]" />
           </div>
         </div>
-        <div className="mt-2 text-base sm:text-lg font-black font-mono text-slate-800 dark:text-slate-100 font-mono-digits tracking-tight truncate">
+        <div className="my-1 text-base sm:text-lg font-black font-mono text-orange-600 dark:text-orange-400 font-mono-digits tracking-tight truncate">
           {formatCurrency(snacksRevenue)}
         </div>
-        <div className="mt-1 text-[10px] text-slate-500 dark:text-slate-400 flex items-center gap-1 font-medium truncate">
+        <div className="text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400 flex items-center gap-1.5 font-medium truncate">
           <span className="w-1.5 h-1.5 rounded-full bg-orange-500 shrink-0" />
           <span className="truncate">المشروبات والوجبات</span>
         </div>
@@ -130,22 +132,22 @@ export const StatsBar: React.FC<StatsBarProps> = ({
       <motion.div 
         variants={cardVariants}
         whileHover="hover"
-        className="bg-white dark:bg-[#0b101c] border border-slate-200/90 dark:border-slate-800 hover:border-emerald-500/40 rounded-xl p-3 sm:p-3.5 shadow-xs transition-all relative overflow-hidden group cursor-default"
+        className="bg-white dark:bg-[#0b101c] border-2 border-slate-200/90 dark:border-slate-800/90 hover:border-purple-500 dark:hover:border-purple-400 hover:ring-2 hover:ring-purple-500/40 hover:shadow-lg hover:shadow-purple-500/20 rounded-xl p-3 sm:p-3.5 shadow-xs transition-all duration-200 relative overflow-hidden group cursor-pointer flex flex-col justify-between h-full min-h-[108px]"
       >
-        <div className="flex items-center justify-between gap-1.5">
-          <span className="text-[11px] font-bold text-slate-600 dark:text-slate-400 truncate">
+        <div className="flex items-center justify-between gap-1 min-w-0">
+          <span className="text-[10px] sm:text-[10.5px] font-black text-slate-900 dark:text-white leading-tight">
             الأجهزة النشطة
           </span>
-          <div className="w-7 h-7 shrink-0 rounded-md bg-emerald-500/10 dark:bg-emerald-400/10 border border-emerald-500/25 flex items-center justify-center text-emerald-600 dark:text-emerald-400 shadow-xs">
+          <div className="w-6 h-6 shrink-0 rounded-md bg-purple-500/10 dark:bg-purple-400/10 border border-purple-500/25 flex items-center justify-center text-purple-600 dark:text-purple-400 shadow-xs group-hover:scale-110 transition-transform">
             <Joystick className="w-3.5 h-3.5 stroke-[2.2]" />
           </div>
         </div>
-        <div className="mt-2 text-base sm:text-lg font-black font-mono text-emerald-600 dark:text-emerald-400 font-mono-digits tracking-tight flex items-baseline gap-1">
+        <div className="my-1 text-base sm:text-lg font-black font-mono text-purple-600 dark:text-purple-400 font-mono-digits tracking-tight flex items-baseline gap-1">
           <span>{occupiedStations}</span>
           <span className="text-xs font-semibold text-slate-400">/ {totalStations}</span>
         </div>
-        <div className="mt-1 text-[10px] text-slate-500 dark:text-slate-400 flex items-center gap-1 font-medium font-mono-digits truncate">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
+        <div className="text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400 flex items-center gap-1.5 font-medium font-mono-digits truncate">
+          <span className="w-1.5 h-1.5 rounded-full bg-purple-500 shrink-0" />
           <span>إشغال {totalStations > 0 ? Math.round((occupiedStations / totalStations) * 100) : 0}%</span>
         </div>
       </motion.div>
@@ -154,21 +156,21 @@ export const StatsBar: React.FC<StatsBarProps> = ({
       <motion.div 
         variants={cardVariants}
         whileHover="hover"
-        className="bg-white dark:bg-[#0b101c] border border-slate-200/90 dark:border-slate-800 hover:border-sky-500/40 rounded-xl p-3 sm:p-3.5 shadow-xs transition-all relative overflow-hidden group cursor-default"
+        className="bg-white dark:bg-[#0b101c] border-2 border-slate-200/90 dark:border-slate-800/90 hover:border-sky-500 dark:hover:border-sky-400 hover:ring-2 hover:ring-sky-500/40 hover:shadow-lg hover:shadow-sky-500/20 rounded-xl p-3 sm:p-3.5 shadow-xs transition-all duration-200 relative overflow-hidden group cursor-pointer flex flex-col justify-between h-full min-h-[108px]"
       >
-        <div className="flex items-center justify-between gap-1.5">
-          <span className="text-[11px] font-bold text-slate-600 dark:text-slate-400 truncate">
+        <div className="flex items-center justify-between gap-1 min-w-0">
+          <span className="text-[10px] sm:text-[10.5px] font-black text-slate-900 dark:text-white leading-tight">
             الشبكة (فايبر)
           </span>
-          <div className="w-7 h-7 shrink-0 rounded-md bg-sky-500/10 dark:bg-sky-400/10 border border-sky-500/25 flex items-center justify-center text-sky-600 dark:text-sky-400 shadow-xs">
+          <div className="w-6 h-6 shrink-0 rounded-md bg-sky-500/10 dark:bg-sky-400/10 border border-sky-500/25 flex items-center justify-center text-sky-600 dark:text-sky-400 shadow-xs group-hover:scale-110 transition-transform">
             <Zap className="w-3.5 h-3.5 stroke-[2.2] fill-sky-500/20" />
           </div>
         </div>
-        <div className="mt-2 text-base sm:text-lg font-black font-mono text-sky-600 dark:text-sky-400 font-mono-digits tracking-tight flex items-baseline gap-1 truncate">
+        <div className="my-1 text-base sm:text-lg font-black font-mono text-sky-600 dark:text-sky-400 font-mono-digits tracking-tight flex items-baseline gap-1 truncate">
           <span>950</span>
           <span className="text-xs font-bold text-slate-400 font-sans">Mbps</span>
         </div>
-        <div className="mt-1 text-[10px] text-slate-500 dark:text-slate-400 flex items-center gap-1 font-medium truncate">
+        <div className="text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400 flex items-center gap-1.5 font-medium truncate">
           <span className="w-1.5 h-1.5 rounded-full bg-sky-500 shrink-0" />
           <span>بينغ 8ms • ألياف بصرية</span>
         </div>
@@ -178,21 +180,21 @@ export const StatsBar: React.FC<StatsBarProps> = ({
       <motion.div 
         variants={cardVariants}
         whileHover="hover"
-        className="bg-white dark:bg-[#0b101c] border border-slate-200/90 dark:border-slate-800 hover:border-amber-500/40 rounded-xl p-3 sm:p-3.5 shadow-xs transition-all relative overflow-hidden group cursor-default"
+        className="bg-white dark:bg-[#0b101c] border-2 border-slate-200/90 dark:border-slate-800/90 hover:border-amber-500 dark:hover:border-amber-400 hover:ring-2 hover:ring-amber-500/40 hover:shadow-lg hover:shadow-amber-500/20 rounded-xl p-3 sm:p-3.5 shadow-xs transition-all duration-200 relative overflow-hidden group cursor-pointer flex flex-col justify-between h-full min-h-[108px]"
       >
-        <div className="flex items-center justify-between gap-1.5">
-          <span className="text-[11px] font-bold text-slate-600 dark:text-slate-400 truncate">
+        <div className="flex items-center justify-between gap-1 min-w-0">
+          <span className="text-[10px] sm:text-[10.5px] font-black text-slate-900 dark:text-white leading-tight">
             ساعات اللعب
           </span>
-          <div className="w-7 h-7 shrink-0 rounded-md bg-amber-500/10 dark:bg-amber-400/10 border border-amber-500/25 flex items-center justify-center text-amber-600 dark:text-amber-400 shadow-xs">
-            <Trophy className="w-3.5 h-3.5 stroke-[2.2]" />
+          <div className="w-6 h-6 shrink-0 rounded-md bg-amber-500/10 dark:bg-amber-400/10 border border-amber-500/25 flex items-center justify-center text-amber-600 dark:text-amber-400 shadow-xs group-hover:scale-110 transition-transform">
+            <Clock className="w-3.5 h-3.5 stroke-[2.2]" />
           </div>
         </div>
-        <div className="mt-2 text-base sm:text-lg font-black font-mono text-slate-800 dark:text-slate-100 font-mono-digits tracking-tight flex items-baseline gap-1 truncate">
+        <div className="my-1 text-base sm:text-lg font-black font-mono text-amber-600 dark:text-amber-400 font-mono-digits tracking-tight flex items-baseline gap-1 truncate">
           <span>{(totalMinutesPlayed / 60).toFixed(1)}</span>
-          <span className="text-xs font-semibold text-slate-400 font-sans">ساعة</span>
+          <span className="text-xs font-semibold text-amber-600/70 dark:text-amber-400/70 font-sans">ساعة</span>
         </div>
-        <div className="mt-1 text-[10px] text-slate-500 dark:text-slate-400 flex items-center gap-1 font-medium truncate">
+        <div className="text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400 flex items-center gap-1.5 font-medium truncate">
           <span className="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0" />
           <span className="truncate">{formatDuration(totalMinutesPlayed)}</span>
         </div>
@@ -204,7 +206,7 @@ export const StatsBar: React.FC<StatsBarProps> = ({
   // 1. FIXED VIEW: ONLY ON 'station_management' (ثابت فقط في إدارة المحطات)
   if (isFixed) {
     return (
-      <div className="my-5">
+      <div className={embedded ? "" : "my-5"}>
         {renderCardsGrid()}
       </div>
     );
@@ -212,7 +214,7 @@ export const StatsBar: React.FC<StatsBarProps> = ({
 
   // 2. WINDOWED / ACCORDION VIEW: IN ALL OTHER PAGES WITH BADASS CYBER ARROW
   return (
-    <div className="my-4">
+    <div className={embedded ? "" : "my-4"}>
       {/* High-Tech Cyber Pill / Trigger Bar with Arrow */}
       <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-emerald-950/40 via-slate-900/90 to-teal-950/40 dark:from-[#0a1120] dark:via-[#0c1424] dark:to-[#08131e] border border-emerald-500/30 dark:border-emerald-500/35 shadow-lg shadow-emerald-950/20 backdrop-blur-xl p-3 sm:px-4 transition-all duration-300">
         

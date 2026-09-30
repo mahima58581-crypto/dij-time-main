@@ -7,7 +7,7 @@
   --color-cyber-bg: #060a14;
 }
 
-/* Explicit Bulletproof Dark Mode Rules for All App Cards */
+/* Explicit Bulletproof Dark Mode Rules for All App Cards & Containers */
 html.dark .dark-card,
 .dark .dark-card,
 html.dark [class*="dark:bg-[#0c101c]"],
@@ -30,6 +30,68 @@ html.dark .dark-card-inner,
 .dark .dark-card-inner {
   background-color: #0f172a !important;
   border-color: rgba(51, 65, 85, 0.6) !important;
+}
+
+/* Automatic Dark Mode Guard for Content Cards & Dialogs */
+.dark main .bg-white,
+.dark form .bg-white,
+.dark [role="dialog"] .bg-white,
+.dark .fixed .bg-white {
+  background-color: #0c101c !important;
+  border-color: rgba(30, 41, 59, 0.85) !important;
+  color: #f1f5f9 !important;
+}
+
+.dark main .bg-slate-50,
+.dark form .bg-slate-50,
+.dark [role="dialog"] .bg-slate-50,
+.dark .fixed .bg-slate-50 {
+  background-color: #080d19 !important;
+  border-color: rgba(30, 41, 59, 0.7) !important;
+  color: #cbd5e1 !important;
+}
+
+.dark main input:not([type="checkbox"]):not([type="radio"]),
+.dark form input:not([type="checkbox"]):not([type="radio"]),
+.dark main select,
+.dark form select {
+  background-color: #080d19 !important;
+  border-color: rgba(51, 65, 85, 0.8) !important;
+  color: #ffffff !important;
+}
+
+.dark main input::placeholder,
+.dark form input::placeholder {
+  color: #64748b !important;
+}
+
+.dark table th {
+  color: #94a3b8 !important;
+  border-color: rgba(30, 41, 59, 0.8) !important;
+}
+
+.dark table td {
+  border-color: rgba(30, 41, 59, 0.6) !important;
+}
+
+.dark table td .text-slate-900 {
+  color: #ffffff !important;
+}
+
+.dark h1,
+.dark h2,
+.dark h3,
+.dark h4,
+.dark h5,
+.dark h6 {
+  color: #ffffff !important;
+}
+
+.dark h1 > span:not([class*="text-emerald"]):not([class*="text-teal"]):not([class*="text-blue"]):not([class*="text-rose"]):not([class*="text-amber"]),
+.dark h2 > span:not([class*="text-emerald"]):not([class*="text-teal"]):not([class*="text-blue"]):not([class*="text-rose"]):not([class*="text-amber"]),
+.dark h3 > span:not([class*="text-emerald"]):not([class*="text-teal"]):not([class*="text-blue"]):not([class*="text-rose"]):not([class*="text-amber"]),
+.dark h4 > span:not([class*="text-emerald"]):not([class*="text-teal"]):not([class*="text-blue"]):not([class*="text-rose"]):not([class*="text-amber"]) {
+  color: #ffffff !important;
 }
 
 @layer base {

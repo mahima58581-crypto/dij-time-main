@@ -132,7 +132,7 @@ export const CustomersManager: React.FC<CustomersManagerProps> = ({
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="البحث بالاسم، رقم الهاتف أو رمز PIN..."
-          className="w-full pl-3 pr-9 py-2.5 rounded-xl text-xs bg-white border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-emerald-500 shadow-xs transition"
+          className="w-full pl-3 pr-9 py-2.5 rounded-xl text-xs bg-white dark:bg-[#0c101c] border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-emerald-500 shadow-xs transition"
         />
       </div>
 
@@ -152,7 +152,7 @@ export const CustomersManager: React.FC<CustomersManagerProps> = ({
                 transition={{ duration: 0.2, delay: idx * 0.04 }}
                 whileHover={{ y: -2 }}
                 id={`customer-card-${cust.id}`}
-                className="bg-white border border-slate-200 hover:border-emerald-300 rounded-2xl p-4 shadow-sm hover:shadow-md flex flex-col justify-between space-y-3 transition-all group"
+                className="bg-white dark:bg-[#0c101c] border border-slate-200 dark:border-slate-800 hover:border-emerald-300 dark:hover:border-emerald-500/50 rounded-2xl p-4 shadow-sm hover:shadow-md flex flex-col justify-between space-y-3 transition-all group"
               >
                 {/* Header of customer card */}
                 <div className="flex items-center justify-between">
@@ -161,12 +161,12 @@ export const CustomersManager: React.FC<CustomersManagerProps> = ({
                       {cust.name.slice(0, 1)}
                     </div>
                     <div>
-                      <h3 className="font-bold text-slate-900 text-sm">
+                      <h3 className="font-bold text-slate-900 dark:text-white text-sm">
                         {cust.name}
                       </h3>
                       <div className="flex items-center gap-1 text-slate-400 text-xs mt-0.5">
-                        <Phone className="w-3 h-3 text-emerald-600" />
-                        <span dir="ltr" className="font-mono font-mono-digits">{cust.phone}</span>
+                        <Phone className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
+                        <span dir="ltr" className="font-mono font-mono-digits text-slate-700 dark:text-slate-300">{cust.phone}</span>
                       </div>
                     </div>
                   </div>
@@ -175,22 +175,22 @@ export const CustomersManager: React.FC<CustomersManagerProps> = ({
                 </div>
 
                 {/* PIN & Wallet */}
-                <div className="grid grid-cols-2 gap-2 bg-slate-50 p-3 rounded-xl border border-slate-200">
+                <div className="grid grid-cols-2 gap-2 bg-slate-50 dark:bg-[#080d19] p-3 rounded-xl border border-slate-200 dark:border-slate-800/80">
                   
                   {/* PIN */}
                   <div>
-                    <div className="text-[11px] text-slate-500 flex items-center gap-1">
-                      <KeyRound className="w-3 h-3 text-emerald-600" />
+                    <div className="text-[11px] text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                      <KeyRound className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
                       <span>رمز الدخول (PIN):</span>
                     </div>
                     <div className="flex items-center gap-1.5 mt-1">
-                      <span className="font-mono font-mono-digits font-bold text-xs tracking-widest text-slate-800 bg-white px-2 py-0.5 rounded border border-slate-200">
+                      <span className="font-mono font-mono-digits font-bold text-xs tracking-widest text-slate-800 dark:text-slate-200 bg-white dark:bg-slate-900 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-700">
                         {isPinRevealed ? cust.pin : '••••'}
                       </span>
                       <button
                         type="button"
                         onClick={() => togglePin(cust.id)}
-                        className="text-slate-400 hover:text-emerald-700 p-0.5 transition"
+                        className="text-slate-400 hover:text-emerald-700 dark:hover:text-emerald-400 p-0.5 transition cursor-pointer"
                         title={isPinRevealed ? 'إخفاء الرمز' : 'إظهار الرمز'}
                       >
                         {isPinRevealed ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5 text-emerald-600" />}
@@ -263,10 +263,10 @@ export const CustomersManager: React.FC<CustomersManagerProps> = ({
             initial={{ opacity: 0, scale: 0.95, y: 15 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95 }}
-            className="bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl border border-emerald-100 space-y-4"
+            className="bg-white dark:bg-[#0c101c] rounded-3xl p-6 max-w-sm w-full shadow-2xl border border-emerald-100 dark:border-slate-800 space-y-4"
           >
-            <h3 className="text-sm font-black text-slate-900 flex items-center gap-2">
-              <Wallet className="w-5 h-5 text-emerald-600" />
+            <h3 className="text-sm font-black text-slate-900 dark:text-white flex items-center gap-2">
+              <Wallet className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
               <span>شحن محفظة الزبون: {rechargeModalCustomer.name}</span>
             </h3>
 

@@ -22,6 +22,7 @@ interface CyberMarqueeTickerProps {
   activeSessionsCount?: number;
   stations?: Station[];
   sessions?: Session[];
+  embedded?: boolean;
 }
 
 interface TickerItem {
@@ -38,6 +39,7 @@ export const CyberMarqueeTicker: React.FC<CyberMarqueeTickerProps> = ({
   activeSessionsCount = 0,
   stations = [],
   sessions = [],
+  embedded = false,
 }) => {
   const [isVisible, setIsVisible] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -206,13 +208,17 @@ export const CyberMarqueeTicker: React.FC<CyberMarqueeTickerProps> = ({
     <div
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
-      className="relative overflow-hidden bg-gradient-to-r from-emerald-50/95 via-slate-50 to-teal-50/95 dark:from-[#080d19] dark:via-[#0c1324] dark:to-[#080d19] border-b border-emerald-200/90 dark:border-emerald-500/25 text-slate-800 dark:text-slate-200 h-11 sm:h-12 px-3 sm:px-6 shadow-xs dark:shadow-md dark:shadow-black/40 z-20 flex items-center transition-colors"
+      className={`relative overflow-hidden bg-gradient-to-r from-emerald-50/95 via-slate-50 to-teal-50/95 dark:from-[#080d19] dark:via-[#0c1324] dark:to-[#080d19] border-b border-emerald-200/90 dark:border-emerald-500/25 text-slate-800 dark:text-slate-200 z-20 flex items-center transition-colors ${
+        embedded 
+          ? 'h-10 sm:h-11 px-3 sm:px-4' 
+          : 'h-11 sm:h-12 px-3 sm:px-6 shadow-xs dark:shadow-md dark:shadow-black/40'
+      }`}
       dir="rtl"
     >
       {/* Background Cyber Grid Accent */}
       <div className="absolute inset-0 opacity-10 dark:opacity-20 bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
 
-      <div className="max-w-7xl w-full mx-auto flex items-center justify-between gap-3 text-xs">
+      <div className={`${embedded ? 'w-full' : 'max-w-7xl w-full mx-auto'} flex items-center justify-between gap-3 text-xs`}>
 
         {/* عرض التنبيه المتحرك المتغير (Animated Ticker Message) */}
         <div className="flex-1 overflow-hidden relative min-h-[24px] flex items-center">

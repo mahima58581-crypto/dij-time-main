@@ -134,7 +134,20 @@ export default function App() {
   // 1. Persistence for Core State
   const [stations, setStations] = useState<Station[]>(() => {
     const saved = localStorage.getItem('dij_tiem_stations_v3');
-    return saved ? JSON.parse(saved) : INITIAL_STATIONS;
+    if (saved) {
+      try {
+        const parsed: Station[] = JSON.parse(saved);
+        const hasXbox = parsed.some((s) => s.type === 'XBOX');
+        if (!hasXbox) {
+          const xboxStations = INITIAL_STATIONS.filter((s) => s.type === 'XBOX');
+          return [...parsed, ...xboxStations];
+        }
+        return parsed;
+      } catch {
+        return INITIAL_STATIONS;
+      }
+    }
+    return INITIAL_STATIONS;
   });
 
   const [customers, setCustomers] = useState<Customer[]>(() => {
@@ -623,6 +636,7 @@ export default function App() {
 
   const handleDeleteStation = (stationId: string) => {
     setStations((prev) => prev.filter((s) => s.id !== stationId));
+    setSessions((prev) => prev.filter((sess) => sess.stationId !== stationId));
   };
 
   // Goods Handlers
@@ -839,11 +853,11 @@ export default function App() {
       dir="rtl"
       className={`${isDarkMode ? 'dark' : ''} min-h-screen bg-white dark:bg-[#060a14] text-slate-900 dark:text-slate-100 flex flex-col selection:bg-emerald-500 selection:text-white antialiased relative overflow-x-hidden font-['Alexandria','Cairo',sans-serif]`}
     >
-      {/* 0. Quranic Welcome Splash Screen (4 Seconds of Breathtaking Holy Verse in Emerald Theme) */}
+      {/* 0. Quranic Welcome Splash Screen (Active for 4 seconds upon opening browser or page reload) */}
       <AnimatePresence>
         {showQuranicWelcome && (
           <QuranicWelcomeScreen
-            durationMs={4000}
+            durationMs={4200}
             onComplete={() => setShowQuranicWelcome(false)}
           />
         )}
@@ -899,28 +913,6 @@ export default function App() {
             >
               <Menu className="w-5 h-5" />
             </button>
-
-            {/* Club Brand Info */}
-            <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-500 p-[1.5px] shadow-sm shadow-emerald-500/20">
-                <div className="w-full h-full bg-white dark:bg-[#0c101c] rounded-[10px] flex items-center justify-center">
-                  <Gamepad2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
-                </div>
-              </div>
-              <div>
-                <h1 className="text-sm sm:text-base font-black text-emerald-900 dark:text-emerald-300 font-gaming">
-                  {clubSettings.clubName}
-                </h1>
-                <div className="text-[10px] text-slate-500 dark:text-slate-400 flex items-center gap-2">
-                  <span>{clubSettings.branchName}</span>
-                  <span>•</span>
-                  <span className="text-emerald-600 dark:text-emerald-400 font-mono font-bold flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                    النظام متصل
-                  </span>
-                </div>
-              </div>
-            </div>
           </div>
 
           {/* Left Side (In RTL: End side) - Sleek, Organized Pro Esports Action Bar */}
@@ -1052,19 +1044,25 @@ export default function App() {
           </div>
         </header>
 
-        {/* 5. Cyber Marquee Ticker for News / Live System Updates */}
-        <CyberMarqueeTicker
-          clubName={clubSettings.clubName}
-          activeSessionsCount={activeSessions.length}
-          stations={stations}
-          sessions={sessions}
-        />
-
         {/* Main Content Body */}
-        <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 relative z-10">
+        <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-6 space-y-6 relative z-10">
           
-          {/* Top Real-time Accounting Bar (Fixed on station_management, collapsible windowed on other pages) */}
-          <StatsBar sessions={sessions} stations={stations} activeTab={activeTab} />
+          {/* Connected Live Ticker & Stats Telemetry Module (بهم چسبیده و کاملاً متصل) */}
+          <div className="rounded-2xl border border-emerald-200/80 dark:border-slate-800/90 bg-white/90 dark:bg-[#070b16]/95 backdrop-blur-xl shadow-xs overflow-hidden">
+            {/* 1. Attached Top Bar: Cyber Marquee Ticker */}
+            <CyberMarqueeTicker
+              clubName={clubSettings.clubName}
+              activeSessionsCount={activeSessions.length}
+              stations={stations}
+              sessions={sessions}
+              embedded
+            />
+
+            {/* 2. Attached Bottom Body: Real-time Stats Cards */}
+            <div className="p-3 sm:p-3.5 bg-slate-50/40 dark:bg-transparent">
+              <StatsBar sessions={sessions} stations={stations} activeTab={activeTab} embedded />
+            </div>
+          </div>
 
           {/* Dynamic Component Rendering based on Selected Sidebar Tab */}
           <AnimatePresence mode="wait">

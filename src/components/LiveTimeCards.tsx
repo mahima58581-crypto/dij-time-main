@@ -18,7 +18,11 @@ import {
   Volume2,
   Bell,
   AlertTriangle,
-  Flame
+  Flame,
+  User,
+  Activity,
+  ShieldCheck,
+  Zap
 } from 'lucide-react';
 import { Session, Station } from '../types';
 import { 
@@ -26,7 +30,6 @@ import {
   calculatePlayCost
 } from '../utils/formatters';
 import { play10MinWarningSound, speakVoiceAlert, unlockAudioContext } from '../utils/audioAlerts';
-import { CyberHardwareBadge } from './CyberHardwareBadge';
 import { CyberDigitalTimer } from './CyberDigitalTimer';
 import { CyberSectionIcon } from './CyberSectionIcon';
 
@@ -38,6 +41,36 @@ interface LiveTimeCardsProps {
   onCheckoutSession: (session: Session) => void;
   onStartNewSession: (stationId?: string) => void;
 }
+
+// Ultra-badass Cyber Esports Live Chrono & Match Timer Icon
+const CyberLiveChronoTimerIcon: React.FC<{ className?: string }> = ({ className = 'w-6 h-6' }) => (
+  <svg 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+  >
+    {/* Top Chrono Pushers / Tactical Mechanical Trigger Buttons */}
+    <path d="M10 2H14" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+    <path d="M12 2V4.5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+    <path d="M19 5.5L17.5 7M5 5.5L6.5 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" opacity="0.8" />
+
+    {/* Outer Precision Telemetry Tachymeter Octagonal / High-tech Ring */}
+    <circle cx="12" cy="13.5" r="8.5" stroke="currentColor" strokeWidth="1.8" strokeDasharray="3 2" opacity="0.4" />
+    <circle cx="12" cy="13.5" r="7.5" stroke="currentColor" strokeWidth="2" />
+
+    {/* Glowing Hour Cardinal Energy Marks */}
+    <path d="M12 7V8.5M12 18.5V20M6.5 13.5H8M16 13.5H17.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+
+    {/* High-speed Esports Chrono Laser Needle Hands (Pointing dynamically) */}
+    <path d="M12 13.5L12 9.5" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" />
+    <path d="M12 13.5L15 15.5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+
+    {/* Central Glowing Reactor Core Pivot */}
+    <circle cx="12" cy="13.5" r="1.8" fill="currentColor" />
+    <circle cx="12" cy="13.5" r="0.7" fill="#040a14" />
+  </svg>
+);
 
 export const LiveTimeCards: React.FC<LiveTimeCardsProps> = ({
   sessions,
@@ -63,6 +96,51 @@ export const LiveTimeCards: React.FC<LiveTimeCardsProps> = ({
 
   const activeSessions = sessions.filter((s) => s.status === 'active');
 
+  const getStationEmblem = (type: string) => {
+    switch (type) {
+      case 'PC':
+        return (
+          <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-emerald-500/20 via-teal-600/10 to-slate-900 border border-emerald-500/40 flex items-center justify-center shadow-md shadow-emerald-500/20 shrink-0">
+            <div className="absolute inset-0 bg-emerald-500/10 rounded-xl blur-xs" />
+            <Monitor className="w-5 h-5 text-emerald-400 drop-shadow-[0_0_8px_rgba(52,211,153,0.8)] relative z-10 stroke-[2.2]" />
+            <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-slate-950" />
+          </div>
+        );
+      case 'PS5':
+        return (
+          <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-blue-500/20 via-indigo-600/10 to-slate-900 border border-blue-500/40 flex items-center justify-center shadow-md shadow-blue-500/20 shrink-0">
+            <div className="absolute inset-0 bg-blue-500/10 rounded-xl blur-xs" />
+            <Gamepad2 className="w-5 h-5 text-blue-400 drop-shadow-[0_0_8px_rgba(59,130,246,0.8)] relative z-10 stroke-[2.2]" />
+            <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-blue-500 ring-2 ring-slate-950" />
+          </div>
+        );
+      case 'XBOX':
+        return (
+          <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-green-500/20 via-emerald-600/10 to-slate-900 border border-green-500/40 flex items-center justify-center shadow-md shadow-green-500/20 shrink-0">
+            <div className="absolute inset-0 bg-green-500/10 rounded-xl blur-xs" />
+            <Tv className="w-5 h-5 text-green-400 drop-shadow-[0_0_8px_rgba(34,197,94,0.8)] relative z-10 stroke-[2.2]" />
+            <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-green-500 ring-2 ring-slate-950" />
+          </div>
+        );
+      case 'VIP_SIM':
+        return (
+          <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-amber-500/20 via-orange-600/10 to-slate-900 border border-amber-500/40 flex items-center justify-center shadow-md shadow-amber-500/20 shrink-0">
+            <div className="absolute inset-0 bg-amber-500/10 rounded-xl blur-xs" />
+            <Car className="w-5 h-5 text-amber-400 drop-shadow-[0_0_8px_rgba(245,158,11,0.8)] relative z-10 stroke-[2.2]" />
+            <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-amber-500 ring-2 ring-slate-950" />
+          </div>
+        );
+      default:
+        return (
+          <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-purple-500/20 via-indigo-600/10 to-slate-900 border border-purple-500/40 flex items-center justify-center shadow-md shadow-purple-500/20 shrink-0">
+            <div className="absolute inset-0 bg-purple-500/10 rounded-xl blur-xs" />
+            <Gamepad2 className="w-5 h-5 text-purple-400 drop-shadow-[0_0_8px_rgba(168,85,247,0.8)] relative z-10 stroke-[2.2]" />
+            <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-purple-500 ring-2 ring-slate-950" />
+          </div>
+        );
+    }
+  };
+
   const getStationIcon = (type: string) => {
     switch (type) {
       case 'PC':
@@ -80,14 +158,9 @@ export const LiveTimeCards: React.FC<LiveTimeCardsProps> = ({
     <section className="space-y-4">
       
       {/* عنوان وقسم التوقیت المباشر */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-200">
-        <div className="flex items-center gap-3">
-          <motion.div 
-            whileHover={{ scale: 1.1, rotate: 15 }}
-            className="p-2.5 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-500 text-white shadow-md shadow-emerald-500/20"
-          >
-            <Clock className="w-5 h-5 stroke-[2.5]" />
-          </motion.div>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-emerald-100 dark:border-slate-800">
+        <div className="flex items-center gap-3.5">
+          <CyberSectionIcon icon={CyberLiveChronoTimerIcon} size="lg" variant="emerald" />
           <div>
             <div className="flex items-center gap-2">
               <h2 className="text-lg font-black text-emerald-600 dark:text-emerald-400 font-gaming">
@@ -97,7 +170,7 @@ export const LiveTimeCards: React.FC<LiveTimeCardsProps> = ({
                 {activeSessions.length} جلسات نشطة
               </span>
             </div>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
               احتساب دقيق بالثواني، تمييز الألعاب أونلاين وأوفلاين وحساب التكلفة بالدينار العراقي
             </p>
           </div>
@@ -168,53 +241,69 @@ export const LiveTimeCards: React.FC<LiveTimeCardsProps> = ({
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.2 }}
                   whileHover={{ y: -4 }}
-                  className={`rounded-2xl border transition-all duration-300 flex flex-col justify-between overflow-hidden relative ${
+                  className={`rounded-2xl border transition-all duration-300 flex flex-col justify-between overflow-hidden relative shadow-lg ${
                     isOvertime
-                      ? 'station-glow-alert bg-white dark:bg-[#150a0f] border-rose-500 ring-2 ring-rose-500/50'
-                      : 'station-glow-active bg-white dark:bg-[#0c121e] border-emerald-400 dark:border-emerald-500/80 ring-1 ring-emerald-400/40'
+                      ? 'station-glow-alert bg-white dark:bg-[#14080e] border-rose-500 ring-2 ring-rose-500/40 shadow-rose-950/20'
+                      : 'station-glow-active bg-white dark:bg-[#070b14] border-emerald-400/80 dark:border-emerald-500/50 hover:border-emerald-400 ring-1 ring-emerald-400/30 dark:ring-emerald-500/20 shadow-emerald-950/20'
                   }`}
                 >
-                  {/* سربرگ کارت */}
-                  <div className="p-4 bg-slate-50 dark:bg-[#0e1320] border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
-                    <div className="flex items-center gap-2.5">
-                      <CyberHardwareBadge
-                        type={session.stationType as any}
-                        size="sm"
-                        isActive={true}
-                      />
-                      <div>
-                        <h3 className="font-black text-slate-900 dark:text-slate-100 text-sm font-gaming">
-                          {session.stationName}
-                        </h3>
-                        <span className="text-[11px] font-medium text-emerald-600 dark:text-emerald-400 font-mono-digits">
-                          {session.sessionType === 'open' ? 'وقت مفتوح' : `حجز ${session.allocatedMinutes} دقيقة`}
-                        </span>
+                  {/* Cyber Accent Top Glow Bar */}
+                  <div className={`h-1 w-full bg-gradient-to-r ${
+                    isOvertime 
+                      ? 'from-rose-500 via-amber-400 to-rose-600' 
+                      : 'from-emerald-500 via-teal-400 to-emerald-500'
+                  }`} />
+
+                  {/* سربرگ کارت - Cyber Header */}
+                  <div className="p-3.5 bg-slate-50/95 dark:bg-[#0c1220] border-b border-slate-200/80 dark:border-slate-800/80 flex items-start justify-between gap-2.5">
+                    <div className="flex items-center gap-2.5 min-w-0 flex-1">
+                      {getStationEmblem(session.stationType)}
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-1.5 flex-wrap">
+                          <h3 className="font-black text-slate-950 dark:text-white text-base sm:text-[17px] font-gaming tracking-wide leading-tight drop-shadow-xs">
+                            {session.stationName}
+                          </h3>
+                          <span className="px-1.5 py-0.5 rounded text-[9px] font-black uppercase font-mono tracking-wider bg-emerald-500/10 dark:bg-emerald-400/20 text-emerald-800 dark:text-emerald-300 border border-emerald-500/30 shrink-0">
+                            {session.stationType}
+                          </span>
+                        </div>
+                        <div className="text-xs font-bold text-emerald-600 dark:text-emerald-400 font-mono-digits flex items-center gap-1.5 mt-1">
+                          <Activity className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+                          <span>
+                            {session.sessionType === 'open' ? 'وقت مفتوح' : `حجز ${session.allocatedMinutes} دقيقة`}
+                          </span>
+                        </div>
                       </div>
                     </div>
 
-                    <div>
+                    <div className="shrink-0 self-start mt-0.5">
                       {isOvertime ? (
-                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-black bg-rose-600 text-white shadow-md shadow-rose-600/30 animate-pulse">
+                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-black bg-rose-500/15 text-rose-500 border border-rose-500/40 shadow-xs uppercase tracking-wide animate-pulse">
                           <Flame className="w-3.5 h-3.5" />
-                          إضافي!
+                          <span>إضافي!</span>
                         </span>
                       ) : (
-                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-black bg-emerald-600 text-white shadow-md shadow-emerald-600/30">
-                          <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping"></span>
+                        <span className="inline-flex items-center px-2.5 py-1 rounded-lg text-[10px] font-black bg-emerald-500/15 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 border border-emerald-500/35 uppercase tracking-wide shadow-2xs">
                           قيد اللعب
                         </span>
                       )}
                     </div>
                   </div>
 
-                  {/* جعبه تایمر دیجیتالی سبز */}
-                  <div className="p-4 space-y-3">
+                  {/* جعبه تایمر دیجیتالی و محتوای کارت */}
+                  <div className="p-3.5 space-y-3">
                     
-                    {/* باکس تایمر دیجیتالی LED با حلقه پیشرفت */}
-                    <div className="bg-slate-950 border border-emerald-500/30 dark:border-emerald-500/40 rounded-2xl p-3 text-center shadow-inner flex flex-col items-center justify-center">
-                      <div className="text-[10px] text-slate-400 flex items-center gap-1 mb-1">
-                        <Clock className="w-3 h-3 text-emerald-400" />
-                        <span>العداد الرقمي المباشر (LED):</span>
+                    {/* باکس تایمر دیجیتالی Cockpit HUD با زوایای سایبری - در لایت مود کاملاً سفید و روشن */}
+                    <div className="relative bg-white dark:bg-slate-950/95 border border-emerald-200/90 dark:border-emerald-500/40 rounded-xl p-3.5 text-center shadow-xs dark:shadow-inner flex flex-col items-center justify-center overflow-hidden transition-colors">
+                      {/* Corner HUD Brackets */}
+                      <div className="absolute top-1 right-1 w-2.5 h-2.5 border-t-2 border-r-2 border-emerald-400 dark:border-emerald-400/60 pointer-events-none" />
+                      <div className="absolute top-1 left-1 w-2.5 h-2.5 border-t-2 border-l-2 border-emerald-400 dark:border-emerald-400/60 pointer-events-none" />
+                      <div className="absolute bottom-1 right-1 w-2.5 h-2.5 border-b-2 border-r-2 border-emerald-400 dark:border-emerald-400/60 pointer-events-none" />
+                      <div className="absolute bottom-1 left-1 w-2.5 h-2.5 border-b-2 border-l-2 border-emerald-400 dark:border-emerald-400/60 pointer-events-none" />
+
+                      <div className="text-[10px] text-emerald-700 dark:text-emerald-400/90 flex items-center gap-1 mb-1 font-mono font-bold tracking-wider uppercase">
+                        <Clock className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
+                        <span>مؤقت الجلسة المباشر (LIVE HUD)</span>
                       </div>
                       
                       <CyberDigitalTimer
@@ -226,10 +315,12 @@ export const LiveTimeCards: React.FC<LiveTimeCardsProps> = ({
                         progressPercent={isFixed ? Math.min(100, Math.round((elapsedSeconds / totalAllocatedSec) * 100)) : ((elapsedSeconds % 3600) / 3600) * 100}
                       />
 
-                      <div className="text-[10px] text-slate-400 pt-1.5 flex items-center justify-center gap-2 border-t border-slate-800/80 mt-2 font-mono-digits w-full">
-                        <span>دخول: {new Date(session.checkInTime).toLocaleTimeString('ar-IQ', { hour: '2-digit', minute: '2-digit' })}</span>
-                        <span>•</span>
-                        <span className="text-emerald-400 font-mono font-bold">{formatCurrency(session.hourlyRate)} / ساعة</span>
+                      <div className="text-[10px] text-slate-500 dark:text-slate-400 pt-2 flex items-center justify-between border-t border-slate-200 dark:border-slate-800/80 mt-2 font-mono-digits w-full px-1">
+                        <span className="flex items-center gap-1 text-slate-500 dark:text-slate-400">
+                          <span>دخول:</span>
+                          <strong className="text-slate-800 dark:text-slate-300 font-mono">{new Date(session.checkInTime).toLocaleTimeString('ar-IQ', { hour: '2-digit', minute: '2-digit' })}</strong>
+                        </span>
+                        <span className="text-emerald-700 dark:text-emerald-400 font-mono font-bold">{formatCurrency(session.hourlyRate)} / س</span>
                       </div>
                     </div>
 
@@ -242,7 +333,7 @@ export const LiveTimeCards: React.FC<LiveTimeCardsProps> = ({
                           ? 'bg-amber-950/40 border-amber-800 text-amber-300 animate-pulse'
                           : isUnder10Min
                           ? 'bg-amber-950/20 border-amber-900/60 text-amber-300'
-                          : 'bg-slate-50 dark:bg-slate-900/60 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300'
+                          : 'bg-slate-50 dark:bg-slate-900/70 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300'
                       }`}>
                         <div className="flex items-center gap-1.5 font-mono-digits">
                           {isOvertime ? (
@@ -264,7 +355,7 @@ export const LiveTimeCards: React.FC<LiveTimeCardsProps> = ({
                             play10MinWarningSound();
                             speakVoiceAlert(`تنبيه: متبقي ${Math.ceil(remainingSec / 60)} دقيقة لجهاز ${session.stationName}`);
                           }}
-                          className="px-2 py-1 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-emerald-400 text-[10px] font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1 shadow-2xs transition"
+                          className="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-emerald-400 text-[10px] font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1 shadow-2xs transition cursor-pointer"
                           title="اعلان صوتی هشدار زمان به بازیکن"
                         >
                           <Volume2 className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
@@ -274,53 +365,56 @@ export const LiveTimeCards: React.FC<LiveTimeCardsProps> = ({
                     )}
 
                     {/* اطلاعات بازیکن و کد PIN */}
-                    <div className="bg-slate-50 dark:bg-slate-900/60 p-3 rounded-xl border border-slate-200 dark:border-slate-800 space-y-1.5 text-xs">
+                    <div className="bg-slate-50 dark:bg-[#0c1222] p-3 rounded-xl border border-slate-200/90 dark:border-slate-800 space-y-2 text-xs">
                       <div className="flex items-center justify-between">
-                        <span className="text-slate-500 dark:text-slate-400">اسم اللاعب:</span>
-                        <strong className="text-slate-900 dark:text-slate-100 font-bold">{session.customerName}</strong>
+                        <span className="text-slate-500 dark:text-slate-400 flex items-center gap-1 text-[11px]">
+                          <User className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
+                          اللاعب:
+                        </span>
+                        <strong className="text-slate-900 dark:text-white font-bold font-gaming text-[12px]">{session.customerName}</strong>
                       </div>
 
                       <div className="flex items-center justify-between">
-                        <span className="text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                        <span className="text-slate-500 dark:text-slate-400 flex items-center gap-1 text-[11px]">
                           <Phone className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
                           رقم الهاتف:
                         </span>
-                        <span dir="ltr" className="font-mono text-emerald-600 dark:text-emerald-400 font-medium font-mono-digits">
+                        <span dir="ltr" className="font-mono text-emerald-600 dark:text-emerald-400 font-semibold font-mono-digits text-[11px]">
                           {session.customerPhone}
                         </span>
                       </div>
 
-                      <div className="flex items-center justify-between pt-1 border-t border-slate-200 dark:border-slate-800">
-                        <span className="text-slate-500 dark:text-slate-400 flex items-center gap-1">
-                          <KeyRound className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
+                      <div className="flex items-center justify-between pt-1.5 border-t border-slate-200/80 dark:border-slate-800/80">
+                        <span className="text-slate-500 dark:text-slate-400 flex items-center gap-1 text-[11px]">
+                          <ShieldCheck className="w-3.5 h-3.5 text-teal-600 dark:text-teal-400" />
                           رمز PIN:
                         </span>
                         <div className="flex items-center gap-1.5">
-                          <span className="font-mono font-bold text-emerald-800 dark:text-emerald-300 bg-emerald-50 dark:bg-slate-800 px-2 py-0.5 rounded border border-emerald-200 dark:border-slate-700 text-xs font-mono-digits">
+                          <span className="font-mono font-black text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-slate-900 px-2 py-0.5 rounded-md border border-emerald-200/80 dark:border-slate-700 text-xs font-mono-digits tracking-wider">
                             {isPinVisible ? session.customerPin : '••••'}
                           </span>
                           <button
                             type="button"
                             onClick={() => togglePin(session.id)}
-                            className="text-slate-400 hover:text-emerald-600 p-0.5 transition"
+                            className="text-slate-400 hover:text-emerald-600 p-0.5 transition cursor-pointer"
                             title={isPinVisible ? 'إخفاء الرمز' : 'إظهار رمز PIN'}
                           >
-                            {isPinVisible ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5 text-emerald-600" />}
+                            {isPinVisible ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />}
                           </button>
                         </div>
                       </div>
                     </div>
 
                     {/* بازی‌های فعال */}
-                    <div className="space-y-1">
+                    <div className="space-y-1.5">
                       <div className="flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400">
-                        <span className="flex items-center gap-1">
-                          <Gamepad2 className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
+                        <span className="flex items-center gap-1 font-bold">
+                          <Gamepad2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                           الألعاب الجارية:
                         </span>
                         <button
                           onClick={() => onEditGames(session)}
-                          className="text-emerald-600 dark:text-emerald-400 hover:underline text-[10px] font-semibold"
+                          className="text-emerald-600 dark:text-emerald-400 hover:underline text-[10px] font-bold cursor-pointer"
                         >
                           + تعديل الألعاب
                         </button>
@@ -329,62 +423,64 @@ export const LiveTimeCards: React.FC<LiveTimeCardsProps> = ({
                         {session.gamesPlayed.map((g, idx) => (
                           <span
                             key={idx}
-                            className={`text-[10px] px-2 py-0.5 rounded-md font-medium border flex items-center gap-1 ${
+                            className={`text-[10px] px-2 py-0.5 rounded-lg font-bold border flex items-center gap-1 shadow-2xs ${
                               g.mode === 'online'
-                                ? 'bg-teal-50 dark:bg-teal-950/40 text-teal-700 dark:text-teal-300 border-teal-200 dark:border-teal-800'
-                                : 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800'
+                                ? 'bg-teal-50 dark:bg-teal-950/50 text-teal-700 dark:text-teal-300 border-teal-300/80 dark:border-teal-700/80'
+                                : 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-800 dark:text-emerald-300 border-emerald-300/80 dark:border-emerald-700/80'
                             }`}
                           >
                             <span>{g.gameName}</span>
-                            <span className="text-[9px] font-bold">({g.mode === 'online' ? 'أونلاين' : 'أوفلاين'})</span>
+                            <span className="text-[9px] font-black">({g.mode === 'online' ? 'أونلاين' : 'أوفلاين'})</span>
                           </span>
                         ))}
                       </div>
                     </div>
 
                     {/* بخش بوفه و خوراکی */}
-                    <div className="flex items-center justify-between text-xs pt-1 border-t border-slate-200 dark:border-slate-800">
-                      <div className="flex items-center gap-1 text-slate-500 dark:text-slate-400 text-[11px]">
-                        <Coffee className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
+                    <div className="flex items-center justify-between text-xs pt-1.5 border-t border-slate-200/80 dark:border-slate-800">
+                      <div className="flex items-center gap-1.5 text-slate-600 dark:text-slate-400 text-[11px]">
+                        <Coffee className="w-3.5 h-3.5 text-orange-500 shrink-0" />
                         <span>طلبات البوفيه:</span>
-                        <strong className="text-slate-800 dark:text-slate-200 font-mono font-mono-digits">
+                        <strong className="text-slate-900 dark:text-slate-200 font-mono font-mono-digits font-bold">
                           {session.snacks.length > 0 ? `${session.snacks.length} طلب` : 'لا يوجد'}
                         </strong>
                       </div>
                       <motion.button
                         whileTap={{ scale: 0.95 }}
                         onClick={() => onAddSnack(session)}
-                        className="text-[11px] font-bold text-emerald-700 dark:text-emerald-300 hover:text-emerald-800 flex items-center gap-0.5 bg-emerald-50 dark:bg-slate-800 px-2 py-0.5 rounded-lg border border-emerald-200 dark:border-slate-700 transition shadow-xs"
+                        className="text-[11px] font-bold text-emerald-700 dark:text-emerald-300 hover:text-emerald-800 flex items-center gap-1 bg-emerald-500/10 dark:bg-emerald-500/20 px-2.5 py-1 rounded-lg border border-emerald-500/30 transition shadow-2xs cursor-pointer"
                       >
-                        <Plus className="w-3 h-3" />
+                        <Plus className="w-3 h-3 stroke-[2.5]" />
                         <span>+ إضافة بوفيه</span>
                       </motion.button>
                     </div>
 
-                    {/* مبالغ زنده به دینار */}
-                    <div className="p-3 bg-slate-900 border border-slate-800 rounded-xl flex items-center justify-between text-white">
+                    {/* مبالغ زنده به دینار - Cyber HUD Cost Box - در لایت مود سفید و شیک */}
+                    <div className="p-3 bg-white dark:bg-gradient-to-r dark:from-slate-950 dark:via-[#0a1220] dark:to-slate-950 border border-emerald-200/90 dark:border-emerald-500/30 rounded-xl flex items-center justify-between text-slate-900 dark:text-white shadow-xs dark:shadow-md transition-colors">
                       <div>
-                        <div className="text-[10px] text-slate-400">إجمالي الحساب حتى الآن:</div>
-                        <div className="text-base font-black font-mono text-emerald-400 font-mono-digits drop-shadow-[0_0_8px_rgba(52,211,153,0.5)]">
+                        <div className="text-[10px] text-slate-500 dark:text-slate-400 font-medium">إجمالي الحساب حتى الآن:</div>
+                        <div className="text-base font-black font-mono text-emerald-600 dark:text-emerald-400 font-mono-digits drop-shadow-xs dark:drop-shadow-[0_0_8px_rgba(52,211,153,0.5)]">
                           {formatCurrency(totalDue)}
                         </div>
                       </div>
-                      <div className="text-left text-[10px] text-slate-400 font-mono-digits">
-                        <div>الوقت: {formatCurrency(currentPlayCost)}</div>
-                        {snacksCost > 0 && <div className="text-amber-400">البوفيه: {formatCurrency(snacksCost)}</div>}
-                      </div>
+                      {snacksCost > 0 && (
+                        <div className="text-left text-[10px] text-orange-600 dark:text-orange-400 font-bold font-mono-digits">
+                          البوفيه: {formatCurrency(snacksCost)}
+                        </div>
+                      )}
                     </div>
 
                   </div>
 
-                  {/* دکمه تسویه نهایی */}
-                  <div className="p-3 bg-slate-50 dark:bg-[#0a0e18] border-t border-slate-100 dark:border-slate-800 flex items-center gap-2">
+                  {/* دکمه تسویه نهایی - Badass Esports Checkout Action */}
+                  <div className="p-3 bg-slate-50/90 dark:bg-[#070b14] border-t border-slate-100 dark:border-slate-800/80 flex items-center gap-2">
                     <motion.button
                       whileTap={{ scale: 0.97 }}
+                      whileHover={{ scale: 1.02 }}
                       onClick={() => onCheckoutSession(session)}
-                      className="w-full py-2.5 px-3 rounded-xl text-xs font-black text-white bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 hover:brightness-105 shadow-md shadow-emerald-500/20 transition-all flex items-center justify-center gap-1.5 font-gaming"
+                      className="w-full py-2.5 px-3 rounded-xl text-xs font-black text-white bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 hover:brightness-110 shadow-md shadow-emerald-500/25 transition-all flex items-center justify-center gap-2 font-gaming tracking-wide cursor-pointer"
                     >
-                      <Receipt className="w-3.5 h-3.5 text-white stroke-[2.5]" />
+                      <Receipt className="w-4 h-4 text-white stroke-[2.5]" />
                       <span>تسوية الحساب وإصدار الفاتورة</span>
                     </motion.button>
                   </div>

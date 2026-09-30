@@ -389,8 +389,8 @@ export const QrDeskOrderManager: React.FC<QrDeskOrderManagerProps> = ({
                       <div className="flex items-start justify-between gap-2 pb-3 border-b border-slate-100">
                         <div>
                           <div className="flex items-center gap-2">
-                            <span className="font-black text-slate-900 text-sm flex items-center gap-1 font-gaming">
-                              <Monitor className="w-4 h-4 text-emerald-600" />
+                            <span className="font-black text-slate-900 dark:text-white text-sm flex items-center gap-1 font-gaming">
+                              <Monitor className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                               <span>{order.stationName}</span>
                             </span>
                             <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
@@ -567,7 +567,7 @@ export const QrDeskOrderManager: React.FC<QrDeskOrderManagerProps> = ({
 
                   {/* Station Name Display */}
                   <div>
-                    <div className="text-base font-black text-slate-900 font-gaming">
+                    <div className="text-base font-black text-slate-900 dark:text-white font-gaming">
                       {st.name}
                     </div>
                     <div className="text-[11px] text-slate-500 font-medium">

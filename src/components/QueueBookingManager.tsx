@@ -93,13 +93,13 @@ export const QueueBookingManager: React.FC<QueueBookingManagerProps> = ({
     <div className="space-y-6">
       
       {/* Header Banner */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-5 rounded-2xl bg-white border border-emerald-100 shadow-sm">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-5 rounded-2xl bg-white dark:bg-[#0c101c] border border-emerald-100 dark:border-slate-800 shadow-sm">
         <div>
-          <h2 className="text-lg font-black text-slate-900 flex items-center gap-2">
-            <CalendarClock className="w-5 h-5 text-emerald-600" />
+          <h2 className="text-lg font-black text-slate-900 dark:text-white flex items-center gap-2">
+            <CalendarClock className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
             <span>الحجوزات وقوائم الانتظار للاعبين</span>
           </h2>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
             تسجيل الحجوزات الهاتفية والحضورية، التوزيع السريع على الأجهزة الشاغرة ومتابعة جدول اليوم
           </p>
         </div>
@@ -116,10 +116,10 @@ export const QueueBookingManager: React.FC<QueueBookingManagerProps> = ({
       </div>
 
       {/* Free Stations Quick Glance */}
-      <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-2">
+      <div className="p-4 rounded-2xl bg-white dark:bg-[#0c101c] border border-slate-200 dark:border-slate-800 shadow-sm space-y-2">
         <div className="flex items-center justify-between text-xs">
-          <span className="font-bold text-slate-700">حالة الأجهزة المتاحة للحجز السريع:</span>
-          <span className="text-emerald-700 font-mono font-mono-digits font-bold">
+          <span className="font-black text-slate-900 dark:text-white">حالة الأجهزة المتاحة للحجز السريع:</span>
+          <span className="text-emerald-700 dark:text-emerald-400 font-mono font-mono-digits font-bold">
             {stations.filter((s) => s.status === 'available').length} أجهزة شاغرة
           </span>
         </div>
@@ -129,8 +129,8 @@ export const QueueBookingManager: React.FC<QueueBookingManagerProps> = ({
               key={st.id}
               className={`px-2.5 py-1 rounded-xl text-xs font-bold border flex items-center gap-1.5 ${
                 st.status === 'available'
-                  ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
-                  : 'bg-slate-100 text-slate-500 border-slate-200'
+                  ? 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800'
+                  : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700'
               }`}
             >
               <span className={`w-1.5 h-1.5 rounded-full ${st.status === 'available' ? 'bg-emerald-500 animate-pulse' : 'bg-slate-400'}`}></span>
@@ -141,7 +141,7 @@ export const QueueBookingManager: React.FC<QueueBookingManagerProps> = ({
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 p-3 bg-white rounded-2xl border border-slate-200 shadow-sm">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 p-3 bg-white dark:bg-[#0c101c] rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
         <div className="relative w-full sm:w-80">
           <Search className="w-4 h-4 text-slate-400 absolute right-3 top-3 pointer-events-none" />
           <input
@@ -149,17 +149,17 @@ export const QueueBookingManager: React.FC<QueueBookingManagerProps> = ({
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="البحث باسم اللاعب، رقم الهاتف أو الجهاز..."
-            className="w-full pl-3 pr-9 py-2 text-xs bg-slate-50 border border-slate-200 text-slate-900 rounded-xl focus:outline-none focus:border-emerald-500 focus:bg-white"
+            className="w-full pl-3 pr-9 py-2 text-xs bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 rounded-xl focus:outline-none focus:border-emerald-500"
           />
         </div>
 
-        <div className="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto p-1 bg-slate-50 rounded-xl border border-slate-200 text-xs font-mono-digits">
+        <div className="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto p-1 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 text-xs font-mono-digits">
           <button
             onClick={() => setStatusFilter('pending')}
             className={`px-3 py-1.5 font-bold rounded-lg transition ${
               statusFilter === 'pending'
                 ? 'bg-emerald-600 text-white font-black shadow-xs'
-                : 'text-slate-600 hover:text-emerald-700'
+                : 'text-slate-600 dark:text-slate-400 hover:text-emerald-700 dark:hover:text-emerald-300'
             }`}
           >
             في انتظار الدخول ({pendingCount})
@@ -169,7 +169,7 @@ export const QueueBookingManager: React.FC<QueueBookingManagerProps> = ({
             className={`px-3 py-1.5 font-bold rounded-lg transition ${
               statusFilter === 'seated'
                 ? 'bg-emerald-600 text-white font-black shadow-xs'
-                : 'text-slate-600 hover:text-emerald-700'
+                : 'text-slate-600 dark:text-slate-400 hover:text-emerald-700 dark:hover:text-emerald-300'
             }`}
           >
             تم الدخول واللعب
@@ -179,7 +179,7 @@ export const QueueBookingManager: React.FC<QueueBookingManagerProps> = ({
             className={`px-3 py-1.5 font-bold rounded-lg transition ${
               statusFilter === 'all'
                 ? 'bg-emerald-600 text-white font-black shadow-xs'
-                : 'text-slate-600 hover:text-emerald-700'
+                : 'text-slate-600 dark:text-slate-400 hover:text-emerald-700 dark:hover:text-emerald-300'
             }`}
           >
             كافة سجلات الحجوزات
@@ -198,58 +198,58 @@ export const QueueBookingManager: React.FC<QueueBookingManagerProps> = ({
             <motion.div
               key={res.id}
               whileHover={{ y: -2 }}
-              className={`p-5 rounded-2xl bg-white border transition-all shadow-sm space-y-4 flex flex-col justify-between ${
-                isPending ? 'border-emerald-200 hover:border-emerald-400' : 'border-slate-200 opacity-75'
+              className={`p-5 rounded-2xl bg-white dark:bg-[#0c101c] border transition-all shadow-sm space-y-4 flex flex-col justify-between ${
+                isPending ? 'border-emerald-200 dark:border-emerald-500/40 hover:border-emerald-400' : 'border-slate-200 dark:border-slate-800 opacity-75'
               }`}
             >
               <div>
                 <div className="flex items-start justify-between gap-2">
                   <div>
-                    <h3 className="text-sm font-black text-slate-900 flex items-center gap-1.5">
+                    <h3 className="text-sm font-black text-slate-900 dark:text-white flex items-center gap-1.5">
                       <span>{res.customerName}</span>
                     </h3>
-                    <div className="text-[11px] text-slate-500 font-mono font-mono-digits mt-0.5">
+                    <div className="text-[11px] text-slate-500 dark:text-slate-400 font-mono font-mono-digits mt-0.5">
                       {res.customerPhone}
                     </div>
                   </div>
 
                   <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold border ${
                     res.status === 'pending'
-                      ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
+                      ? 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800'
                       : res.status === 'seated'
-                      ? 'bg-teal-50 text-teal-800 border-teal-200'
-                      : 'bg-rose-50 text-rose-700 border-rose-200'
+                      ? 'bg-teal-50 dark:bg-teal-950/60 text-teal-800 dark:text-teal-300 border-teal-200 dark:border-teal-800'
+                      : 'bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 border-rose-200 dark:border-rose-800'
                   }`}>
                     {res.status === 'pending' ? 'في الانتظار' : res.status === 'seated' ? 'بدأ اللعب' : 'ملغي'}
                   </span>
                 </div>
 
-                <div className="mt-3 p-3 bg-slate-50 rounded-xl border border-slate-200/80 text-xs space-y-1.5 font-mono font-mono-digits">
-                  <div className="flex items-center justify-between text-slate-600">
+                <div className="mt-3 p-3 bg-slate-50 dark:bg-[#080d19] rounded-xl border border-slate-200/80 dark:border-slate-800/80 text-xs space-y-1.5 font-mono font-mono-digits">
+                  <div className="flex items-center justify-between text-slate-600 dark:text-slate-400">
                     <span className="flex items-center gap-1 font-sans">
-                      <Monitor className="w-3.5 h-3.5 text-emerald-600" />
+                      <Monitor className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                       الجهاز المحجوز:
                     </span>
-                    <span className="text-slate-900 font-bold">{res.stationName}</span>
+                    <span className="text-slate-900 dark:text-white font-bold">{res.stationName}</span>
                   </div>
 
-                  <div className="flex items-center justify-between text-slate-600">
+                  <div className="flex items-center justify-between text-slate-600 dark:text-slate-400">
                     <span className="flex items-center gap-1 font-sans">
                       <Clock className="w-3.5 h-3.5 text-slate-400" />
                       الوقت والمدة:
                     </span>
-                    <span className="text-emerald-800 font-bold font-mono-digits">{res.startTime} • {res.durationMinutes} دقيقة</span>
+                    <span className="text-emerald-800 dark:text-emerald-400 font-bold font-mono-digits">{res.startTime} • {res.durationMinutes} دقيقة</span>
                   </div>
 
-                  <div className="flex items-center justify-between text-slate-600 pt-1 border-t border-slate-200 font-sans">
+                  <div className="flex items-center justify-between text-slate-600 dark:text-slate-400 pt-1 border-t border-slate-200 dark:border-slate-800 font-sans">
                     <span>تاريخ الحجز:</span>
-                    <span className="font-mono-digits">{res.reservedDate}</span>
+                    <span className="font-mono-digits text-slate-800 dark:text-slate-200">{res.reservedDate}</span>
                   </div>
                 </div>
 
                 {res.notes && (
-                  <div className="mt-2 text-xs text-slate-600 bg-slate-50 p-2 rounded-lg border border-slate-200">
-                    <span className="font-bold text-slate-800">ملاحظات: </span>
+                  <div className="mt-2 text-xs text-slate-600 dark:text-slate-300 bg-slate-50 dark:bg-slate-900 p-2 rounded-lg border border-slate-200 dark:border-slate-800">
+                    <span className="font-bold text-slate-800 dark:text-white">ملاحظات: </span>
                     <span>{res.notes}</span>
                   </div>
                 )}
@@ -304,11 +304,11 @@ export const QueueBookingManager: React.FC<QueueBookingManagerProps> = ({
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-white border border-emerald-100 rounded-3xl p-6 max-w-md w-full shadow-2xl space-y-4"
+              className="bg-white dark:bg-[#0c101c] border border-emerald-100 dark:border-slate-800 rounded-3xl p-6 max-w-md w-full shadow-2xl space-y-4"
             >
-              <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-                <h3 className="text-base font-black text-slate-900 flex items-center gap-2">
-                  <CalendarClock className="w-5 h-5 text-emerald-600" />
+              <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+                <h3 className="text-base font-black text-slate-900 dark:text-white flex items-center gap-2">
+                  <CalendarClock className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
                   <span>تسجيل حجز موعد جديد</span>
                 </h3>
                 <button

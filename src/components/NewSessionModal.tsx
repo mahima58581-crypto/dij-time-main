@@ -219,7 +219,7 @@ export const NewSessionModal: React.FC<NewSessionModalProps> = ({
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 15 }}
         transition={{ duration: 0.2, ease: 'easeOut' }}
-        className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-emerald-500/30 rounded-3xl p-5 sm:p-7 max-w-2xl w-full shadow-2xl dark:shadow-[0_0_50px_rgba(16,185,129,0.15)] space-y-5 my-6 overflow-hidden text-right"
+        className="relative bg-white dark:bg-[#0c1220] dark-card border border-slate-200 dark:border-emerald-500/30 rounded-3xl p-5 sm:p-7 max-w-2xl w-full shadow-2xl dark:shadow-[0_0_50px_rgba(16,185,129,0.15)] space-y-5 my-6 overflow-hidden text-right"
         dir="rtl"
       >
         {/* Glow ambient background elements for Cyber Dark Mode */}

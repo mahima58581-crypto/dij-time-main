@@ -81,21 +81,21 @@ export const UsersStaffManager: React.FC<UsersStaffManagerProps> = ({
     <div className="space-y-6">
       
       {/* Header Banner */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-5 rounded-2xl bg-white border border-emerald-100 shadow-sm">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-5 rounded-2xl bg-white dark:bg-[#0c101c] border border-emerald-100 dark:border-slate-800 shadow-sm">
         <div>
-          <h2 className="text-lg font-black text-slate-900 flex items-center gap-2">
-            <ShieldCheck className="w-5 h-5 text-emerald-600" />
+          <h2 className="text-lg font-black text-slate-900 dark:text-white flex items-center gap-2">
+            <ShieldCheck className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
             <span>إدارة المستخدمين والمشغلين وكادر النادي</span>
           </h2>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
             تعيين حسابات أمناء الصندوق، مشرفي الشيفت، إدارة جداول العمل وسجلات الدخول
           </p>
         </div>
 
         <div className="flex items-center gap-3">
-          <div className="p-2 px-3 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-right shadow-xs">
-            <span className="text-slate-600">المشغل النشط في الصندوق: </span>
-            <span className="font-black text-emerald-800">{currentOperator.name}</span>
+          <div className="p-2 px-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/80 border border-emerald-200 dark:border-emerald-700 text-xs text-right shadow-xs">
+            <span className="text-slate-600 dark:text-slate-300">المشغل النشط في الصندوق: </span>
+            <span className="font-black text-emerald-800 dark:text-emerald-300">{currentOperator.name}</span>
           </div>
 
           <motion.button
@@ -120,12 +120,12 @@ export const UsersStaffManager: React.FC<UsersStaffManagerProps> = ({
             <motion.div
               key={staff.id}
               whileHover={{ y: -2 }}
-              className={`p-5 rounded-2xl bg-white border transition-all shadow-sm space-y-4 flex flex-col justify-between ${
+              className={`p-5 rounded-2xl bg-white dark:bg-[#0c101c] border transition-all shadow-sm space-y-4 flex flex-col justify-between ${
                 isCurrent
                   ? 'border-emerald-500 ring-2 ring-emerald-500/20 shadow-md shadow-emerald-500/10'
                   : isActive
-                  ? 'border-slate-200 hover:border-emerald-300'
-                  : 'border-slate-200 opacity-60'
+                  ? 'border-slate-200 dark:border-slate-800 hover:border-emerald-300'
+                  : 'border-slate-200 dark:border-slate-800 opacity-60'
               }`}
             >
               <div>
@@ -136,7 +136,7 @@ export const UsersStaffManager: React.FC<UsersStaffManagerProps> = ({
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
-                        <h3 className="text-sm font-black text-slate-900">{staff.name}</h3>
+                        <h3 className="text-sm font-black text-slate-900 dark:text-white">{staff.name}</h3>
                         {isCurrent && (
                           <span className="px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-600 text-white">
                             صندوق نشط
@@ -213,11 +213,9 @@ export const UsersStaffManager: React.FC<UsersStaffManagerProps> = ({
                   {staffList.length > 1 && (
                     <button
                       onClick={() => {
-                        if (window.confirm(`هل أنت متأكد من حذف حساب ${staff.name}؟`)) {
-                          onDeleteStaff(staff.id);
-                        }
+                        onDeleteStaff(staff.id);
                       }}
-                      className="p-1.5 rounded-lg bg-slate-50 border border-slate-200 text-rose-600 hover:bg-rose-50 transition"
+                      className="p-1.5 rounded-lg bg-slate-50 border border-slate-200 text-rose-600 hover:bg-rose-50 transition cursor-pointer active:scale-95"
                       title="حذف الحساب"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
@@ -238,11 +236,11 @@ export const UsersStaffManager: React.FC<UsersStaffManagerProps> = ({
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-white border border-emerald-100 rounded-3xl p-6 max-w-md w-full shadow-2xl space-y-4"
+              className="bg-white dark:bg-[#0c101c] border border-emerald-100 dark:border-slate-800 rounded-3xl p-6 max-w-md w-full shadow-2xl space-y-4"
             >
-              <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-                <h3 className="text-base font-black text-slate-900 flex items-center gap-2">
-                  <UserPlus className="w-5 h-5 text-emerald-600" />
+              <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+                <h3 className="text-base font-black text-slate-900 dark:text-white flex items-center gap-2">
+                  <UserPlus className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
                   <span>إضافة مشغل / موظف جديد</span>
                 </h3>
                 <button
@@ -347,11 +345,11 @@ export const UsersStaffManager: React.FC<UsersStaffManagerProps> = ({
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-white border border-emerald-100 rounded-3xl p-6 max-w-md w-full shadow-2xl space-y-4"
+              className="bg-white dark:bg-[#0c101c] border border-emerald-100 dark:border-slate-800 rounded-3xl p-6 max-w-md w-full shadow-2xl space-y-4"
             >
-              <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-                <h3 className="text-base font-black text-slate-900 flex items-center gap-2">
-                  <Edit3 className="w-5 h-5 text-emerald-600" />
+              <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+                <h3 className="text-base font-black text-slate-900 dark:text-white flex items-center gap-2">
+                  <Edit3 className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
                   <span>تعديل الموظف: {editingStaff.name}</span>
                 </h3>
                 <button

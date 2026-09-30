@@ -82,6 +82,22 @@ export const INITIAL_STATIONS: Station[] = [
     status: 'available',
     specs: 'مقود Moza R12 Direct Drive • مقعد سباق احترافي • 3 شاشات منحنية بانورامية',
   },
+  {
+    id: 'XBOX-01',
+    name: 'منصة إكس بوكس سيريز X - محطة 1',
+    type: 'XBOX',
+    hourlyRate: 5500,
+    status: 'available',
+    specs: 'شاشة 55 بوصة 4K 120Hz VRR • يد تحكم Xbox Wireless Controller Elite • اشتراک Game Pass Ultimate',
+  },
+  {
+    id: 'XBOX-02',
+    name: 'منصة إكس بوكس سيريز S - محطة 2',
+    type: 'XBOX',
+    hourlyRate: 5000,
+    status: 'available',
+    specs: 'شاشة 50 بوصة 4K HDR • ذراعي تحكم إكس بوكس لاسلكية • ألعاب وتحديات أونلاين',
+  },
 ];
 
 export const INITIAL_CUSTOMERS: Customer[] = [
