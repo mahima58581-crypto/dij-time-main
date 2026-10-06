@@ -178,7 +178,7 @@ export const SoundAlertsController: React.FC<SoundAlertsControllerProps> = ({
                 <Radio className="w-4 h-4 animate-spin" />
               </div>
               <div className="flex-1 min-w-[170px]">
-                <div className="text-[11px] font-black text-slate-900 dark:text-slate-100 flex items-center justify-between gap-2">
+                <div className="text-[11px] font-black text-slate-900 dark:text-white flex items-center justify-between gap-2">
                   <div className="flex items-center gap-1.5">
                     <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
                     <span>{activeToast.type}</span>
@@ -238,7 +238,7 @@ export const SoundAlertsController: React.FC<SoundAlertsControllerProps> = ({
                     <Radio className="w-4 h-4" />
                   </div>
                   <div>
-                    <h3 className="text-sm font-black text-slate-900 dark:text-slate-100">
+                    <h3 className="text-sm font-black text-slate-900 dark:text-white">
                       هشدارهای صوتی هوشمند سالن
                     </h3>
                     <p className="text-[10px] text-slate-500 dark:text-slate-400">
@@ -297,7 +297,7 @@ export const SoundAlertsController: React.FC<SoundAlertsControllerProps> = ({
                     {settings.voiceEnabled ? <Mic className="w-4 h-4" /> : <MicOff className="w-4 h-4" />}
                   </div>
                   <div>
-                    <div className="text-xs font-bold text-slate-900 dark:text-slate-100">اعلان گفتاری هوشمند (TTS)</div>
+                    <div className="text-xs font-bold text-slate-900 dark:text-white">اعلان گفتاری هوشمند (TTS)</div>
                     <div className="text-[10px] text-slate-500 dark:text-slate-400">خواندن نام دستگاه و وضعیت به زبان فارسی/عربی</div>
                   </div>
                 </div>
@@ -328,7 +328,7 @@ export const SoundAlertsController: React.FC<SoundAlertsControllerProps> = ({
                   <div className="flex items-center gap-1.5">
                     <button
                       type="button"
-                      onClick={() => handleTestSound('10min', play10MinWarningSound, 'تنبيه: تبقى 10 دقائق على نهاية الجلسة')}
+                      onClick={() => handleTestSound('10min', play10MinWarningSound, 'باقي 10 دقائق من وقتك')}
                       className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition flex items-center gap-1 ${
                         isPlayingTest === '10min'
                           ? 'bg-emerald-600 text-white'
@@ -359,7 +359,7 @@ export const SoundAlertsController: React.FC<SoundAlertsControllerProps> = ({
                   <div className="flex items-center gap-1.5">
                     <button
                       type="button"
-                      onClick={() => handleTestSound('5min', play5MinWarningSound, 'تنبيه عاجل: تبقى 5 دقائق فقط على نهاية الوقت')}
+                      onClick={() => handleTestSound('5min', play5MinWarningSound, 'باقي 5 دقائق فقط من وقتك')}
                       className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition flex items-center gap-1 ${
                         isPlayingTest === '5min'
                           ? 'bg-emerald-600 text-white'

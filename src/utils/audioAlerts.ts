@@ -241,12 +241,14 @@ export function speakVoiceAlert(text: string) {
     utterance.volume = Math.min(1, currentSettings.volume * 1.2);
     utterance.rate = 1.0;
     utterance.pitch = 1.05;
+    utterance.lang = 'ar'; // اعلان‌های صوتی به زبان عربی
 
-    // Pick Arabic or Persian voice if available, else default
+    // Prefer an Arabic voice, then Persian, else default
     const voices = window.speechSynthesis.getVoices();
-    const targetVoice = voices.find(
-      (v) => v.lang.startsWith('ar') || v.lang.startsWith('fa')
-    ) || voices[0];
+    const targetVoice =
+      voices.find((v) => v.lang.startsWith('ar')) ||
+      voices.find((v) => v.lang.startsWith('fa')) ||
+      voices[0];
 
     if (targetVoice) {
       utterance.voice = targetVoice;

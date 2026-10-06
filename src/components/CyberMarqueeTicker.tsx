@@ -1,21 +1,8 @@
+import { GamingPcIcon } from './GamingPcIcon';
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { 
-  Sparkles, 
-  Wrench, 
-  Clock, 
-  AlertTriangle, 
-  ShieldCheck, 
-  Monitor, 
-  ChevronRight, 
-  ChevronLeft,
-  X,
-  BellRing,
-  Activity,
-  Flame,
-  CheckCircle2
-} from 'lucide-react';
 import { Station, Session } from '../types';
+import { AlertTriangle, CheckCircle2, ChevronLeft, ChevronRight, Clock, Grid, Navigation, ShieldCheck, Sparkles, Tag, Text, Wrench, X } from 'lucide-react';
 
 interface CyberMarqueeTickerProps {
   clubName?: string;
@@ -174,7 +161,7 @@ export const CyberMarqueeTicker: React.FC<CyberMarqueeTickerProps> = ({
 
     items.push({
       id: 'general-capacity',
-      icon: <Monitor className="w-3.5 h-3.5 text-cyan-400 shrink-0" />,
+      icon: <GamingPcIcon className="w-3.5 h-3.5 text-cyan-400 shrink-0" />,
       tag: 'سعة الصالة',
       tagColor: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40',
       text: `إشغال الصالة: ${inUseStations} جهاز قيد اللعب • ${availableStations} جهاز شاغر وجاهز للاستقبال الفوري للاعبين.`,

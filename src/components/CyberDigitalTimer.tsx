@@ -3,7 +3,7 @@ import { formatDurationDigital } from '../utils/formatters';
 
 interface CyberDigitalTimerProps {
   seconds: number;
-  variant?: 'emerald' | 'amber' | 'red' | 'cyber';
+  variant?: 'emerald' | 'amber' | 'red' | 'cyber' | 'blue' | 'green';
   size?: 'sm' | 'md' | 'lg';
   isOvertime?: boolean;
   showProgressRing?: boolean;
@@ -55,6 +55,22 @@ export const CyberDigitalTimer: React.FC<CyberDigitalTimerProps> = ({
           colon: 'text-cyan-600 dark:text-cyan-400',
           ring: '#06b6d4',
           bg: 'bg-cyan-50/90 dark:bg-[#041017] border-cyan-200 dark:border-cyan-900/60 shadow-xs dark:shadow-[inset_0_2px_8px_rgba(0,0,0,0.8),0_0_12px_rgba(6,182,212,0.25)]',
+        };
+      case 'blue':
+        return {
+          text: 'text-blue-600 dark:text-blue-400 drop-shadow-xs dark:drop-shadow-[0_0_8px_rgba(96,165,250,0.85)]',
+          ghost: 'text-blue-300/40 dark:text-blue-950/40',
+          colon: 'text-blue-600 dark:text-blue-400',
+          ring: '#3b82f6',
+          bg: 'bg-blue-50/90 dark:bg-[#050b18] border-blue-200 dark:border-blue-900/60 shadow-xs dark:shadow-[inset_0_2px_8px_rgba(0,0,0,0.8),0_0_12px_rgba(59,130,246,0.25)]',
+        };
+      case 'green':
+        return {
+          text: 'text-green-600 dark:text-green-400 drop-shadow-xs dark:drop-shadow-[0_0_8px_rgba(74,222,128,0.85)]',
+          ghost: 'text-green-300/40 dark:text-green-950/40',
+          colon: 'text-green-600 dark:text-green-400',
+          ring: '#22c55e',
+          bg: 'bg-green-50/90 dark:bg-[#041407] border-green-200 dark:border-green-900/60 shadow-xs dark:shadow-[inset_0_2px_8px_rgba(0,0,0,0.8),0_0_12px_rgba(34,197,94,0.25)]',
         };
       default: // emerald
         return {
@@ -122,27 +138,53 @@ export const CyberDigitalTimer: React.FC<CyberDigitalTimerProps> = ({
         </div>
       )}
 
-      {/* LED 7-Segment Scoreboard Display Box */}
+      {/* LED 7-Segment Scoreboard Display Box - Strictly LTR (Hours : Minutes : Seconds) */}
       <div
-        className={`relative px-3 py-1.5 rounded-xl border font-mono font-black select-none overflow-hidden ${
+        dir="ltr"
+        className={`relative px-3 py-1.5 rounded-xl border font-mono font-black select-none overflow-hidden [direction:ltr] ${
           style.bg
         } ${size === 'lg' ? 'text-2xl sm:text-3xl' : size === 'sm' ? 'text-base' : 'text-xl'}`}
       >
         {/* Ghost background digits (88:88:88) */}
         <div
+          dir="ltr"
           aria-hidden="true"
-          className={`absolute inset-0 flex items-center justify-center font-['Chakra_Petch',monospace] tracking-widest font-black pointer-events-none opacity-20 ${style.ghost}`}
+          className={`absolute inset-0 flex items-center justify-center font-['Chakra_Petch',monospace] tracking-widest font-black pointer-events-none opacity-20 [direction:ltr] ${style.ghost}`}
         >
           88:88:88
         </div>
 
-        {/* Live Active LED Glowing Digits */}
-        <div className="relative z-10 flex items-center justify-center gap-0.5 font-['Chakra_Petch',monospace] tracking-widest">
-          <span className={style.text}>{hours}</span>
+        {/* Live Active LED Glowing Digits: Exactly [Hours] : [Minutes] : [Seconds] */}
+        <div 
+          dir="ltr" 
+          className="relative z-10 flex items-center justify-center gap-0.5 font-['Chakra_Petch',monospace] tracking-widest [direction:ltr]"
+        >
+          {/* Hours (ساعت) */}
+          <span className={style.text} title="الساعات (ساعت)">
+            {hours}
+          </span>
           <span className={`animate-pulse ${style.colon}`}>:</span>
-          <span className={style.text}>{minutes}</span>
+          {/* Minutes (دقیقه) */}
+          <span className={style.text} title="الدقائق (دقیقه)">
+            {minutes}
+          </span>
           <span className={`animate-pulse ${style.colon}`}>:</span>
-          <span className={style.text}>{secs}</span>
+          {/* Seconds (ثانیه) */}
+          <span className={style.text} title="الثواني (ثانیه)">
+            {secs}
+          </span>
+        </div>
+
+        {/* Subtle Micro-Labels: س (Hour) | د (Min) | ث (Sec) */}
+        <div 
+          dir="ltr"
+          className="relative z-10 flex items-center justify-around text-[8px] text-slate-400/80 dark:text-slate-500 font-bold uppercase tracking-wider pt-0.5 [direction:ltr]"
+        >
+          <span className="w-5 text-center">ساعة</span>
+          <span className="w-2 text-center text-transparent">:</span>
+          <span className="w-5 text-center">دقيقة</span>
+          <span className="w-2 text-center text-transparent">:</span>
+          <span className="w-5 text-center">ثانية</span>
         </div>
 
         {/* Subtle LED Scanline / Glare Effect */}

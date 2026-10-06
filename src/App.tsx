@@ -36,6 +36,7 @@ import { calculatePlayCost, formatCurrency } from './utils/formatters';
 // Navigation & Layout
 import { Sidebar } from './components/Sidebar';
 import { StatsBar } from './components/StatsBar';
+import { UnifiedCockpitHeader } from './components/UnifiedCockpitHeader';
 
 // 12 Requested Functional Modules
 import { StationManagement } from './components/StationManagement';
@@ -44,6 +45,7 @@ import { CustomersManager } from './components/CustomersManager';
 import { CustomerLevels } from './components/CustomerLevels';
 import { GoodsManager } from './components/GoodsManager';
 import { QrDeskOrderManager } from './components/QrDeskOrderManager';
+import { BackToTopButton } from './components/BackToTopButton';
 import { StationsGrid } from './components/StationsGrid';
 import { LiveTimeCards } from './components/LiveTimeCards';
 import { TariffsManager } from './components/TariffsManager';
@@ -76,40 +78,9 @@ import { SecurityPinModal } from './components/SecurityPinModal';
 import { ActivePlayersLiveModal } from './components/ActivePlayersLiveModal';
 import { AppEntryLockScreen } from './components/AppEntryLockScreen';
 import { QuranicWelcomeScreen } from './components/QuranicWelcomeScreen';
+import { Badge, Clock, Code, Component, Copyright, Fullscreen, Gamepad2, Grid, Group, Hamburger, Home, KeyRound, Layout, Lock, Menu, Moon, Navigation, Option, Play, Plus, Save, Section, Settings, Sun, Timer, Unlock, View } from 'lucide-react';
 
 // Icons & Visual Assets
-import { 
-  Menu, 
-  PlusCircle, 
-  UserPlus, 
-  Clock, 
-  Timer,
-  Gamepad2, 
-  Swords,
-  Wifi, 
-  Shield, 
-  Bell, 
-  Tv, 
-  Monitor, 
-  CheckCircle2,
-  Sparkles,
-  Moon,
-  Sun,
-  Lock,
-  Unlock,
-  KeyRound,
-  ShieldAlert,
-  ShieldOff,
-  Plus,
-  Play,
-  Zap,
-  ArrowUp,
-  Activity,
-  Cpu,
-  ShieldCheck,
-  UserCheck,
-  Users
-} from 'lucide-react';
 import { CyberMarqueeTicker } from './components/CyberMarqueeTicker';
 import gamingBg from './assets/images/gaming_gold_bg_1789905712211.jpg';
 
@@ -354,7 +325,7 @@ export default function App() {
               'هشدار ۱۰ دقیقه پایانی',
               `${sess.stationName} - باقي ${Math.ceil(remainingMinutes)} دقائق`,
               play10MinWarningSound,
-              `تنبيه: تبقى 10 دقائق على نهاية وقت ${sess.stationName}`
+              `باقي 10 دقائق من وقتك على ${sess.stationName}`
             );
           }
         }
@@ -367,7 +338,7 @@ export default function App() {
               'هشدار ۵ دقیقه پایانی',
               `${sess.stationName} - باقي ${Math.ceil(remainingMinutes)} دقائق فقط`,
               play5MinWarningSound,
-              `تنبيه عاجل: تبقى 5 دقائق فقط على نهاية وقت ${sess.stationName}`
+              `باقي 5 دقائق فقط من وقتك على ${sess.stationName}`
             );
           }
         }
@@ -380,7 +351,7 @@ export default function App() {
               'اتمام وقت الجلسة',
               `${sess.stationName} - انتهى الوقت المخصص وبدأ الوقت الإضافي`,
               playTimeOverAlarmSound,
-              `انتهى وقت الجلسة للجهاز ${sess.stationName}`
+              `انتهى وقتك على ${sess.stationName}`
             );
           }
         }
@@ -851,7 +822,7 @@ export default function App() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: "easeOut" }}
       dir="rtl"
-      className={`${isDarkMode ? 'dark' : ''} min-h-screen bg-white dark:bg-[#060a14] text-slate-900 dark:text-slate-100 flex flex-col selection:bg-emerald-500 selection:text-white antialiased relative overflow-x-hidden font-['Alexandria','Cairo',sans-serif]`}
+      className={`${isDarkMode ? 'dark' : ''} min-h-screen bg-white dark:bg-[#060a14] text-slate-900 dark:text-white flex flex-col selection:bg-emerald-500 selection:text-white antialiased relative overflow-x-hidden font-['Alexandria','Cairo',sans-serif]`}
     >
       {/* 0. Quranic Welcome Splash Screen (Active for 4 seconds upon opening browser or page reload) */}
       <AnimatePresence>
@@ -902,9 +873,9 @@ export default function App() {
       } bg-white/70 dark:bg-[#060a14]/80 backdrop-blur-sm min-h-screen relative z-10`}>
         
         {/* Top App Header Bar */}
-        <header className="sticky top-0 z-30 h-16 sm:h-20 bg-white/95 dark:bg-[#0c101c]/95 backdrop-blur-xl border-b border-emerald-100 dark:border-slate-800/80 px-4 sm:px-6 flex items-center justify-between shadow-sm">
-          {/* Right Side (In RTL: Start side) */}
-          <div className="flex items-center gap-3">
+        <header className="sticky top-0 z-30 h-16 sm:h-20 bg-white/95 dark:bg-[#0c101c]/95 backdrop-blur-xl border-b border-emerald-100 dark:border-slate-800/80 px-4 sm:px-6 flex items-center justify-center shadow-sm relative">
+          {/* Right Side (In RTL: Start side) — ثابت در گوشه، فقط موبایل */}
+          <div className="absolute inset-y-0 right-4 sm:right-6 flex items-center">
             {/* Mobile Sidebar Hamburger Toggle */}
             <button
               onClick={() => setIsSidebarMobileOpen(true)}
@@ -915,7 +886,7 @@ export default function App() {
             </button>
           </div>
 
-          {/* Left Side (In RTL: End side) - Sleek, Organized Pro Esports Action Bar */}
+          {/* Centered Pro Esports Action Bar — وسط‌چین حرفه‌ای */}
           <div className="flex items-center gap-2 sm:gap-2.5">
             {/* Group 1: Live Status & Telemetry */}
             <div className="flex items-center gap-2">
@@ -1047,22 +1018,14 @@ export default function App() {
         {/* Main Content Body */}
         <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-6 space-y-6 relative z-10">
           
-          {/* Connected Live Ticker & Stats Telemetry Module (بهم چسبیده و کاملاً متصل) */}
-          <div className="rounded-2xl border border-emerald-200/80 dark:border-slate-800/90 bg-white/90 dark:bg-[#070b16]/95 backdrop-blur-xl shadow-xs overflow-hidden">
-            {/* 1. Attached Top Bar: Cyber Marquee Ticker */}
-            <CyberMarqueeTicker
-              clubName={clubSettings.clubName}
-              activeSessionsCount={activeSessions.length}
-              stations={stations}
-              sessions={sessions}
-              embedded
-            />
-
-            {/* 2. Attached Bottom Body: Real-time Stats Cards */}
-            <div className="p-3 sm:p-3.5 bg-slate-50/40 dark:bg-transparent">
-              <StatsBar sessions={sessions} stations={stations} activeTab={activeTab} embedded />
-            </div>
-          </div>
+          {/* Unified Pro-Esports Master Cockpit Header (یکپارچه‌سازی کامل عنوان، وضعیت زنده، مارکی تیکر و تله‌متری) */}
+          <UnifiedCockpitHeader
+            clubName={clubSettings.clubName}
+            activeTab={activeTab}
+            stations={stations}
+            sessions={sessions}
+            activeSessionsCount={activeSessions.length}
+          />
 
           {/* Dynamic Component Rendering based on Selected Sidebar Tab */}
           <AnimatePresence mode="wait">
@@ -1143,73 +1106,18 @@ export default function App() {
                 />
               )}
 
-              {/* 6. ایستگاه ها (Overview, Timers & Devices) */}
+              {/* 6. ایستگاه ها (Overview & Live Timers) */}
               {activeTab === 'stations_overview' && (
                 <div className="space-y-6">
-                  {/* View sub-filter */}
-                  <div className="flex items-center justify-between p-3 bg-white dark:bg-slate-900 dark-card rounded-2xl border border-emerald-100/80 dark:border-slate-800 shadow-xs">
-                    <div className="flex items-center gap-1.5 text-xs font-bold">
-                      <span className="text-slate-500 dark:text-slate-400">طريقة العرض:</span>
-                      <button
-                        onClick={() => setStationsViewFilter('all')}
-                        className={`px-3 py-1.5 rounded-lg transition ${
-                          stationsViewFilter === 'all'
-                            ? 'bg-emerald-600 text-white font-black shadow-xs'
-                            : 'text-slate-600 dark:text-slate-300 hover:text-emerald-700 dark:hover:text-emerald-400 hover:bg-slate-100 dark:hover:bg-slate-800'
-                        }`}
-                      >
-                        عرض شامل
-                      </button>
-                      <button
-                        onClick={() => setStationsViewFilter('timers')}
-                        className={`px-3 py-1.5 rounded-lg transition ${
-                          stationsViewFilter === 'timers'
-                            ? 'bg-emerald-600 text-white font-black shadow-xs'
-                            : 'text-slate-600 dark:text-slate-300 hover:text-emerald-700 dark:hover:text-emerald-400 hover:bg-slate-100 dark:hover:bg-slate-800'
-                        }`}
-                      >
-                        مؤقتات الجلسات الحية ({activeSessions.length})
-                      </button>
-                      <button
-                        onClick={() => setStationsViewFilter('devices')}
-                        className={`px-3 py-1.5 rounded-lg transition ${
-                          stationsViewFilter === 'devices'
-                            ? 'bg-emerald-600 text-white font-black shadow-xs'
-                            : 'text-slate-600 dark:text-slate-300 hover:text-emerald-700 dark:hover:text-emerald-400 hover:bg-slate-100 dark:hover:bg-slate-800'
-                        }`}
-                      >
-                        الأجهزة والمنصات ({stations.length})
-                      </button>
-                    </div>
-
-                    <div className="text-xs text-emerald-700 dark:text-emerald-400 font-mono font-bold font-mono-digits">
-                      {stations.filter((s) => s.status === 'in-use').length} قيد التشغيل / {stations.length} إجمالي المحطات
-                    </div>
-                  </div>
-
                   {/* Live Timers Section */}
-                  {(stationsViewFilter === 'all' || stationsViewFilter === 'timers') && (
-                    <LiveTimeCards
-                      sessions={sessions}
-                      stations={stations}
-                      onAddSnack={(sess) => setSnackModalSession(sess)}
-                      onEditGames={(sess) => setEditGamesSession(sess)}
-                      onCheckoutSession={(sess) => setInvoiceModalSession(sess)}
-                      onStartNewSession={(stId) => handleOpenStartSession(stId)}
-                    />
-                  )}
-
-                  {/* Devices Grid Section */}
-                  {(stationsViewFilter === 'all' || stationsViewFilter === 'devices') && (
-                    <StationsGrid
-                      stations={stations}
-                      sessions={sessions}
-                      onStartSession={(stId) => handleOpenStartSession(stId)}
-                      onAddSnack={(sess) => setSnackModalSession(sess)}
-                      onEditGames={(sess) => setEditGamesSession(sess)}
-                      onCheckoutSession={(sess) => setInvoiceModalSession(sess)}
-                    />
-                  )}
+                  <LiveTimeCards
+                    sessions={sessions}
+                    stations={stations}
+                    onAddSnack={(sess) => setSnackModalSession(sess)}
+                    onEditGames={(sess) => setEditGamesSession(sess)}
+                    onCheckoutSession={(sess) => setInvoiceModalSession(sess)}
+                    onStartNewSession={(stId) => handleOpenStartSession(stId)}
+                  />
                 </div>
               )}
 
@@ -1388,6 +1296,9 @@ export default function App() {
           </div>
         </footer>
       </div>
+
+      {/* Global Back-to-Top Button (visible on every page after scrolling) */}
+      <BackToTopButton />
 
       {/* Modal Dialogues */}
       <NewSessionModal

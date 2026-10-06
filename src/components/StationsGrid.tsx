@@ -1,20 +1,5 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { 
-  Monitor, 
-  Tv, 
-  Gamepad2, 
-  Eye, 
-  EyeOff, 
-  Coffee, 
-  Receipt,
-  Play,
-  Car,
-  Cpu,
-  Clock,
-  User,
-  Zap
-} from 'lucide-react';
 import { Station, Session, StationType } from '../types';
 import { 
   formatCurrency, 
@@ -23,8 +8,11 @@ import {
 } from '../utils/formatters';
 import { useLiveTimer } from '../hooks/useLiveTimer';
 import { CyberSectionIcon } from './CyberSectionIcon';
+import { GamingPcIcon } from './GamingPcIcon';
 import { XboxIcon } from './XboxIcon';
 import { PlaystationIcon } from './PlaystationIcon';
+import { Badge, Box, Clock, Coffee, Cpu, Eye, EyeOff, Gamepad2, Icon, Monitor, Play, Receipt, Tv, User } from 'lucide-react';
+import { VipSimulatorIcon } from './VipSimulatorIcon';
 
 interface StationsGridProps {
   stations: Station[];
@@ -101,11 +89,11 @@ export const StationsGrid: React.FC<StationsGridProps> = ({
   const getStationIcon = (type: StationType) => {
     switch (type) {
       case 'PC':
-        return <Monitor className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />;
+        return <GamingPcIcon className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />;
       case 'PS5':
         return <Tv className="w-5 h-5 text-teal-600 dark:text-teal-400" />;
       case 'VIP_SIM':
-        return <Car className="w-5 h-5 text-emerald-700 dark:text-emerald-300" />;
+        return <VipSimulatorIcon className="w-5 h-5 text-orange-500 dark:text-orange-400" />;
       default:
         return <Gamepad2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />;
     }
@@ -120,7 +108,7 @@ export const StationsGrid: React.FC<StationsGridProps> = ({
           <CyberSectionIcon icon={CyberBattleStationIcon} size="lg" variant="emerald" />
           <div>
             <div className="flex items-center gap-2">
-              <h2 className="text-lg font-black text-emerald-600 dark:text-emerald-400 font-gaming">
+              <h2 className="dark:text-white text-lg font-black text-emerald-600 dark:text-emerald-400 font-gaming">
                 محطات وأجهزة الألعاب النشطة
               </h2>
               <span className="px-2.5 py-0.5 text-xs font-bold rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
@@ -238,7 +226,7 @@ export const StationsGrid: React.FC<StationsGridProps> = ({
               },
               VIP_SIM: {
                 label: 'محاكي قيادة VIP',
-                icon: Car,
+                icon: VipSimulatorIcon,
                 color: 'text-amber-400',
                 bg: 'bg-slate-950 dark:bg-black',
                 border: 'border-amber-500/50 dark:border-amber-500/60 shadow-md shadow-amber-500/20',
@@ -280,8 +268,8 @@ export const StationsGrid: React.FC<StationsGridProps> = ({
                   {/* 1. Header: Platform Icon + Name & Platform Details + Status Badge */}
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex items-center gap-3.5 min-w-0 flex-1">
-                      <div className={`w-14 h-14 rounded-2xl ${platformMeta.bg} border-2 ${platformMeta.border} flex items-center justify-center shrink-0 shadow-md`}>
-                        <PlatformIcon className="w-10 h-10" />
+                      <div className={`w-16 h-16 rounded-2xl ${platformMeta.bg} border-2 ${platformMeta.border} flex items-center justify-center shrink-0 shadow-md`}>
+                        <PlatformIcon className="w-11 h-11" />
                       </div>
                       <div className="min-w-0 flex-1">
                         <h3 className="text-base font-black text-slate-900 dark:text-white leading-snug">
@@ -300,20 +288,20 @@ export const StationsGrid: React.FC<StationsGridProps> = ({
                     <div className="shrink-0">
                       {activeSession ? (
                         isOvertime ? (
-                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-white dark:bg-rose-950/80 text-rose-700 dark:text-white border border-rose-300 dark:border-rose-900/50 animate-pulse shadow-xs">
-                            <span className="w-2 h-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e]"></span>
-                            <span className="text-rose-800 dark:text-white">وقت إضافي</span>
+                          <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-xs text-[10px] sm:text-[11px] font-black bg-rose-500/15 dark:bg-rose-950/90 text-rose-700 dark:text-rose-300 border border-rose-500/70 shadow-[0_0_10px_rgba(244,63,94,0.3)] animate-pulse whitespace-nowrap">
+                            <span className="w-1.5 h-1.5 rounded-[1px] bg-rose-500 rotate-45 shadow-[0_0_8px_#f43f5e]"></span>
+                            <span className="tracking-wide">وقت إضافي</span>
                           </span>
                         ) : (
-                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-white dark:bg-cyan-950/80 text-cyan-700 dark:text-white border border-cyan-300 dark:border-cyan-800/80 shadow-xs">
-                            <span className="w-2 h-2 rounded-full bg-cyan-500 shadow-[0_0_8px_#06b6d4] animate-ping"></span>
-                            <span className="text-cyan-800 dark:text-white">جلسة نشطة</span>
+                          <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-xs text-[10px] sm:text-[11px] font-black bg-cyan-500/15 dark:bg-cyan-950/90 text-cyan-700 dark:text-cyan-300 border border-cyan-500/70 shadow-[0_0_10px_rgba(6,182,212,0.3)] whitespace-nowrap">
+                            <span className="w-1.5 h-1.5 rounded-[1px] bg-cyan-400 rotate-45 shadow-[0_0_8px_#06b6d4] animate-ping"></span>
+                            <span className="tracking-wide">جلسة نشطة</span>
                           </span>
                         )
                       ) : (
-                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-white dark:bg-emerald-950/80 text-emerald-700 dark:text-white border border-emerald-300 dark:border-emerald-800/80 shadow-xs">
-                          <span className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981] animate-pulse"></span>
-                          <span className="text-emerald-800 dark:text-white">شاغر ومتاح</span>
+                        <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-xs text-[10px] sm:text-[11px] font-black bg-emerald-500/15 dark:bg-emerald-950/90 text-emerald-700 dark:text-emerald-300 border border-emerald-500/70 shadow-[0_0_10px_rgba(16,185,129,0.3)] whitespace-nowrap">
+                          <span className="w-1.5 h-1.5 rounded-[1px] bg-emerald-400 rotate-45 shadow-[0_0_8px_#10b981] animate-pulse"></span>
+                          <span className="tracking-wide">شاغر ومتاح</span>
                         </span>
                       )}
                     </div>
@@ -345,10 +333,10 @@ export const StationsGrid: React.FC<StationsGridProps> = ({
                       </div>
 
                       {/* Player & PIN info strip */}
-                      <div className="pt-2 border-t border-slate-200/60 dark:border-slate-700/60 flex items-center justify-between text-xs text-slate-600 dark:text-slate-400">
+                      <div className="pt-2 border-t border-slate-200/60 dark:border-slate-700/60 flex items-center justify-between text-xs text-slate-600 dark:text-slate-300">
                         <div className="flex items-center gap-1.5 min-w-0 flex-1 truncate">
                           <User className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                          <span className="font-bold text-slate-800 dark:text-slate-200 truncate">
+                          <span className="font-bold text-slate-900 dark:text-white truncate">
                             {activeSession.customerName}
                           </span>
                         </div>
@@ -359,7 +347,7 @@ export const StationsGrid: React.FC<StationsGridProps> = ({
                               +{activeSession.snacks.length} طلبات
                             </span>
                           )}
-                          <span className="font-mono text-slate-500 dark:text-slate-400">
+                          <span className="font-mono text-slate-700 dark:text-white font-bold">
                             PIN: {isRevealed ? activeSession.customerPin : '••••'}
                           </span>
                           <button
@@ -377,18 +365,18 @@ export const StationsGrid: React.FC<StationsGridProps> = ({
                     <>
                       {/* Specs Box */}
                       <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/70 dark:border-slate-800 space-y-1.5">
-                        <div className="flex items-center gap-1.5 text-xs font-bold text-slate-700 dark:text-slate-300">
+                        <div className="flex items-center gap-1.5 text-xs font-bold text-slate-800 dark:text-white">
                           <Cpu className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
                           <span>المواصفات والعتاد:</span>
                         </div>
-                        <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-sans line-clamp-2">
+                        <p className="text-xs text-slate-600 dark:text-slate-200 leading-relaxed font-sans line-clamp-2">
                           {station.specs || 'شاشة عالية التردد • عتاد قيمنق احترافي متكامل'}
                         </p>
                       </div>
 
                       {/* Rate Display */}
                       <div className="flex items-center justify-between py-1 px-1">
-                        <div className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 font-medium">
+                        <div className="flex items-center gap-1.5 text-xs text-slate-700 dark:text-white font-bold">
                           <Clock className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                           <span>سعر الساعة الأساسي:</span>
                         </div>
@@ -450,7 +438,7 @@ export const StationsGrid: React.FC<StationsGridProps> = ({
         {filteredStations.length === 0 && (
           <div className="col-span-full p-8 text-center rounded-2xl bg-white dark:bg-[#0c101c] border border-slate-200 dark:border-slate-800 space-y-3">
             <div className="w-12 h-12 mx-auto rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-400 flex items-center justify-center">
-              <Monitor className="w-6 h-6" />
+              <GamingPcIcon className="w-6 h-6" />
             </div>
             <div className="text-sm font-bold text-slate-800 dark:text-slate-200">
               لا توجد محطات مطابقة لخيارات التصفية الحالية
@@ -471,4 +459,3 @@ export const StationsGrid: React.FC<StationsGridProps> = ({
     </section>
   );
 };
-

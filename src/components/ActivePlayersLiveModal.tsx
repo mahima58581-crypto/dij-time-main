@@ -1,26 +1,9 @@
+import { GamingPcIcon } from './GamingPcIcon';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { 
-  Gamepad2, 
-  CheckCircle2, 
-  AlertCircle, 
-  Clock, 
-  User, 
-  Monitor, 
-  Search, 
-  Plus, 
-  X, 
-  Radio, 
-  Receipt, 
-  Coffee, 
-  PlayCircle,
-  ShieldCheck,
-  Activity,
-  History,
-  Sparkles
-} from 'lucide-react';
 import { Session, Station, Customer } from '../types';
 import { formatCurrency, formatDuration, formatArabicTimeOnly } from '../utils/formatters';
+import { Activity, AlertCircle, Badge, CheckCircle2, Clock, Coffee, Filter, Gamepad2, Grid, History, Navigation, Plus, Radio, Receipt, Search, ShieldCheck, User, X } from 'lucide-react';
 
 interface ActivePlayersLiveModalProps {
   isOpen: boolean;
@@ -103,7 +86,7 @@ export const ActivePlayersLiveModal: React.FC<ActivePlayersLiveModalProps> = ({
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h2 className="text-base sm:text-lg font-black font-gaming tracking-wide">
+                <h2 className="dark:text-white text-base sm:text-lg font-black font-gaming tracking-wide">
                   پنجره نظارت بر آغاز بازی و بازیکنان آنلاین
                 </h2>
                 <span className="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-400/20 border border-emerald-300/40 text-[11px] font-mono font-bold text-emerald-100">
@@ -179,7 +162,7 @@ export const ActivePlayersLiveModal: React.FC<ActivePlayersLiveModalProps> = ({
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
               }`}
             >
-              <Monitor className="w-3.5 h-3.5" />
+              <GamingPcIcon className="w-3.5 h-3.5" />
               <span>وضعیت کلی دستگاه‌ها ({stations.length})</span>
             </button>
 
@@ -226,7 +209,7 @@ export const ActivePlayersLiveModal: React.FC<ActivePlayersLiveModalProps> = ({
               {filteredActiveSessions.length === 0 ? (
                 <div className="text-center py-12 px-4 rounded-2xl border border-dashed border-slate-300 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/30">
                   <Gamepad2 className="w-12 h-12 text-slate-300 dark:text-slate-600 mx-auto mb-3" />
-                  <h4 className="text-sm font-bold text-slate-700 dark:text-slate-300">
+                  <h4 className="text-sm font-bold text-slate-700 dark:text-white">
                     {searchQuery ? 'هیچ بازیکنی با این مشخصات یافت نشد' : 'در حال حاضر هیچ بازیکنی در حال بازی نیست'}
                   </h4>
                   <p className="text-xs text-slate-400 dark:text-slate-500 mt-1 max-w-sm mx-auto">

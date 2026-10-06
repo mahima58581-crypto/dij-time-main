@@ -1,31 +1,10 @@
+import { GamingPcIcon } from './GamingPcIcon';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { 
-  X, 
-  Play, 
-  Monitor, 
-  User, 
-  Clock, 
-  Plus, 
-  Minus,
-  KeyRound, 
-  Phone,
-  Sparkles,
-  Zap,
-  CheckCircle2,
-  Tv,
-  Gamepad2,
-  Trophy,
-  Coins,
-  CalendarCheck,
-  RefreshCw,
-  AlertCircle,
-  Search,
-  Check,
-  ChevronDown
-} from 'lucide-react';
 import { Station, Customer, GameItem, Session, StationType } from '../types';
 import { formatCurrency } from '../utils/formatters';
+import { AlertCircle, Check, ChevronDown, Clock, Gamepad2, KeyRound, Minus, Play, Plus, RefreshCw, Search, Tv, User, X, Zap } from 'lucide-react';
+import { VipSimulatorIcon } from './VipSimulatorIcon';
 
 interface NewSessionModalProps {
   isOpen: boolean;
@@ -126,15 +105,15 @@ export const NewSessionModal: React.FC<NewSessionModalProps> = ({
   const getStationTypeIcon = (type: StationType) => {
     switch (type) {
       case 'PC':
-        return <Monitor className="w-4 h-4 text-cyan-500" />;
+        return <GamingPcIcon className="w-4 h-4 text-cyan-500" />;
       case 'PS5':
         return <Gamepad2 className="w-4 h-4 text-blue-500" />;
       case 'XBOX':
         return <Tv className="w-4 h-4 text-emerald-500" />;
       case 'VIP_SIM':
-        return <Trophy className="w-4 h-4 text-amber-500" />;
+        return <VipSimulatorIcon className="w-4 h-4 text-orange-500" />;
       default:
-        return <Monitor className="w-4 h-4 text-emerald-500" />;
+        return <GamingPcIcon className="w-4 h-4 text-emerald-500" />;
     }
   };
 
@@ -263,7 +242,7 @@ export const NewSessionModal: React.FC<NewSessionModalProps> = ({
           <div className="space-y-2.5">
             <div className="flex items-center justify-between">
               <label className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
-                <Monitor className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                <GamingPcIcon className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                 <span>اختيار الجهاز أو المحطة الشاغرة:</span>
               </label>
               <span className="text-[11px] font-mono text-slate-400 dark:text-slate-500">
@@ -297,7 +276,7 @@ export const NewSessionModal: React.FC<NewSessionModalProps> = ({
                     : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:border-cyan-400'
                 }`}
               >
-                <Monitor className="w-3 h-3" />
+                <GamingPcIcon className="w-3 h-3" />
                 <span>كامپیوتر (PC)</span>
                 <span className="px-1 py-0.2 rounded text-[9px] bg-black/10 dark:bg-white/10 font-mono font-mono-digits">
                   {availableStations.filter(s => s.type === 'PC').length}
@@ -345,7 +324,7 @@ export const NewSessionModal: React.FC<NewSessionModalProps> = ({
                     : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:border-amber-400'
                 }`}
               >
-                <Trophy className="w-3 h-3" />
+                <VipSimulatorIcon className="w-3 h-3" />
                 <span>محاکی VIP</span>
                 <span className="px-1 py-0.2 rounded text-[9px] bg-black/10 dark:bg-white/10 font-mono font-mono-digits">
                   {availableStations.filter(s => s.type === 'VIP_SIM').length}

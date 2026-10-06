@@ -1,20 +1,9 @@
+import { GamingPcIcon } from './GamingPcIcon';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { 
-  Coffee, 
-  Plus, 
-  Search, 
-  ShoppingBag, 
-  Check, 
-  X,
-  Sparkles,
-  Key,
-  Monitor,
-  User,
-  ChevronDown
-} from 'lucide-react';
 import { SnackItem, Session } from '../types';
 import { formatCurrency } from '../utils/formatters';
+import { Check, ChevronDown, Coffee, Key, Plus, Search, ShoppingBag, User, X } from 'lucide-react';
 
 interface SnacksBuffetProps {
   snacks: SnackItem[];
@@ -140,7 +129,7 @@ export const SnacksBuffet: React.FC<SnacksBuffetProps> = ({
             {selectedSession && (
               <div className="flex flex-wrap items-center gap-1.5 text-[11px]">
                 <span className="px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-300 border border-amber-500/40 font-bold flex items-center gap-1 font-mono-digits">
-                  <Monitor className="w-3 h-3 text-amber-400" />
+                  <GamingPcIcon className="w-3 h-3 text-amber-400" />
                   <span>شماره دستگاه:</span>
                   <span className="font-mono text-white font-black">{selectedSession.stationId}</span>
                 </span>
@@ -531,4 +520,3 @@ export const SnacksBuffet: React.FC<SnacksBuffetProps> = ({
     </div>
   );
 };
-

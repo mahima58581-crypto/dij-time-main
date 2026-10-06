@@ -1,5 +1,6 @@
 import React from 'react';
 import { StationType } from '../types';
+import { VipSimulatorIcon } from './VipSimulatorIcon';
 
 interface CyberHardwareBadgeProps {
   type: StationType;
@@ -136,26 +137,7 @@ export const CyberHardwareBadge: React.FC<CyberHardwareBadgeProps> = ({
         <div className="relative w-10 h-10 rounded-2xl bg-gradient-to-b from-slate-900 via-slate-950 to-amber-950/80 p-[1.5px] border border-amber-500/40 shadow-md shadow-amber-500/20 flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0 bg-amber-500/10 blur-xs" />
 
-          <svg viewBox="0 0 48 48" className="w-7 h-7 relative z-10 filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
-            {/* Steering Rim */}
-            <circle cx="24" cy="24" r="15" fill="none" stroke="#334155" strokeWidth="3" />
-            <circle cx="24" cy="24" r="15" fill="none" stroke="#f59e0b" strokeWidth="1" strokeDasharray="8 12" />
-            {/* Leather Grip areas */}
-            <path d="M10 20 C10 16 12 12 16 10" stroke="#0f172a" strokeWidth="4" fill="none" strokeLinecap="round" />
-            <path d="M38 20 C38 16 36 12 32 10" stroke="#0f172a" strokeWidth="4" fill="none" strokeLinecap="round" />
-            {/* Center Boss & Hub */}
-            <circle cx="24" cy="24" r="5" fill="#0f172a" stroke="#d97706" strokeWidth="1" />
-            {/* Wheel Spokes */}
-            <line x1="12" y1="24" x2="19" y2="24" stroke="#475569" strokeWidth="2.5" />
-            <line x1="29" y1="24" x2="36" y2="24" stroke="#475569" strokeWidth="2.5" />
-            <line x1="24" y1="29" x2="24" y2="36" stroke="#475569" strokeWidth="2.5" />
-            {/* RPM Rev Shift Lights (Green, Yellow, Red) */}
-            <circle cx="20" cy="14" r="1" fill="#10b981" />
-            <circle cx="22" cy="13" r="1" fill="#10b981" />
-            <circle cx="24" cy="12.5" r="1" fill="#f59e0b" />
-            <circle cx="26" cy="13" r="1" fill="#ef4444" />
-            <circle cx="28" cy="14" r="1" fill="#ef4444" />
-          </svg>
+          <VipSimulatorIcon className="w-7 h-7 relative z-10 filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]" />
 
           {isActive && (
             <span className="absolute top-1 left-1 w-1.5 h-1.5 rounded-full bg-amber-400 shadow-[0_0_6px_#fbbf24] animate-ping" />

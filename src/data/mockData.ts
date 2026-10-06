@@ -600,6 +600,16 @@ export const INITIAL_TARIFFS: TariffRate[] = [
     packageDescription: 'مقود دايركت درايف Moza R12، ثلاث شاشات بانورامية ومقعد سباق احترافي',
   },
   {
+    id: 'tar-5',
+    title: 'منصات إكس بوكس سيريز X (Xbox Game Pass)',
+    platform: 'XBOX',
+    baseHourlyRate: 5000,
+    peakMultiplier: 1.25,
+    onlineGameMultiplier: 1.0,
+    minPlayMinutes: 30,
+    packageDescription: 'شاشات 120Hz 4K، وحدات تحكم Xbox Wireless Controller ومكتبة Game Pass Ultimate كاملة',
+  },
+  {
     id: 'pkg-1',
     title: 'باقة الماراثون الليلي (3 ساعات + ريد بول)',
     platform: 'PC',
@@ -624,6 +634,19 @@ export const INITIAL_TARIFFS: TariffRate[] = [
     packageHours: 2,
     packagePrice: 15000,
     packageDescription: 'ساعتان فيفا أو مورتال كومبات لـ 4 لاعبين مع تشكيلة من تسالي البوفيه',
+  },
+  {
+    id: 'pkg-3',
+    title: 'باقة أبطال الإكس بوكس (ساعتان فورزا وهيملو + مشروبين)',
+    platform: 'XBOX',
+    baseHourlyRate: 5000,
+    peakMultiplier: 1.0,
+    onlineGameMultiplier: 1.0,
+    minPlayMinutes: 120,
+    isPackage: true,
+    packageHours: 2,
+    packagePrice: 12000,
+    packageDescription: 'ساعتان ألعاب حصرية Forza Horizon 5 وHalo مع مشروبات منعشة',
   },
 ];
 

@@ -1,25 +1,26 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { 
-  X, 
-  Receipt, 
-  Printer, 
-  CreditCard, 
-  Banknote, 
-  Wallet, 
-  Clock, 
-  Phone, 
-  KeyRound, 
-  Gamepad2, 
+import {
+  X,
+  Receipt,
+  Printer,
+  CreditCard,
+  Banknote,
+  Wallet,
+  Clock,
+  Phone,
+  KeyRound,
+  Gamepad2,
   Coffee
 } from 'lucide-react';
 import { Session } from '../types';
-import { 
-  formatCurrency, 
-  formatDuration, 
+import {
+  formatCurrency,
+  formatDuration,
   formatDurationDigital,
   calculatePlayCost
 } from '../utils/formatters';
+import { PLATFORM_META } from './platformMeta';
 
 interface CheckoutInvoiceModalProps {
   isOpen: boolean;
@@ -38,6 +39,10 @@ export const CheckoutInvoiceModal: React.FC<CheckoutInvoiceModalProps> = ({
 
   const isActive = session.status === 'active';
   const checkOutTime = session.checkOutTime || new Date().toISOString();
+
+  // هویت بصری پلتفرم مربوطه (رنگ و لوگوی اختصاصی)
+  const meta = PLATFORM_META[session.stationType] || PLATFORM_META.PC;
+  const PlatformIcon = meta.icon;
 
   // حساب مدة الجلسة بدقة
   const startMs = new Date(session.checkInTime).getTime();
@@ -70,28 +75,40 @@ export const CheckoutInvoiceModal: React.FC<CheckoutInvoiceModalProps> = ({
 
   return (
     <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 overflow-y-auto">
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, scale: 0.95, y: 15 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 15 }}
-        className="bg-white dark:bg-[#0c1220] border border-emerald-200/80 dark:border-emerald-500/30 rounded-3xl max-w-xl w-full shadow-2xl overflow-hidden my-6 dark:shadow-[0_0_50px_rgba(16,185,129,0.15)] text-right"
+        className={`bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-3xl max-w-xl w-full shadow-2xl ring-1 overflow-hidden my-6 text-right ${meta.text
+          .split(' ')
+          .map((c) => c.replace('text-', 'ring-'))
+          .join(' ')} dark:shadow-[0_0_50px_rgba(16,185,129,0.15)]`}
         dir="rtl"
       >
-        
+        {/* خط الألوان المميز للمنصة */}
+        <div className={`h-1.5 w-full bg-gradient-to-r ${meta.accent}`} />
+
         {/* شريط رأس الفاتورة */}
-        <div className="p-4 bg-slate-50 dark:bg-[#080d19] border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Receipt className="w-5 h-5 text-emerald-600 dark:text-emerald-400 stroke-[2.5]" />
-            <h3 className="font-black text-slate-900 dark:text-white text-sm font-gaming tracking-wide">
-              {isActive ? 'تسجيل الخروج، التسوية وإصدار الفاتورة الرسمية' : 'فاتورة مسواة ومحفوظة بالسجل'}
-            </h3>
+        <div className="p-4 bg-slate-50 dark:bg-[#080d19] border-b border-slate-200 dark:border-slate-800 flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2.5 min-w-0">
+            <div className={`w-9 h-9 rounded-xl border flex items-center justify-center shrink-0 shadow-sm ${meta.badge}`}>
+              <PlatformIcon className="w-6 h-6" />
+            </div>
+            <div className="min-w-0">
+              <h3 className="font-black text-slate-900 dark:text-white text-sm font-gaming tracking-wide">
+                {isActive ? 'تسجيل الخروج، التسوية وإصدار الفاتورة الرسمية' : 'فاتورة مسواة ومحفوظة بالسجل'}
+              </h3>
+              <div className={`text-[10px] font-bold ${meta.text}`}>
+                {meta.label} • {session.stationName}
+              </div>
+            </div>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 shrink-0">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={handlePrint}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-emerald-700 dark:text-emerald-400 border border-slate-200 dark:border-slate-700 transition shadow-xs cursor-pointer"
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 transition shadow-xs cursor-pointer ${meta.text}`}
               title="طباعة الفاتورة"
             >
               <Printer className="w-3.5 h-3.5" />
@@ -108,10 +125,10 @@ export const CheckoutInvoiceModal: React.FC<CheckoutInvoiceModalProps> = ({
 
         {/* تفاصيل ورقة الفاتورة الرسمية */}
         <div className="p-6 sm:p-7 space-y-5 text-slate-800 dark:text-slate-200 bg-white dark:bg-[#0c1220]">
-          
+
           {/* الترويسة والشعار */}
           <div className="text-center pb-4 border-b border-slate-100 dark:border-slate-800 space-y-1">
-            <div className="text-2xl font-black text-emerald-800 dark:text-emerald-400 tracking-wider font-['Chakra_Petch']">
+            <div className={`text-2xl font-black tracking-wider font-['Chakra_Petch'] ${meta.text}`}>
               صالة ديج تايم للألعاب • Dij-Tiem Gaming Club
             </div>
             <div className="text-xs font-medium text-slate-500 dark:text-slate-400">
@@ -128,13 +145,13 @@ export const CheckoutInvoiceModal: React.FC<CheckoutInvoiceModalProps> = ({
               <div className="text-slate-500 dark:text-slate-400 font-medium">بيانات اللاعب:</div>
               <div className="font-black text-sm text-slate-900 dark:text-white">{session.customerName}</div>
               <div className="text-slate-500 dark:text-slate-400 flex items-center gap-1 pt-0.5">
-                <Phone className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
+                <Phone className={`w-3 h-3 ${meta.text}`} />
                 <span dir="ltr" className="font-mono text-slate-700 dark:text-slate-300 font-mono-digits">{session.customerPhone}</span>
               </div>
               <div className="text-slate-500 dark:text-slate-400 flex items-center gap-1">
-                <KeyRound className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
+                <KeyRound className={`w-3 h-3 ${meta.text}`} />
                 <span>رمز PIN: </span>
-                <span className="font-mono font-bold text-emerald-800 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 px-1.5 py-0.5 rounded border border-emerald-200 dark:border-emerald-800 font-mono-digits">
+                <span className={`font-mono font-bold px-1.5 py-0.5 rounded border font-mono-digits ${meta.chip}`}>
                   {session.customerPin}
                 </span>
               </div>
@@ -142,12 +159,12 @@ export const CheckoutInvoiceModal: React.FC<CheckoutInvoiceModalProps> = ({
 
             <div className="space-y-1 text-left">
               <div className="text-slate-500 dark:text-slate-400 font-medium text-right">المحطة والتعرفة:</div>
-              <div className="font-black text-sm text-emerald-800 dark:text-emerald-400 text-right">{session.stationName}</div>
+              <div className={`font-black text-sm text-right ${meta.text}`}>{session.stationName}</div>
               <div className="text-slate-600 dark:text-slate-300 text-right text-[11px] font-mono font-bold font-mono-digits">
                 التعرفة: {formatCurrency(session.hourlyRate)} / ساعة
               </div>
               <div className="text-right pt-0.5">
-                <span className="inline-block px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+                <span className={`inline-block px-2 py-0.5 rounded text-[10px] font-bold border ${meta.chip}`}>
                   {session.sessionType === 'open' ? 'وقت مفتوح' : 'وقت محدد مسبقاً'}
                 </span>
               </div>
@@ -158,7 +175,7 @@ export const CheckoutInvoiceModal: React.FC<CheckoutInvoiceModalProps> = ({
           <div className="bg-slate-50 dark:bg-[#080e1b] p-4 rounded-2xl border border-slate-200 dark:border-slate-800/80 space-y-2 text-xs">
             <div className="flex items-center justify-between text-slate-600 dark:text-slate-400">
               <span className="flex items-center gap-1">
-                <Clock className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+                <Clock className={`w-3.5 h-3.5 ${meta.text}`} />
                 وقت الدخول الفعلي:
               </span>
               <strong className="text-slate-900 dark:text-white font-mono font-mono-digits">{new Date(session.checkInTime).toLocaleTimeString('ar-IQ')}</strong>
@@ -166,7 +183,7 @@ export const CheckoutInvoiceModal: React.FC<CheckoutInvoiceModalProps> = ({
 
             <div className="flex items-center justify-between text-slate-600 dark:text-slate-400">
               <span className="flex items-center gap-1">
-                <Clock className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+                <Clock className={`w-3.5 h-3.5 ${meta.text}`} />
                 وقت تسجيل الخروج:
               </span>
               <strong className="text-slate-900 dark:text-white font-mono font-mono-digits">{new Date(checkOutTime).toLocaleTimeString('ar-IQ')}</strong>
@@ -174,7 +191,7 @@ export const CheckoutInvoiceModal: React.FC<CheckoutInvoiceModalProps> = ({
 
             <div className="pt-2 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
               <span className="font-bold text-slate-700 dark:text-slate-300">إجمالي مدة اللعب:</span>
-              <span className="font-black font-mono text-emerald-800 dark:text-emerald-400 text-sm font-mono-digits">
+              <span className={`font-black font-mono text-sm font-mono-digits ${meta.text}`}>
                 {formatDurationDigital(totalElapsedSecs)} ({formatDuration(elapsedMinutes)})
               </span>
             </div>
@@ -182,7 +199,7 @@ export const CheckoutInvoiceModal: React.FC<CheckoutInvoiceModalProps> = ({
             {/* الألعاب الجارية */}
             <div className="pt-2 border-t border-slate-200 dark:border-slate-800">
               <div className="text-[11px] text-slate-500 dark:text-slate-400 font-bold mb-1 flex items-center gap-1">
-                <Gamepad2 className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
+                <Gamepad2 className={`w-3 h-3 ${meta.text}`} />
                 الألعاب المسجلة في هذه الجلسة:
               </div>
               <div className="flex flex-wrap gap-1">
@@ -199,7 +216,7 @@ export const CheckoutInvoiceModal: React.FC<CheckoutInvoiceModalProps> = ({
           {session.snacks.length > 0 && (
             <div className="space-y-1.5">
               <div className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
-                <Coffee className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+                <Coffee className={`w-3.5 h-3.5 ${meta.text}`} />
                 <span>طلبات البوفيه والمشروبات:</span>
               </div>
               <div className="bg-slate-50 dark:bg-[#080e1b] rounded-xl border border-slate-200 dark:border-slate-800 divide-y divide-slate-200 dark:divide-slate-800">
@@ -208,7 +225,7 @@ export const CheckoutInvoiceModal: React.FC<CheckoutInvoiceModalProps> = ({
                     <div className="text-slate-800 dark:text-slate-200 font-medium">
                       {item.name} <span className="text-slate-500 dark:text-slate-400 font-mono-digits">× {item.quantity}</span>
                     </div>
-                    <div className="font-mono text-emerald-800 dark:text-emerald-400 font-bold font-mono-digits">
+                    <div className={`font-mono font-bold font-mono-digits ${meta.text}`}>
                       {formatCurrency(item.totalPrice)}
                     </div>
                   </div>
@@ -218,7 +235,7 @@ export const CheckoutInvoiceModal: React.FC<CheckoutInvoiceModalProps> = ({
           )}
 
           {/* جدول الحساب الإجمالي بالدينار */}
-          <div className="bg-emerald-50/70 dark:bg-[#081220] p-4 rounded-2xl border border-emerald-200 dark:border-emerald-500/30 space-y-2 text-xs">
+          <div className={`p-4 rounded-2xl border space-y-2 text-xs ${meta.softBg}`}>
             <div className="flex items-center justify-between text-slate-600 dark:text-slate-400">
               <span>تكلفة وقت اللعب:</span>
               <span className="font-mono font-bold text-slate-900 dark:text-white font-mono-digits">{formatCurrency(currentPlayCost)}</span>
@@ -226,11 +243,11 @@ export const CheckoutInvoiceModal: React.FC<CheckoutInvoiceModalProps> = ({
 
             <div className="flex items-center justify-between text-slate-600 dark:text-slate-400">
               <span>تكلفة طلبات البوفيه:</span>
-              <span className="font-mono font-bold text-emerald-800 dark:text-emerald-400 font-mono-digits">{formatCurrency(currentSnacksCost)}</span>
+              <span className={`font-mono font-bold font-mono-digits ${meta.text}`}>{formatCurrency(currentSnacksCost)}</span>
             </div>
 
             {isActive && (
-              <div className="flex items-center justify-between text-slate-600 dark:text-slate-400 pt-1 border-t border-emerald-200/60 dark:border-slate-800">
+              <div className="flex items-center justify-between text-slate-600 dark:text-slate-400 pt-1 border-t border-slate-200/70 dark:border-slate-800">
                 <span className="font-medium">خصم خاص:</span>
                 <div className="flex items-center gap-1">
                   <input
@@ -246,9 +263,9 @@ export const CheckoutInvoiceModal: React.FC<CheckoutInvoiceModalProps> = ({
               </div>
             )}
 
-            <div className="flex items-center justify-between text-slate-900 dark:text-white text-sm font-black pt-2 border-t border-emerald-200 dark:border-emerald-500/30">
+            <div className="flex items-center justify-between text-slate-900 dark:text-white text-sm font-black pt-2 border-t border-slate-200 dark:border-slate-700/70">
               <span>المبلغ النهائي للدفع:</span>
-              <span className="font-mono text-emerald-700 dark:text-emerald-400 text-xl font-black font-mono-digits drop-shadow-xs">
+              <span className={`font-mono text-xl font-black font-mono-digits drop-shadow-xs ${meta.text}`}>
                 {formatCurrency(grandTotal)}
               </span>
             </div>
@@ -271,8 +288,8 @@ export const CheckoutInvoiceModal: React.FC<CheckoutInvoiceModalProps> = ({
                     onClick={() => setPaymentMethod(m.id)}
                     className={`py-2 px-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1 transition border cursor-pointer ${
                       paymentMethod === m.id
-                        ? 'bg-emerald-600 text-white font-black border-emerald-600 shadow-xs'
-                        : 'bg-slate-50 dark:bg-[#080e1b] text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-emerald-400 dark:hover:border-emerald-600'
+                        ? `bg-gradient-to-r ${meta.accent} text-white font-black border-transparent shadow-md`
+                        : 'bg-slate-50 dark:bg-[#080e1b] text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-600'
                     }`}
                   >
                     {m.icon}
@@ -298,7 +315,7 @@ export const CheckoutInvoiceModal: React.FC<CheckoutInvoiceModalProps> = ({
                 whileTap={{ scale: 0.97 }}
                 type="button"
                 onClick={handleSettle}
-                className="px-5 py-2.5 rounded-xl text-xs sm:text-sm font-black text-white bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 hover:brightness-105 transition shadow-md shadow-emerald-500/20 cursor-pointer font-gaming"
+                className={`px-5 py-2.5 rounded-xl text-xs sm:text-sm font-black text-white bg-gradient-to-r ${meta.accent} hover:brightness-105 transition shadow-md font-gaming cursor-pointer`}
               >
                 تأكيد التسوية، إنهاء الجلسة وإغلاق الحساب
               </motion.button>
@@ -307,7 +324,7 @@ export const CheckoutInvoiceModal: React.FC<CheckoutInvoiceModalProps> = ({
                 whileTap={{ scale: 0.97 }}
                 type="button"
                 onClick={handlePrint}
-                className="px-5 py-2 rounded-xl text-xs font-bold text-emerald-800 dark:text-emerald-300 bg-emerald-50 dark:bg-slate-800 hover:bg-emerald-100 dark:hover:bg-slate-700 border border-emerald-200 dark:border-slate-700 transition cursor-pointer"
+                className={`px-5 py-2 rounded-xl text-xs font-bold border transition cursor-pointer ${meta.chip} hover:brightness-95 dark:hover:brightness-125`}
               >
                 إعادة طباعة الفاتورة
               </motion.button>
@@ -320,4 +337,3 @@ export const CheckoutInvoiceModal: React.FC<CheckoutInvoiceModalProps> = ({
     </div>
   );
 };
-

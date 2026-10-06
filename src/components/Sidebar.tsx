@@ -1,30 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { 
-  Gamepad2, 
-  Monitor, 
-  ReceiptText, 
-  Users, 
-  Award, 
-  ShoppingBag, 
-  LayoutGrid, 
-  Tag, 
-  ShieldCheck, 
-  CalendarClock, 
-  TrendingUp, 
-  FileSpreadsheet, 
-  Settings, 
-  ChevronLeft, 
-  ChevronRight, 
-  Menu, 
-  X,
-  UserPlus,
-  PlusCircle,
-  QrCode,
-  Lock,
-  Sparkles
-} from 'lucide-react';
 import { ActiveSidebarTab, StaffOperator } from '../types';
+import { Award, Badge, CalendarClock, ChevronLeft, ChevronRight, Container, Dot, FileSpreadsheet, Gamepad, Gamepad2, LayoutGrid, List, Lock, Monitor, Navigation, PlusCircle, QrCode, ReceiptText, Settings, ShieldCheck, ShoppingBag, Tag, TrendingUp, UserPlus, Users, X } from 'lucide-react';
 
 interface SidebarProps {
   activeTab: ActiveSidebarTab;
