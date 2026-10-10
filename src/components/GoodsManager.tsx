@@ -239,9 +239,9 @@ export const GoodsManager: React.FC<GoodsManagerProps> = ({
               <button
                 type="button"
                 onClick={onNavigateToQrOrders}
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-black text-emerald-800 bg-white/90 hover:bg-white border border-white/40 shadow-lg shadow-emerald-900/20 transition"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-black bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/60 hover:border-emerald-400 dark:hover:border-emerald-600 shadow-lg shadow-emerald-500/15 transition"
               >
-                <QrCode className="w-4 h-4 text-emerald-700" />
+                <QrCode className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                 <span>طلبات الطاولات بالـ QR</span>
               </button>
             )}
@@ -366,12 +366,14 @@ export const GoodsManager: React.FC<GoodsManagerProps> = ({
                     ? cat.key === 'all'
                       ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border-emerald-500/50'
                       : meta!.tabActive
-                    : 'text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800/60'
+                    : cat.key === 'all'
+                    ? 'border border-emerald-200 dark:border-emerald-800/60 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 hover:brightness-95'
+                    : `border ${meta!.softBg} ${meta!.text} hover:brightness-95`
                 }`}
               >
                 <span className="text-sm leading-none">{cat.emoji}</span>
                 <span>{cat.label}</span>
-                <span className="font-mono text-[10px] px-1.5 py-0.5 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-mono-digits">
+                <span className={`font-mono text-[10px] font-black px-1.5 py-0.5 rounded-full border font-mono-digits ${active ? 'bg-white/25 text-white border-transparent' : meta!.badge}`}>
                   {count}
                 </span>
               </motion.button>

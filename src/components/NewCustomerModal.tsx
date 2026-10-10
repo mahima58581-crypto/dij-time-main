@@ -73,7 +73,8 @@ export const NewCustomerModal: React.FC<NewCustomerModalProps> = ({
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-xl text-slate-400 hover:text-slate-700 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition cursor-pointer"
+            title="إغلاق"
+            className="p-1.5 rounded-xl border border-emerald-200 dark:border-emerald-800/60 bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-300 transition cursor-pointer hover:brightness-95 active:scale-95"
           >
             <X className="w-5 h-5" />
           </button>

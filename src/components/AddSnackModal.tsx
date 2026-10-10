@@ -132,7 +132,7 @@ export const AddSnackModal: React.FC<AddSnackModalProps> = ({
                     type="button"
                     onClick={() => handleUpdateQty(snack.id, -1)}
                     disabled={qty === 0}
-                    className="w-7 h-7 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 disabled:opacity-30 flex items-center justify-center transition hover:border-emerald-300 cursor-pointer"
+                    className="w-7 h-7 rounded-lg bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-500/40 text-emerald-600 dark:text-emerald-400 disabled:opacity-30 flex items-center justify-center transition hover:bg-emerald-100 dark:hover:bg-emerald-900/50 cursor-pointer"
                   >
                     <Minus className="w-3.5 h-3.5" />
                   </motion.button>

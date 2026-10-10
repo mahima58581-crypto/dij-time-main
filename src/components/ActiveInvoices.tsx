@@ -36,6 +36,8 @@ const ALL_META = {
   accent: 'from-emerald-500 to-teal-600',
   softBg:
     'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-100 dark:border-emerald-900/60',
+  chip:
+    'bg-emerald-50 dark:bg-emerald-950/70 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800',
   text: 'text-emerald-600 dark:text-emerald-400',
   ring: 'ring-1 ring-emerald-500/30 shadow-lg shadow-emerald-500/10',
 };
@@ -171,10 +173,10 @@ export const ActiveInvoices: React.FC<ActiveInvoicesProps> = ({
                 <Icon className="w-3.5 h-3.5 shrink-0" />
                 <span className="hidden md:inline">{meta.label}</span>
                 <span
-                  className={`font-mono font-mono-digits text-[10px] font-black px-1.5 py-0.5 rounded-full min-w-[18px] text-center ${
+                  className={`font-mono font-mono-digits text-[10px] font-black px-1.5 py-0.5 rounded-full min-w-[18px] text-center border ${
                     active
-                      ? 'bg-white/25 text-white'
-                      : 'bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-300 border border-slate-200 dark:border-slate-700'
+                      ? 'bg-white/25 text-white border-transparent'
+                      : meta.chip
                   }`}
                 >
                   {count}
@@ -277,7 +279,7 @@ export const ActiveInvoices: React.FC<ActiveInvoicesProps> = ({
                           <h3 className="text-base font-black text-slate-900 dark:text-white">
                             {session.customerName}
                           </h3>
-                          <span className="font-mono text-[11px] px-2 py-0.5 rounded-full bg-white dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-300 dark:border-slate-700 font-mono-digits font-bold shadow-2xs">
+                          <span className={`font-mono text-[11px] px-2 py-0.5 rounded-full border font-mono-digits font-bold shadow-2xs ${meta.chip}`}>
                             {session.stationName}
                           </span>
                           <span className={`text-[11px] font-bold ${meta.text}`}>

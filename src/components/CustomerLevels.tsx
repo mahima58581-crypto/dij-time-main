@@ -218,7 +218,7 @@ export const CustomerLevels: React.FC<CustomerLevelsProps> = ({
               >
                 <Icon className="w-3 h-3" />
                 {t.id}
-                <span className="font-mono font-mono-digits px-1.5 py-0.5 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                <span className="font-mono font-mono-digits px-1.5 py-0.5 rounded-full bg-white/80 dark:bg-white/20">
                   {n} • {((n / totalPlayers) * 100).toFixed(0)}%
                 </span>
               </span>
@@ -365,10 +365,10 @@ export const CustomerLevels: React.FC<CustomerLevelsProps> = ({
           <div className="flex items-center gap-1.5 overflow-x-auto pb-1 lg:pb-0">
             <button
               onClick={() => setSelectedTierFilter('all')}
-              className={`px-3.5 py-1.5 text-xs font-bold rounded-xl transition cursor-pointer whitespace-nowrap ${
+              className={`px-3.5 py-1.5 text-xs font-bold rounded-xl transition cursor-pointer whitespace-nowrap border ${
                 selectedTierFilter === 'all'
-                  ? 'bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-black shadow-md shadow-emerald-500/25'
-                  : 'text-slate-600 dark:text-slate-300 hover:text-emerald-700 dark:hover:text-emerald-300 bg-slate-100 dark:bg-slate-800'
+                  ? 'bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-black shadow-md shadow-emerald-500/25 border-transparent'
+                  : 'border-emerald-200 dark:border-emerald-800/60 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 hover:brightness-95'
               }`}
             >
               الكل ({customers.length})
@@ -380,10 +380,10 @@ export const CustomerLevels: React.FC<CustomerLevelsProps> = ({
                 <button
                   key={t.id}
                   onClick={() => setSelectedTierFilter(t.id)}
-                  className={`px-3.5 py-1.5 text-xs font-bold rounded-xl transition cursor-pointer whitespace-nowrap inline-flex items-center gap-1.5 ${
+                  className={`px-3.5 py-1.5 text-xs font-bold rounded-xl transition cursor-pointer whitespace-nowrap inline-flex items-center gap-1.5 border ${
                     selectedTierFilter === t.id
                       ? style.tabActive
-                      : 'text-slate-600 dark:text-slate-300 hover:text-emerald-700 dark:hover:text-emerald-300 bg-slate-100 dark:bg-slate-800'
+                      : `${style.softBg} ${style.text} hover:brightness-95`
                   }`}
                 >
                   <Icon className="w-3 h-3" />
@@ -437,7 +437,7 @@ export const CustomerLevels: React.FC<CustomerLevelsProps> = ({
                           <select
                             value={cust.vipLevel}
                             onChange={(e) => onUpdateCustomerTier(cust.id, e.target.value as any)}
-                            className="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white rounded-lg px-2 py-1 text-xs focus:outline-none focus:border-emerald-500 cursor-pointer"
+                            className={`border rounded-lg px-2 py-1 text-xs font-bold focus:outline-none focus:border-emerald-500 cursor-pointer ${style.softBg} ${style.text}`}
                           >
                             <option value="برونزي">برونزي</option>
                             <option value="فضي">فضي</option>
@@ -486,7 +486,8 @@ export const CustomerLevels: React.FC<CustomerLevelsProps> = ({
                   </h3>
                   <button
                     onClick={() => setEditingTier(null)}
-                    className="p-1 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 cursor-pointer"
+                    title="إغلاق"
+                    className={`p-1.5 rounded-lg border transition hover:brightness-95 active:scale-95 ${getTierStyle(editingTier.id).badge}`}
                   >
                     <X className="w-5 h-5" />
                   </button>
@@ -500,7 +501,7 @@ export const CustomerLevels: React.FC<CustomerLevelsProps> = ({
                       required
                       value={editingTier.name}
                       onChange={(e) => setEditingTier({ ...editingTier, name: e.target.value })}
-                      className="w-full px-3 py-2.5 text-xs bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none"
+                      className={`w-full px-3 py-2.5 text-xs border rounded-xl text-slate-900 dark:text-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none ${getTierStyle(editingTier.id).softBg}`}
                     />
                   </div>
 
@@ -514,7 +515,7 @@ export const CustomerLevels: React.FC<CustomerLevelsProps> = ({
                         required
                         value={editingTier.discountPercent}
                         onChange={(e) => setEditingTier({ ...editingTier, discountPercent: Number(e.target.value) })}
-                        className="w-full px-3 py-2.5 text-xs font-mono font-bold bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-emerald-700 dark:text-emerald-400 focus:border-emerald-500 focus:outline-none font-mono-digits"
+                        className={`w-full px-3 py-2.5 text-xs font-mono font-bold border rounded-xl text-emerald-700 dark:text-emerald-400 focus:border-emerald-500 focus:outline-none font-mono-digits ${getTierStyle(editingTier.id).softBg}`}
                       />
                     </div>
 
@@ -526,7 +527,7 @@ export const CustomerLevels: React.FC<CustomerLevelsProps> = ({
                         required
                         value={editingTier.minHoursRequired}
                         onChange={(e) => setEditingTier({ ...editingTier, minHoursRequired: Number(e.target.value) })}
-                        className="w-full px-3 py-2.5 text-xs font-mono font-bold bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white focus:border-emerald-500 focus:outline-none font-mono-digits"
+                        className={`w-full px-3 py-2.5 text-xs font-mono font-bold border rounded-xl text-slate-900 dark:text-white focus:border-emerald-500 focus:outline-none font-mono-digits ${getTierStyle(editingTier.id).softBg}`}
                       />
                     </div>
                   </div>
@@ -539,7 +540,7 @@ export const CustomerLevels: React.FC<CustomerLevelsProps> = ({
                       required
                       value={editingTier.minSpendRequired}
                       onChange={(e) => setEditingTier({ ...editingTier, minSpendRequired: Number(e.target.value) })}
-                      className="w-full px-3 py-2.5 text-xs font-mono font-bold bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-emerald-700 dark:text-emerald-400 focus:border-emerald-500 focus:outline-none font-mono-digits"
+                      className={`w-full px-3 py-2.5 text-xs font-mono font-bold border rounded-xl text-emerald-700 dark:text-emerald-400 focus:border-emerald-500 focus:outline-none font-mono-digits ${getTierStyle(editingTier.id).softBg}`}
                     />
                   </div>
 
@@ -547,7 +548,7 @@ export const CustomerLevels: React.FC<CustomerLevelsProps> = ({
                     <button
                       type="button"
                       onClick={() => setEditingTier(null)}
-                      className="px-4 py-2 text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 cursor-pointer"
+                      className={`px-4 py-2 text-xs font-bold rounded-xl border transition hover:brightness-95 ${getTierStyle(editingTier.id).softBg} ${getTierStyle(editingTier.id).text}`}
                     >
                       إلغاء
                     </button>

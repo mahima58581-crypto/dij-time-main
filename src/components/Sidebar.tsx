@@ -324,7 +324,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         {/* 4. Sidebar Footer: Current Operator Badge */}
         <div className="p-2.5 border-t border-emerald-100/80 dark:border-slate-800/80 bg-gradient-to-b from-slate-50/60 to-white dark:from-[#060a14] dark:to-[#060a14] shrink-0">
           {!isCollapsed ? (
-            <div className="operator-card group flex items-center gap-2.5 p-2 rounded-xl bg-white/95 dark:bg-[#0b1020]/95 border border-emerald-100/80 dark:border-slate-800 shadow-sm hover:shadow-lg hover:shadow-emerald-500/10 dark:hover:shadow-emerald-500/10 hover:-translate-y-0.5 transition-all duration-300">
+            <div className="flex items-center gap-2.5 p-2 rounded-xl bg-white/95 dark:bg-[#0b1020]/95 border border-emerald-100/80 dark:border-slate-800 shadow-sm">
               <div className="relative shrink-0">
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 via-teal-500 to-cyan-500 p-[2px] shadow-md shadow-emerald-500/30">
                   <div className="w-full h-full rounded-[10px] bg-white dark:bg-[#0b1020] flex items-center justify-center">
@@ -333,7 +333,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     </span>
                   </div>
                 </div>
-                <span className="online-dot absolute -bottom-0.5 -left-0.5 w-2.5 h-2.5 rounded-full bg-emerald-500 border-2 border-white dark:border-[#0b1020]" />
+                <span className="absolute -bottom-0.5 -left-0.5 w-2.5 h-2.5 rounded-full bg-emerald-500 border-2 border-white dark:border-[#0b1020]" />
               </div>
               <div className="text-right truncate flex-1 min-w-0">
                 <div className="flex items-center gap-1.5">

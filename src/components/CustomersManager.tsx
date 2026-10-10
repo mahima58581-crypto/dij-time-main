@@ -293,12 +293,12 @@ export const CustomersManager: React.FC<CustomersManagerProps> = ({
                 key={tier}
                 onClick={() => setTierFilter(tier)}
                 className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[11px] font-bold border transition-all ${
-                  active ? meta.tabActive : 'text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800/60'
+                  active ? meta.tabActive : `border ${meta.softBg} ${meta.text} hover:brightness-95`
                 }`}
               >
-                <Icon className="w-3.5 h-3.5" />
+                <Icon className={`w-3.5 h-3.5 ${active ? '' : meta.text}`} />
                 <span>{meta.label}</span>
-                <span className="font-mono text-[10px] px-1.5 py-0.5 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-mono-digits">
+                <span className={`font-mono text-[10px] px-1.5 py-0.5 rounded-full border font-mono-digits font-black ${active ? 'bg-white/25 text-white border-transparent' : meta.badge}`}>
                   {count}
                 </span>
               </motion.button>
@@ -383,7 +383,7 @@ export const CustomersManager: React.FC<CustomersManagerProps> = ({
                           <span>رمز الدخول السري:</span>
                         </div>
                         <div className="flex items-center gap-1.5 mt-1">
-                          <span className="font-mono font-mono-digits font-bold text-xs tracking-widest text-slate-800 dark:text-slate-200 bg-white dark:bg-slate-900 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-700">
+                          <span className={`font-mono font-mono-digits font-bold text-xs tracking-widest px-2 py-0.5 rounded border ${tier.badge}`}>
                             {isPinRevealed ? cust.pin : '••••'}
                           </span>
                           <button
