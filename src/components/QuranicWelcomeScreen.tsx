@@ -275,7 +275,7 @@ export const QuranicWelcomeScreen: React.FC<QuranicWelcomeScreenProps> = ({
                 <div className="text-[11px] font-black font-mono tracking-widest text-emerald-300 uppercase drop-shadow-sm flex items-center gap-1.5 font-mono-digits">
                   <span>DIJ-TIEM</span>
                   <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shadow-[0_0_6px_#fbbf24]" />
-                  <span className="text-teal-300">GAMING SYSTEM</span>
+                  <span className="text-teal-300">نظام الألعاب</span>
                 </div>
                 <div className="text-[9px] font-bold text-slate-400 -mt-0.5">
                   منظومة إدارة وحسابات صالات الألعاب والإنترنت

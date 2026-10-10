@@ -202,7 +202,7 @@ export const CustomersManager: React.FC<CustomersManagerProps> = ({
                 إدارة حسابات وبيانات زبائن النادي
               </h2>
               <p className="text-xs text-emerald-50/90 mt-1">
-                عرض الأسماء، رمز الدخول السري (PIN)، أرصدة المحافظ بالدينار وساعات اللعب المسجلة
+                عرض الأسماء، رمز الدخول السري، أرصدة المحافظ بالدينار وساعات اللعب المسجلة
               </p>
             </div>
           </div>
@@ -259,7 +259,7 @@ export const CustomersManager: React.FC<CustomersManagerProps> = ({
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="البحث بالاسم، رقم الهاتف أو رمز PIN..."
+            placeholder="البحث بالاسم، رقم الهاتف أو الرمز السري..."
             className="w-full pl-3 pr-10 py-2.5 rounded-xl text-xs bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 shadow-xs transition"
           />
         </div>
@@ -380,7 +380,7 @@ export const CustomersManager: React.FC<CustomersManagerProps> = ({
                       <div>
                         <div className="text-[11px] text-slate-500 dark:text-slate-400 flex items-center gap-1">
                           <KeyRound className={`w-3 h-3 ${tier.text}`} />
-                          <span>رمز الدخول (PIN):</span>
+                          <span>رمز الدخول السري:</span>
                         </div>
                         <div className="flex items-center gap-1.5 mt-1">
                           <span className="font-mono font-mono-digits font-bold text-xs tracking-widest text-slate-800 dark:text-slate-200 bg-white dark:bg-slate-900 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-700">
@@ -439,7 +439,7 @@ export const CustomersManager: React.FC<CustomersManagerProps> = ({
                           {prog.next ? `التقدم إلى مستوى «${prog.next}»` : 'وصل إلى أعلى مستوى'}
                         </span>
                         <span className={tier.text}>
-                          {prog.next ? `${prog.hours.toFixed(1)} / ${prog.target} ساعة` : '🏆 VIP Master'}
+                          {prog.next ? `${prog.hours.toFixed(1)} / ${prog.target} ساعة` : '🏆 رئيس VIP'}
                         </span>
                       </div>
                       <div className="h-2 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">

@@ -353,7 +353,7 @@ export const LiveTimeCards: React.FC<LiveTimeCardsProps> = ({
 
                       <div className={`text-[9px] ${theme.hudText} flex items-center gap-1 mb-1 font-mono font-bold tracking-wider uppercase`}>
                         <Clock className="w-2.5 h-2.5" />
-                        <span>مؤقت الجلسة (LIVE HUD)</span>
+                        <span>مؤقت الجلسة (مباشر)</span>
                       </div>
                       
                       <CyberDigitalTimer
@@ -435,7 +435,7 @@ export const LiveTimeCards: React.FC<LiveTimeCardsProps> = ({
                         </div>
 
                         <div className="flex items-center gap-1 shrink-0">
-                          <span className="text-[10px] text-slate-400 font-mono">PIN:</span>
+                          <span className="text-[10px] text-slate-400 font-mono">رمز:</span>
                           <span className={`font-mono font-black ${theme.pinBadge} px-1.5 py-0.2 rounded text-[10px] font-mono-digits tracking-wider`}>
                             {isPinVisible ? session.customerPin : '••••'}
                           </span>
@@ -443,7 +443,7 @@ export const LiveTimeCards: React.FC<LiveTimeCardsProps> = ({
                             type="button"
                             onClick={() => togglePin(session.id)}
                             className="text-slate-400 hover:text-slate-600 dark:hover:text-white p-0.5 transition cursor-pointer"
-                            title={isPinVisible ? 'إخفاء الرمز' : 'إظهار رمز PIN'}
+                            title={isPinVisible ? 'إخفاء الرمز' : 'إظهار الرمز'}
                           >
                             {isPinVisible ? <EyeOff className="w-3 h-3" /> : <Eye className="w-3 h-3 text-slate-400" />}
                           </button>

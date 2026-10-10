@@ -44,6 +44,87 @@ function getAudioContext(): AudioContext | null {
   return audioCtx;
 }
 
+// ---------------------------------------------------------------
+// Custom audio samples (real recorded alerts) from /public
+// ---------------------------------------------------------------
+export const AUDIO_SAMPLES = {
+  tenMin: `${import.meta.env.BASE_URL}audio-1.wav`,
+  fiveMin: `${import.meta.env.BASE_URL}audio-5min.wav`,
+  timeUp: `${import.meta.env.BASE_URL}audio-5min.wav`,
+} as const;
+
+// Decoded buffers are cached so each file is fetched/decoded only once
+const sampleBufferCache = new Map<string, Promise<AudioBuffer | null>>();
+
+function loadSampleBuffer(url: string): Promise<AudioBuffer | null> {
+  const cached = sampleBufferCache.get(url);
+  if (cached) return cached;
+
+  const ctx = getAudioContext();
+  if (!ctx) return Promise.resolve(null); // no cache: retry on the next play
+
+  const pending = (async () => {
+    try {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return await ctx.decodeAudioData(await res.arrayBuffer());
+    } catch (err) {
+      console.warn(`Could not load audio sample "${url}":`, err);
+      return null;
+    }
+  })();
+
+  sampleBufferCache.set(url, pending);
+  return pending;
+}
+
+/**
+ * Plays a real audio file through the Web Audio API so it honours the
+ * master volume / mute settings. Falls back to a synth tone if the file
+ * is missing or fails to decode.
+ */
+function playAudioSample(url: string, gainPeak = 1, fallback?: () => void) {
+  if (currentSettings.isMuted || currentSettings.volume <= 0) return;
+
+  loadSampleBuffer(url).then((buffer) => {
+    if (!buffer) {
+      fallback?.();
+      return;
+    }
+
+    // Settings may have changed while the file was still loading
+    if (currentSettings.isMuted || currentSettings.volume <= 0) return;
+
+    const ctx = getAudioContext();
+    if (!ctx) return;
+
+    try {
+      const source = ctx.createBufferSource();
+      source.buffer = buffer;
+
+      const gain = ctx.createGain();
+      gain.gain.setValueAtTime(
+        Math.max(0.0001, Math.min(1, gainPeak) * currentSettings.volume),
+        ctx.currentTime
+      );
+
+      source.connect(gain);
+      gain.connect(ctx.destination);
+      source.start();
+    } catch (err) {
+      console.warn('Audio sample playback error:', err);
+      fallback?.();
+    }
+  });
+}
+
+/** Warms the sample cache so the first alert fires without a fetch delay. */
+export function preloadAudioSamples() {
+  Object.values(AUDIO_SAMPLES).forEach((url) => {
+    loadSampleBuffer(url);
+  });
+}
+
 // Load saved sound settings
 export function loadSoundSettings(): SoundSettings {
   try {
@@ -121,12 +202,14 @@ function playToneBurst(
 
 /**
  * 1. 10 Minutes Warning Sound
- * Gentle high-low double chime indicating 10 mins remaining
+ * Custom recorded alert (public/audio-1.wav), synth tone as fallback
  */
 export function play10MinWarningSound() {
   if (!currentSettings.alert10MinEnabled) return;
-  // Notes: G5 (784Hz) -> E5 (659Hz)
-  playToneBurst([784, 659], [0.18, 0.28], 'triangle', 0.28);
+  playAudioSample(AUDIO_SAMPLES.tenMin, 0.9, () => {
+    // Notes: G5 (784Hz) -> E5 (659Hz)
+    playToneBurst([784, 659], [0.18, 0.28], 'triangle', 0.28);
+  });
 }
 
 /**
@@ -228,31 +311,70 @@ export function playCoinSound() {
 }
 
 /**
- * 9. Speech Synthesis Voice Announcement
- * Speaks Arabic or Persian announcements if browser supports it
+ * Chrome/Safari populate speechSynthesis.getVoices() asynchronously, so the
+ * list can be empty on the very first call. Wait for `voiceschanged` once
+ * instead of giving up and grabbing a default (English) voice.
  */
-export function speakVoiceAlert(text: string) {
+let voicesPromise: Promise<SpeechSynthesisVoice[]> | null = null;
+
+function ensureVoices(): Promise<SpeechSynthesisVoice[]> {
+  if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
+    return Promise.resolve([]);
+  }
+  if (voicesPromise) return voicesPromise;
+
+  voicesPromise = new Promise<SpeechSynthesisVoice[]>((resolve) => {
+    const existing = window.speechSynthesis.getVoices();
+    if (existing.length > 0) return resolve(existing);
+
+    let settled = false;
+    const finish = () => {
+      if (settled) return;
+      settled = true;
+      window.speechSynthesis.removeEventListener('voiceschanged', finish);
+      resolve(window.speechSynthesis.getVoices());
+    };
+
+    window.speechSynthesis.addEventListener('voiceschanged', finish);
+    // Safety net: don't hang the alert if the event never fires
+    setTimeout(finish, 1200);
+  });
+
+  return voicesPromise;
+}
+
+/**
+ * 9. Speech Synthesis Voice Announcement
+ * Speaks Arabic announcements using an Arabic voice only
+ */
+export async function speakVoiceAlert(text: string) {
   if (currentSettings.isMuted || !currentSettings.voiceEnabled) return;
   if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
 
   try {
+    const voices = await ensureVoices();
+
+    // Only Arabic / Persian voices are allowed. Never fall back to the
+    // system default: an English voice reading Arabic text pronounces the
+    // digits in English ("ten") and the rest comes out unintelligible.
+    const targetVoice =
+      voices.find((v) => /^ar/i.test(v.lang)) ||
+      voices.find((v) => /^fa/i.test(v.lang));
+
+    if (!targetVoice) {
+      console.warn(
+        'No Arabic/Persian voice installed - skipping spoken alert to avoid an English voice.'
+      );
+      return;
+    }
+
     window.speechSynthesis.cancel(); // Cancel any lingering utterance
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.volume = Math.min(1, currentSettings.volume * 1.2);
     utterance.rate = 1.0;
     utterance.pitch = 1.05;
-    utterance.lang = 'ar'; // اعلان‌های صوتی به زبان عربی
-
-    // Prefer an Arabic voice, then Persian, else default
-    const voices = window.speechSynthesis.getVoices();
-    const targetVoice =
-      voices.find((v) => v.lang.startsWith('ar')) ||
-      voices.find((v) => v.lang.startsWith('fa')) ||
-      voices[0];
-
-    if (targetVoice) {
-      utterance.voice = targetVoice;
-    }
+    utterance.lang = targetVoice.lang; // اعلان‌های صوتی به زبان عربی
+    utterance.voice = targetVoice;
 
     window.speechSynthesis.speak(utterance);
   } catch (err) {

@@ -23,7 +23,7 @@ interface SecurityPinModalProps {
 }
 
 const KEYPAD_KEYS = [
-  { digit: '1', sub: 'SEC' },
+  { digit: '1', sub: 'ثانية' },
   { digit: '2', sub: 'ABC' },
   { digit: '3', sub: 'DEF' },
   { digit: '4', sub: 'GHI' },
@@ -322,7 +322,7 @@ export const SecurityPinModal: React.FC<SecurityPinModalProps> = ({
                 0
               </span>
               <span className="text-[8px] font-black font-mono tracking-widest text-slate-500 group-hover:text-teal-400 transition-colors mt-0.5">
-                SYS
+                نظام
               </span>
               <div className="absolute top-1 right-1.5 w-1 h-1 rounded-full bg-slate-700 group-hover:bg-emerald-400 group-hover:shadow-[0_0_6px_#34d399] transition-all" />
             </motion.button>

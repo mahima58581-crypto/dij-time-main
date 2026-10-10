@@ -467,7 +467,6 @@ export const StationManagement: React.FC<StationManagementProps> = ({
             {
               id: 'all',
               title: 'جميع المنصات',
-              desc: 'كامل أسطول الأجهزة',
               icon: Layers,
               count: countForType('all'),
               idleClass: 'bg-white dark:bg-emerald-950/20 border-emerald-200/90 dark:border-emerald-500/30 hover:border-emerald-400 dark:hover:border-emerald-500/60 hover:shadow-md hover:shadow-emerald-500/15 text-slate-800 dark:text-emerald-100',
@@ -482,7 +481,6 @@ export const StationManagement: React.FC<StationManagementProps> = ({
             {
               id: 'VIP_SIM',
               title: 'محاكي قيادة VIP',
-              desc: 'مقصورات السباق (برتقالي)',
               icon: VipSimulatorIcon,
               count: countForType('VIP_SIM'),
               // Distinct Pure Neon Orange Theme as requested by user
@@ -498,7 +496,6 @@ export const StationManagement: React.FC<StationManagementProps> = ({
             {
               id: 'XBOX',
               title: 'Xbox Series X',
-              desc: 'منصات مايكروسوفت (أخضر)',
               icon: XboxIcon,
               count: countForType('XBOX'),
               // Distinct Pure Xbox Laser Green Theme as requested by user
@@ -514,7 +511,6 @@ export const StationManagement: React.FC<StationManagementProps> = ({
             {
               id: 'PS5',
               title: 'PlayStation 5',
-              desc: 'منصات سوني (أزرق ملكي)',
               icon: PlaystationIcon,
               count: countForType('PS5'),
               idleClass: 'bg-white dark:bg-blue-950/20 border-blue-200/90 dark:border-blue-500/30 hover:border-blue-400 dark:hover:border-blue-500/60 hover:shadow-md hover:shadow-blue-500/20 text-slate-800 dark:text-blue-100',
@@ -529,7 +525,6 @@ export const StationManagement: React.FC<StationManagementProps> = ({
             {
               id: 'PC',
               title: 'حواسيب PC',
-              desc: 'عتاد فائق (سيان سايبر)',
               icon: Monitor,
               count: countForType('PC'),
               idleClass: 'bg-white dark:bg-cyan-950/20 border-cyan-200/90 dark:border-cyan-500/30 hover:border-cyan-400 dark:hover:border-cyan-500/60 hover:shadow-md hover:shadow-cyan-500/20 text-slate-800 dark:text-cyan-100',
@@ -574,14 +569,11 @@ export const StationManagement: React.FC<StationManagementProps> = ({
                   </span>
                 </div>
 
-                {/* Bottom Deck: Category Name & Subtitle */}
+                {/* Bottom Deck: Category Name */}
                 <div>
                   <h3 className="text-xs sm:text-sm font-black font-gaming tracking-wide truncate text-slate-900 dark:text-white">
                     {cat.title}
                   </h3>
-                  <p className="text-[10px] text-slate-500 dark:text-slate-400 truncate mt-0.5 font-medium">
-                    {cat.desc}
-                  </p>
                 </div>
 
                 {/* Active Diamond Beacon */}

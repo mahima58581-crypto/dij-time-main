@@ -250,7 +250,7 @@ export const NewSessionModal: React.FC<NewSessionModalProps> = ({
               </span>
             </div>
 
-            {/* شريط أقسام الأجهزة مصغر ومضغوط (بخش کامپیوتر، اکس باکس، پلی استیشن، محاکی VIP) */}
+            {/* شريط أقسام الأجهزة مصغر ومضغوط (قسم حاسوب، إكس بوكس، بلايستيشن، محاكي VIP) */}
             <div className="flex items-center gap-1 overflow-x-auto pb-0.5 custom-scrollbar">
               <button
                 type="button"
@@ -277,7 +277,7 @@ export const NewSessionModal: React.FC<NewSessionModalProps> = ({
                 }`}
               >
                 <GamingPcIcon className="w-3 h-3" />
-                <span>كامپیوتر (PC)</span>
+                <span>حاسوب</span>
                 <span className="px-1 py-0.2 rounded text-[9px] bg-black/10 dark:bg-white/10 font-mono font-mono-digits">
                   {availableStations.filter(s => s.type === 'PC').length}
                 </span>
@@ -293,7 +293,7 @@ export const NewSessionModal: React.FC<NewSessionModalProps> = ({
                 }`}
               >
                 <Gamepad2 className="w-3 h-3" />
-                <span>پلی‌استیشن (PS5)</span>
+                <span>بلايستيشن 5</span>
                 <span className="px-1 py-0.2 rounded text-[9px] bg-black/10 dark:bg-white/10 font-mono font-mono-digits">
                   {availableStations.filter(s => s.type === 'PS5').length}
                 </span>
@@ -309,7 +309,7 @@ export const NewSessionModal: React.FC<NewSessionModalProps> = ({
                 }`}
               >
                 <Tv className="w-3 h-3" />
-                <span>اکس‌باکس (Xbox)</span>
+                <span>إكس بوكس</span>
                 <span className="px-1 py-0.2 rounded text-[9px] bg-black/10 dark:bg-white/10 font-mono font-mono-digits">
                   {availableStations.filter(s => s.type === 'XBOX').length}
                 </span>
@@ -325,7 +325,7 @@ export const NewSessionModal: React.FC<NewSessionModalProps> = ({
                 }`}
               >
                 <VipSimulatorIcon className="w-3 h-3" />
-                <span>محاکی VIP</span>
+                <span>محاكي VIP</span>
                 <span className="px-1 py-0.2 rounded text-[9px] bg-black/10 dark:bg-white/10 font-mono font-mono-digits">
                   {availableStations.filter(s => s.type === 'VIP_SIM').length}
                 </span>
@@ -398,7 +398,7 @@ export const NewSessionModal: React.FC<NewSessionModalProps> = ({
             <div className="flex items-center justify-between">
               <label className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
                 <User className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-                <span>بيانات اللاعب (الاسم، الهاتف، رمز PIN):</span>
+                <span>بيانات اللاعب (الاسم، الهاتف، رمز الدخول):</span>
               </label>
 
               {/* Toggle Existing vs New */}
@@ -430,7 +430,7 @@ export const NewSessionModal: React.FC<NewSessionModalProps> = ({
 
             {customerMode === 'existing' ? (
               <div className="space-y-2">
-                {/* فیلد جستجوی زنده بر اساس نام، رمز PIN یا شماره تلفن */}
+                {/* حقل بحث مباشر بالاسم، رمز الدخول أو رقم الهاتف */}
                 <div className="relative">
                   <Search className="w-4 h-4 text-emerald-500 absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                   <input
@@ -500,7 +500,7 @@ export const NewSessionModal: React.FC<NewSessionModalProps> = ({
                                 <div className="text-[10px] text-slate-500 dark:text-slate-400 font-mono font-mono-digits flex items-center gap-2 mt-0.5">
                                   <span className="flex items-center gap-0.5">
                                     <KeyRound className="w-2.5 h-2.5 text-emerald-600 dark:text-emerald-400" />
-                                    PIN: <strong className="text-emerald-600 dark:text-emerald-400 font-bold">{c.pin}</strong>
+                                    رمز: <strong className="text-emerald-600 dark:text-emerald-400 font-bold">{c.pin}</strong>
                                   </span>
                                   <span>هاتف: {c.phone}</span>
                                 </div>
@@ -562,7 +562,7 @@ export const NewSessionModal: React.FC<NewSessionModalProps> = ({
                         <div className="flex items-center gap-3 font-mono text-[11px] font-mono-digits text-slate-500 dark:text-slate-400 mt-0.5">
                           <span className="flex items-center gap-1">
                             <KeyRound className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
-                            رمز PIN: <strong className="text-emerald-600 dark:text-emerald-400 font-bold">{selectedCust.pin}</strong>
+                            رمز الدخول: <strong className="text-emerald-600 dark:text-emerald-400 font-bold">{selectedCust.pin}</strong>
                           </span>
                           <span>هاتف: {selectedCust.phone}</span>
                           <span>الرصيد: <strong className="text-emerald-600 dark:text-emerald-400 font-bold">{formatCurrency(selectedCust.balance)}</strong></span>
@@ -610,7 +610,7 @@ export const NewSessionModal: React.FC<NewSessionModalProps> = ({
 
                 <div>
                   <div className="flex items-center justify-between">
-                    <label className="text-[11px] font-bold text-slate-600 dark:text-slate-400">رمز PIN السري:</label>
+                    <label className="text-[11px] font-bold text-slate-600 dark:text-slate-400">رمز الدخول السري:</label>
                     <button
                       type="button"
                       onClick={handleRegeneratePin}
@@ -665,7 +665,7 @@ export const NewSessionModal: React.FC<NewSessionModalProps> = ({
                 />
                 <div>
                   <div className="font-bold text-xs text-slate-900 dark:text-white flex items-center gap-1.5">
-                    <span>وقت مفتوح (Open)</span>
+                    <span>وقت مفتوح</span>
                     <span className="px-1.5 py-0.2 rounded text-[10px] font-mono bg-emerald-500/20 text-emerald-600 dark:text-emerald-400">حر</span>
                   </div>
                   <div className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 leading-relaxed">
@@ -808,7 +808,7 @@ export const NewSessionModal: React.FC<NewSessionModalProps> = ({
 
           </div>
 
-          {/* الملخص السفلي وأزرار الإجراءات Cyber Action Footer */}
+          {/* الملخص السفلي وأزرار الإجراءات */}
           <div className="flex flex-col-reverse sm:flex-row items-center justify-between gap-3 pt-3 border-t border-slate-100 dark:border-slate-800">
             <div className="w-full sm:w-auto flex items-center justify-between sm:justify-start gap-3">
               <button

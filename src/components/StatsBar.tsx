@@ -168,7 +168,7 @@ export const StatsBar: React.FC<StatsBarProps> = ({
         </div>
         <div className="my-1 text-base sm:text-lg font-black font-mono text-sky-600 dark:text-sky-400 font-mono-digits tracking-tight flex items-baseline gap-1 truncate">
           <span>950</span>
-          <span className="text-xs font-bold text-slate-400 font-sans">Mbps</span>
+          <span className="text-xs font-bold text-slate-400 font-sans">ميجابت/ثانية</span>
         </div>
         <div className="text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400 flex items-center gap-1.5 font-medium truncate">
           <span className="w-1.5 h-1.5 rounded-full bg-sky-500 shrink-0" />
@@ -216,9 +216,9 @@ export const StatsBar: React.FC<StatsBarProps> = ({
   return (
     <div className={embedded ? "" : "my-4"}>
       {/* High-Tech Cyber Pill / Trigger Bar with Arrow */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-emerald-950/40 via-slate-900/90 to-teal-950/40 dark:from-[#0a1120] dark:via-[#0c1424] dark:to-[#08131e] border border-emerald-500/30 dark:border-emerald-500/35 shadow-lg shadow-emerald-950/20 backdrop-blur-xl p-3 sm:px-4 transition-all duration-300">
+      <div className="relative overflow-hidden rounded-2xl bg-white dark:bg-gradient-to-r dark:from-[#0a1120] dark:via-[#0c1424] dark:to-[#08131e] border border-slate-200/80 dark:border-emerald-500/35 shadow-soft dark:shadow-lg dark:shadow-emerald-950/20 backdrop-blur-xl p-3 sm:px-4 transition-all duration-300">
         
-        {/* Ambient Neon Backlight */}
+        {/* Ambient Backlight */}
         <div className="absolute top-0 right-1/4 w-72 h-12 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none" />
         
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 relative z-10">
@@ -226,33 +226,33 @@ export const StatsBar: React.FC<StatsBarProps> = ({
           {/* Right Side (RTL): Title & Quick Glance Chips */}
           <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
             <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 p-[1.5px] shadow-sm shadow-emerald-500/30 shrink-0">
-              <div className="w-full h-full rounded-[10px] bg-[#070c16] flex items-center justify-center">
-                <Activity className="w-4 h-4 text-emerald-400 animate-pulse" />
+              <div className="w-full h-full rounded-[10px] bg-white dark:bg-[#070c16] flex items-center justify-center">
+                <Activity className="w-4 h-4 text-emerald-500 dark:text-emerald-400 animate-pulse" />
               </div>
             </div>
 
             <div>
               <div className="flex items-center gap-2">
-                <h3 className="text-xs sm:text-sm font-black text-white font-gaming tracking-wide">
+                <h3 className="text-xs sm:text-sm font-black text-slate-900 dark:text-white font-gaming tracking-wide">
                   لوحة الإحصائيات والمؤشرات الحية
                 </h3>
-                <span className="text-[10px] font-mono font-bold text-emerald-300 bg-emerald-950/80 px-2 py-0.5 rounded-full border border-emerald-500/30">
+                <span className="text-[10px] font-mono font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200 dark:text-emerald-300 dark:bg-emerald-950/80 dark:border-emerald-500/30">
                   نافذة ذكية
                 </span>
               </div>
-              <p className="text-[10px] text-slate-400 hidden sm:block">
+              <p className="text-[10px] text-slate-500 dark:text-slate-400 hidden sm:block">
                 انقر على السهم لعرض بطاقات الإيرادات والإشغال وساعات اللعب
               </p>
             </div>
 
             {/* Quick Live Preview Chips (Visible even when collapsed) */}
             <div className="flex items-center gap-2 mr-auto sm:mr-3 text-xs font-mono">
-              <div className="px-2.5 py-1 rounded-xl bg-slate-900/90 border border-emerald-500/20 text-emerald-400 flex items-center gap-1.5 shadow-xs">
-                <Crown className="w-3.5 h-3.5 text-amber-400" />
+              <div className="px-2.5 py-1 rounded-xl bg-slate-100 border border-emerald-200 text-emerald-700 flex items-center gap-1.5 shadow-xs dark:bg-slate-900/90 dark:border-emerald-500/20 dark:text-emerald-400">
+                <Crown className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400" />
                 <span className="font-bold">{formatCurrency(totalRevenue)}</span>
               </div>
-              <div className="hidden md:flex px-2.5 py-1 rounded-xl bg-slate-900/90 border border-cyan-500/20 text-cyan-400 items-center gap-1.5 shadow-xs">
-                <Joystick className="w-3.5 h-3.5 text-cyan-400" />
+              <div className="hidden md:flex px-2.5 py-1 rounded-xl bg-slate-100 border border-cyan-200 text-cyan-700 items-center gap-1.5 shadow-xs dark:bg-slate-900/90 dark:border-cyan-500/20 dark:text-cyan-400">
+                <Joystick className="w-3.5 h-3.5 text-cyan-500 dark:text-cyan-400" />
                 <span>{occupiedStations}/{totalStations} جهاز</span>
               </div>
             </div>
@@ -270,8 +270,8 @@ export const StatsBar: React.FC<StatsBarProps> = ({
               }}
               className={`h-9 px-3.5 rounded-xl border text-xs font-bold transition-all shadow-md flex items-center gap-2 cursor-pointer ${
                 isOpenInOtherPages
-                  ? 'bg-emerald-500 text-slate-950 border-emerald-400 shadow-emerald-500/30'
-                  : 'bg-emerald-950/60 hover:bg-emerald-900/80 text-emerald-300 border-emerald-500/40 hover:border-emerald-400 shadow-emerald-950/40'
+                  ? 'bg-emerald-500 text-white border-emerald-400 shadow-emerald-500/30'
+                  : 'bg-white hover:bg-emerald-50 text-emerald-700 border-emerald-200 hover:border-emerald-400 shadow-emerald-500/10 dark:bg-emerald-950/60 dark:hover:bg-emerald-900/80 dark:text-emerald-300 dark:border-emerald-500/40 dark:hover:border-emerald-400 dark:shadow-emerald-950/40'
               }`}
             >
               <span className="text-[11px] font-bold">
@@ -282,7 +282,7 @@ export const StatsBar: React.FC<StatsBarProps> = ({
               <motion.div
                 animate={{ rotate: isOpenInOtherPages ? 180 : 0 }}
                 transition={{ type: 'spring', stiffness: 350, damping: 22 }}
-                className="w-5 h-5 rounded-lg bg-black/20 flex items-center justify-center shrink-0"
+                className="w-5 h-5 rounded-lg bg-black/10 dark:bg-black/20 flex items-center justify-center shrink-0"
               >
                 <ChevronDown className="w-4 h-4 stroke-[2.5]" />
               </motion.div>
@@ -299,12 +299,12 @@ export const StatsBar: React.FC<StatsBarProps> = ({
               animate={{ opacity: 1, height: 'auto', marginTop: 16 }}
               exit={{ opacity: 0, height: 0, marginTop: 0 }}
               transition={{ duration: 0.3, ease: 'easeOut' }}
-              className="overflow-hidden pt-3 border-t border-emerald-500/20"
+              className="overflow-hidden pt-3 border-t border-slate-200/80 dark:border-emerald-500/20"
             >
               {renderCardsGrid()}
 
               {/* Bottom Quick-Collapse Strip */}
-              <div className="mt-3 pt-2 flex items-center justify-between text-[11px] text-slate-400 border-t border-slate-800/80">
+              <div className="mt-3 pt-2 flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 border-t border-slate-200/80 dark:border-slate-800/80">
                 <span className="flex items-center gap-1.5">
                   <Sparkles className="w-3.5 h-3.5 text-amber-400" />
                   <span>يتم تحديث جميع القيم تلقائياً وبشکل لحظي.</span>

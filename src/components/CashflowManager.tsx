@@ -262,8 +262,8 @@ export const CashflowManager: React.FC<CashflowManagerProps> = ({
             <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 text-white mx-auto flex items-center justify-center shadow-lg shadow-emerald-500/30">
               <Receipt className="w-6 h-6" />
             </div>
-            <div className="text-sm font-black text-slate-700 dark:text-slate-200">هیچ سجل مصروفی یافت نشد</div>
-            <p className="text-xs text-slate-500 dark:text-slate-400">با تغییر جستجو یا فیلتر دسته، سجلات دیگر نمایش داده می‌شود</p>
+            <div className="text-sm font-black text-slate-700 dark:text-slate-200">لم يتم العثور على سجل مصروف</div>
+            <p className="text-xs text-slate-500 dark:text-slate-400">مع تغيير البحث أو تصفية الفئة، سيتم عرض سجلات أخرى</p>
           </div>
         ) : (
           <div className="overflow-x-auto rounded-xl border border-slate-100 dark:border-slate-800">

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { 
   Gamepad2, 
@@ -84,11 +84,11 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </span>
                 <span className="px-2.5 py-0.5 text-[10px] font-extrabold rounded-full bg-amber-500/15 border border-amber-500/40 text-amber-300 uppercase tracking-wider flex items-center gap-1">
                   <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
-                  گیمینگ کلاب • طلایی
+                  نادي الألعاب • ذهبي
                 </span>
               </div>
               <p className="text-xs text-zinc-400 font-medium">
-                سیستم گیمینگ، زمان‌سنجی هوشمند، مدیریت بازیکنان و بوفه
+                نظام ألعاب، توقيت ذكي، إدارة لاعبين وبوفيه
               </p>
             </div>
           </div>
@@ -170,4 +170,3 @@ export const Navbar: React.FC<NavbarProps> = ({
     </header>
   );
 };
-

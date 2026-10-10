@@ -26,15 +26,15 @@ interface AppEntryLockScreenProps {
 }
 
 const KEYPAD_KEYS = [
-  { digit: '1', sub: 'SEC' },
-  { digit: '2', sub: 'ABC' },
-  { digit: '3', sub: 'DEF' },
-  { digit: '4', sub: 'GHI' },
-  { digit: '5', sub: 'JKL' },
-  { digit: '6', sub: 'MNO' },
-  { digit: '7', sub: 'PQRS' },
-  { digit: '8', sub: 'TUV' },
-  { digit: '9', sub: 'WXYZ' },
+  { digit: '1', sub: 'ـ' },
+  { digit: '2', sub: 'أ ب ت' },
+  { digit: '3', sub: 'ث ج ح' },
+  { digit: '4', sub: 'خ د ذ' },
+  { digit: '5', sub: 'ر ز س' },
+  { digit: '6', sub: 'ش ص ض' },
+  { digit: '7', sub: 'ط ظ ع' },
+  { digit: '8', sub: 'غ ف ق' },
+  { digit: '9', sub: 'ك ل م' },
 ];
 
 export const AppEntryLockScreen: React.FC<AppEntryLockScreenProps> = ({
@@ -199,7 +199,7 @@ export const AppEntryLockScreen: React.FC<AppEntryLockScreenProps> = ({
           {clubSettings.clubName}
         </h1>
         <p className="text-xs text-slate-400 mt-1 font-medium">
-          سامانه هوشمند مدیریت صالات و سالن بازی • قفل امنیتی ورود
+          النظام الذكي لإدارة صالات واللعب • قفل أمان الدخول
         </p>
 
         {/* Active Shift Operator Badge */}
@@ -208,7 +208,7 @@ export const AppEntryLockScreen: React.FC<AppEntryLockScreenProps> = ({
             {currentOperator.name.slice(0, 1)}
           </div>
           <div className="text-right">
-            <span className="text-slate-400 text-[10px] block leading-none">اپراتور فعال نوبت:</span>
+            <span className="text-slate-400 text-[10px] block leading-none">المشغل النشط للوردية:</span>
             <span className="text-slate-200 font-bold text-xs">{currentOperator.name} ({currentOperator.role})</span>
           </div>
         </div>
@@ -219,7 +219,7 @@ export const AppEntryLockScreen: React.FC<AppEntryLockScreenProps> = ({
         <div className="my-5 w-full flex flex-col items-center">
           <div className="text-xs font-bold text-slate-400 mb-3 flex items-center gap-1.5 font-mono">
             <KeyRound className="w-3.5 h-3.5 text-emerald-400 animate-pulse" />
-            <span>رمز امنیتی ۴ رقمی ورود به سامانه:</span>
+            <span>رمز الأمان المكون من 4 أرقام للدخول إلى النظام:</span>
           </div>
 
           <motion.div 
@@ -313,16 +313,16 @@ export const AppEntryLockScreen: React.FC<AppEntryLockScreenProps> = ({
             {error ? (
               <span className="text-xs font-bold text-rose-400 flex items-center gap-1.5 animate-pulse">
                 <AlertCircle className="w-3.5 h-3.5" />
-                رمز ورود نادرست است! دوباره تلاش کنید.
+                رمز الدخول غير صحيح! حاول مرة أخرى.
               </span>
             ) : isSuccess ? (
               <span className="text-xs font-bold text-emerald-400 flex items-center gap-1.5">
                 <ShieldCheck className="w-4 h-4" />
-                تأیید هویت موفقیت‌آمیز بود. در حال ورود...
+                تم التحقق من الهوية بنجاح. جاري الدخول...
               </span>
             ) : (
               <span className="text-[11px] text-slate-500 font-mono">
-                تایپ با کیبورد فیزیکی یا کیپد کریستالی لمسی
+                الكتابة بلوحة المفاتيح الفعلية أو لوحة المفاتيح البلورية اللمسية
               </span>
             )}
           </div>
@@ -366,12 +366,12 @@ export const AppEntryLockScreen: React.FC<AppEntryLockScreenProps> = ({
             type="button"
             onClick={handleClear}
             className="relative h-14 rounded-2xl bg-gradient-to-b from-rose-950/40 via-[#180e14] to-[#0d070b] border border-rose-500/40 hover:border-rose-400 hover:shadow-[0_0_20px_rgba(244,63,94,0.35)] active:bg-rose-900/40 text-rose-300 shadow-[0_6px_16px_rgba(0,0,0,0.5)] transition-all duration-150 flex flex-col items-center justify-center cursor-pointer group overflow-hidden"
-            title="پاک کردن کل ارقام"
+            title="مسح جميع الأرقام"
           >
             <div className="absolute top-0 inset-x-3 h-px bg-gradient-to-r from-transparent via-rose-300/25 to-transparent pointer-events-none" />
             <RotateCcw className="w-4 h-4 text-rose-400 group-hover:rotate-180 transition-transform duration-300" />
             <span className="text-[9px] font-black text-rose-300 mt-1 tracking-wider">
-              پاک کردن
+              مسح
             </span>
           </motion.button>
 
@@ -388,7 +388,7 @@ export const AppEntryLockScreen: React.FC<AppEntryLockScreenProps> = ({
               0
             </span>
             <span className="text-[8px] font-black font-mono tracking-widest text-slate-500 group-hover:text-teal-400 transition-colors mt-0.5">
-              SYS
+              نظام
             </span>
             <div className="absolute top-1 right-1.5 w-1 h-1 rounded-full bg-slate-700 group-hover:bg-emerald-400 group-hover:shadow-[0_0_6px_#34d399] transition-all" />
           </motion.button>
@@ -400,12 +400,12 @@ export const AppEntryLockScreen: React.FC<AppEntryLockScreenProps> = ({
             type="button"
             onClick={handleDelete}
             className="relative h-14 rounded-2xl bg-gradient-to-b from-amber-950/40 via-[#18130e] to-[#0d0907] border border-amber-500/40 hover:border-amber-400 hover:shadow-[0_0_20px_rgba(251,191,36,0.35)] active:bg-amber-900/40 text-amber-300 shadow-[0_6px_16px_rgba(0,0,0,0.5)] transition-all duration-150 flex flex-col items-center justify-center cursor-pointer group overflow-hidden"
-            title="حذف آخرین رقم وارد شده"
+            title="حذف آخر رقم تم إدخاله"
           >
             <div className="absolute top-0 inset-x-3 h-px bg-gradient-to-r from-transparent via-amber-300/25 to-transparent pointer-events-none" />
             <Delete className="w-5 h-5 text-amber-400 group-hover:-translate-x-0.5 transition-transform" />
             <span className="text-[8px] font-black font-mono tracking-wider text-amber-400 mt-1">
-              BACK
+              رجوع
             </span>
           </motion.button>
         </div>

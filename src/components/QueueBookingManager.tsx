@@ -14,7 +14,7 @@ interface QueueBookingManagerProps {
   onStartSessionForStation: (stationId: string, customerName?: string, customerPhone?: string) => void;
 }
 
-// ─── پالت یکدست سبز و فیروزه‌ای برای کل صفحه ───
+// ─── لوحة موحدة خضراء وفيروزية للصفحة بأكملها ───
 const THEME = {
   hero: 'from-emerald-600 via-teal-500 to-cyan-500',
   heroShadow: 'shadow-emerald-500/30',
@@ -112,14 +112,14 @@ export const QueueBookingManager: React.FC<QueueBookingManagerProps> = ({
   return (
     <div className="space-y-5 relative">
 
-      {/* بخش‌های نورانی شناور در پس‌زمینه — فقط سبز و فیروزه‌ای */}
+      {/* أقسام مضيئة عائمة في الخلفية — فقط خضراء وفيروزية */}
       <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
         <div className={`absolute -top-24 left-1/4 w-96 h-96 ${THEME.blob1} rounded-full blur-3xl float-slow`} />
         <div className={`absolute top-1/2 -right-24 w-80 h-80 ${THEME.blob2} rounded-full blur-3xl float-slower`} />
         <div className={`absolute bottom-0 left-1/3 w-96 h-96 ${THEME.blob3} rounded-full blur-3xl float-slow`} />
       </div>
 
-      {/* ─── Header Banner ─── */}
+      {/* ─── لافتة رئيسية ─── */}
       <motion.div
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
@@ -129,7 +129,7 @@ export const QueueBookingManager: React.FC<QueueBookingManagerProps> = ({
         <div className="absolute -left-12 -top-20 w-56 h-56 rounded-full bg-white/10 pointer-events-none" />
         <div className="absolute -left-6 -bottom-24 w-44 h-44 rounded-full bg-white/10 pointer-events-none" />
         <div className="absolute left-1/3 -top-10 w-24 h-24 rounded-full bg-white/5 pointer-events-none" />
-        {/* آیکون‌های شناور */}
+        {/* أيقونات عائمة */}
         <CalendarClock className="absolute left-10 top-5 w-5 h-5 text-white/40 float-slow pointer-events-none" />
         <UserCheck className="absolute left-48 bottom-7 w-4 h-4 text-white/30 float-slower pointer-events-none" />
         <Bell className="absolute right-1/3 top-3 w-4 h-4 text-white/35 float-slow pointer-events-none" />
@@ -408,7 +408,7 @@ export const QueueBookingManager: React.FC<QueueBookingManagerProps> = ({
         </div>
       )}
 
-      {/* ─── مودال تسجيل حجز جديد ─── */}
+      {/* ─── نافذة تسجيل حجز جديد ─── */}
       <AnimatePresence>
         {isAddModalOpen && (
           <div className="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
@@ -419,7 +419,7 @@ export const QueueBookingManager: React.FC<QueueBookingManagerProps> = ({
               transition={{ type: 'spring', damping: 22, stiffness: 300 }}
               className="bg-white dark:bg-[#0c101c] border border-slate-200 dark:border-slate-800 rounded-3xl max-w-md w-full shadow-2xl overflow-hidden"
             >
-              {/* شريط علوي سبز فیروزه‌ای */}
+              {/* شريط علوي أخضر فيروزي */}
               <div className={`h-1.5 w-full bg-gradient-to-r ${THEME.strip} animate-gradient-x`} />
 
               <div className="p-6 space-y-4">

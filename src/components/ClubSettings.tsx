@@ -260,7 +260,7 @@ export const ClubSettings: React.FC<ClubSettingsProps> = ({
                   معاينة حية لترويسة الفاتورة المطبوعة:
                 </div>
                 <div className="mx-auto max-w-xs p-4 rounded-xl bg-white dark:bg-slate-950 border-2 border-dashed border-slate-300 dark:border-slate-700 text-center space-y-1 shadow-inner">
-                  <div className="text-[10px] font-bold text-slate-400 tracking-wider">DIJ-TIEM GAMING CLUB</div>
+                  <div className="text-[10px] font-bold text-slate-400 tracking-wider">ديج تايم لنادي الألعاب</div>
                   <div className="text-base font-black text-slate-900 dark:text-white">
                     {localSettings.clubName || 'اسم النادي'}
                   </div>
@@ -377,7 +377,7 @@ export const ClubSettings: React.FC<ClubSettingsProps> = ({
                   num="3"
                   icon={<Bell className="w-5 h-5 text-white" />}
                   title="التنبيهات والأصوات الذكية للنظام"
-                  subtitle="Sound Alerts Engine"
+                  subtitle="محرك التنبيهات الصوتية"
                 />
                 <span className="text-[11px] font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/80 px-2.5 py-1 rounded-full border border-emerald-200 dark:border-emerald-700 flex items-center gap-1 shrink-0">
                   <Radio className="w-3 h-3 text-emerald-600 animate-pulse" />
@@ -461,7 +461,7 @@ export const ClubSettings: React.FC<ClubSettingsProps> = ({
                 num="4"
                 icon={<KeyRound className="w-5 h-5 text-white" />}
                 title="الأمان ورموز الدخول المزدوجة"
-                subtitle="PIN Security — نظام الحماية المزدوج"
+                subtitle="أمان الرمز — نظام الحماية المزدوج"
                 accent="from-amber-500 to-orange-500"
               />
 
@@ -475,7 +475,7 @@ export const ClubSettings: React.FC<ClubSettingsProps> = ({
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
                   <label className="block text-xs font-bold text-slate-700 dark:text-slate-300">
-                    رمز الدخول العام للمتصفح (Master App Entry PIN)
+                    رمز الدخول العام للمتصفح (رمز دخول التطبيق الرئيسي)
                   </label>
                   <div className="relative">
                     <Lock className="w-4 h-4 text-slate-400 absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
@@ -499,7 +499,7 @@ export const ClubSettings: React.FC<ClubSettingsProps> = ({
 
                 <div className="space-y-1.5">
                   <label className="block text-xs font-bold text-slate-700 dark:text-slate-300">
-                    رمز المدير لتقارير الأرباح والإعدادات (Admin PIN)
+                    رمز المدير لتقارير الأرباح والإعدادات (رمز المدير)
                   </label>
                   <div className="relative">
                     <KeyRound className="w-4 h-4 text-slate-400 absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />

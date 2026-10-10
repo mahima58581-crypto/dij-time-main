@@ -32,7 +32,7 @@ export const NewCustomerModal: React.FC<NewCustomerModalProps> = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim() || !phone.trim() || !pin.trim()) {
-      alert('يرجى إدخال اسم اللاعب، ورقم الهاتف، ورمز PIN!');
+      alert('يرجى إدخال اسم اللاعب، ورقم الهاتف، ورمز الدخول!');
       return;
     }
 
@@ -67,7 +67,7 @@ export const NewCustomerModal: React.FC<NewCustomerModalProps> = ({
             <div>
               <h2 className="text-base font-black text-slate-900 dark:text-white font-gaming">إضافة لاعب جديد إلى الصالة</h2>
               <p className="text-xs text-slate-500 dark:text-slate-400">
-                تسجيل الاسم، رقم الهاتف، رمز PIN وشحن الرصيد المبدئي بالدينار
+                تسجيل الاسم، رقم الهاتف، رمز الدخول وشحن الرصيد المبدئي بالدينار
               </p>
             </div>
           </div>
@@ -116,7 +116,7 @@ export const NewCustomerModal: React.FC<NewCustomerModalProps> = ({
             <div className="flex items-center justify-between">
               <label className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
                 <KeyRound className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-                <span>رمز PIN السري (٤ إلى ٦ أرقام):</span>
+                <span>رمز الدخول السري (٤ إلى ٦ أرقام):</span>
               </label>
               <button
                 type="button"

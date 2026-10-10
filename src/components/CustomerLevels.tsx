@@ -162,7 +162,7 @@ export const CustomerLevels: React.FC<CustomerLevelsProps> = ({
             </div>
             <div>
               <h2 className="text-xl font-black text-white drop-shadow-sm">
-                فئات ومستويات نادي الزبائن (VIP Tiers)
+                فئات ومستويات نادي الزبائن
               </h2>
               <p className="text-xs text-amber-50/90 mt-1">
                 ضبط نسب الخصم، الحد الأدنى لساعات اللعب المطلوبة للترقية والمزايا الحصرية لكل فئة

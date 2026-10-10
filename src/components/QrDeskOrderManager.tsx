@@ -704,7 +704,7 @@ export const QrDeskOrderManager: React.FC<QrDeskOrderManagerProps> = ({
                     <h3 className="font-black text-slate-900 dark:text-white text-sm">
                       شبیه ساز زنده گوشی موبایل گیمر
                     </h3>
-                    <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono">Live Mobile QR Experience</span>
+                    <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono">تجربة QR المباشرة للجوال</span>
                   </div>
                 </div>
 
@@ -722,19 +722,19 @@ export const QrDeskOrderManager: React.FC<QrDeskOrderManagerProps> = ({
                   {simTheme === 'dark' ? (
                     <>
                       <Sun className="w-3.5 h-3.5 text-amber-400 spin-slow" />
-                      <span>حالت دارک فعال است</span>
+                      <span>الوضع الداكن مفعل</span>
                     </>
                   ) : (
                     <>
                       <Moon className="w-3.5 h-3.5 text-indigo-600" />
-                      <span>حالت لایت فعال است</span>
+                      <span>الوضع الفاتح مفعل</span>
                     </>
                   )}
                 </button>
               </div>
 
               <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-                این صفحه دقیقاً همان وب‌اپلیکیشنی است که بازیکن پس از اسکن استند QR میز با موبایل شخصی می‌بیند. او می‌تواند در تم تاریک سایبری یا تم روشن شیک، خوراکی‌ها را مشاهده و سفارش دهد.
+                هذه الصفحة هي نفس تطبيق الويب الذي يراه اللاعب بعد مسح رمز QR للطاولة بجواله الشخصي. يمكنه في الوضع الداكن سيبر أو الوضع الفاتح أنيق، عرض الأطعمة وطلبها.
               </p>
 
               {/* تغییر تم لایت / دارک با دکمه‌های سوئیچ */}
@@ -742,7 +742,7 @@ export const QrDeskOrderManager: React.FC<QrDeskOrderManagerProps> = ({
                 <label className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center justify-between">
                   <span>تم نمایشی موبایل بازیکن:</span>
                   <span className="text-[11px] font-mono text-emerald-600 dark:text-emerald-400 font-bold">
-                    {simTheme === 'dark' ? 'تم تاریک سایبری (OLED Dark)' : 'تم روشن لوکس (Clean Light)'}
+                    {simTheme === 'dark' ? 'الوضع الداكن سيبر (داكن OLED)' : 'الوضع الفاتح أنيق (ضوء نظيف)'}
                   </span>
                 </label>
                 <div className="grid grid-cols-2 gap-2">
@@ -756,7 +756,7 @@ export const QrDeskOrderManager: React.FC<QrDeskOrderManagerProps> = ({
                     }`}
                   >
                     <Moon className="w-4 h-4 text-emerald-400" />
-                    <span>دارک مود (Cyber)</span>
+                    <span>الوضع الداكن (سيبر)</span>
                   </button>
                   <button
                     type="button"
@@ -768,7 +768,7 @@ export const QrDeskOrderManager: React.FC<QrDeskOrderManagerProps> = ({
                     }`}
                   >
                     <Sun className="w-4 h-4 text-amber-500" />
-                    <span>لایت مود (Light)</span>
+                    <span>الوضع الفاتح</span>
                   </button>
                 </div>
               </div>
@@ -797,7 +797,7 @@ export const QrDeskOrderManager: React.FC<QrDeskOrderManagerProps> = ({
                     type="text"
                     value={simStationSearch}
                     onChange={(e) => setSimStationSearch(e.target.value)}
-                    placeholder="جستجوی اسمی دستگاه (مثال: PC-01, PS5-02)..."
+                    placeholder="بحث باسم الجهاز (مثال: PC-01, PS5-02)..."
                     className="w-full pl-8 pr-9 py-2 text-xs bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:border-cyan-500 font-sans"
                   />
                   {simStationSearch && (
@@ -862,11 +862,11 @@ export const QrDeskOrderManager: React.FC<QrDeskOrderManagerProps> = ({
 
             {/* Hardware Side Buttons */}
             {/* Left Buttons: Action Button & Volume Up/Down */}
-            <div className="absolute -left-[5px] top-24 w-[5px] h-7 bg-amber-500 rounded-l-md shadow-xs z-10" title="Action Button" />
-            <div className="absolute -left-[5px] top-36 w-[5px] h-12 bg-slate-700 rounded-l-md shadow-xs z-10" title="Volume Up" />
-            <div className="absolute -left-[5px] top-52 w-[5px] h-12 bg-slate-700 rounded-l-md shadow-xs z-10" title="Volume Down" />
-            {/* Right Button: Power Button */}
-            <div className="absolute -right-[5px] top-36 w-[5px] h-16 bg-slate-700 rounded-r-md shadow-xs z-10" title="Power Button" />
+            <div className="absolute -left-[5px] top-24 w-[5px] h-7 bg-amber-500 rounded-l-md shadow-xs z-10" title="زر الإجراء" />
+            <div className="absolute -left-[5px] top-36 w-[5px] h-12 bg-slate-700 rounded-l-md shadow-xs z-10" title="رفع الصوت" />
+            <div className="absolute -left-[5px] top-52 w-[5px] h-12 bg-slate-700 rounded-l-md shadow-xs z-10" title="خفض الصوت" />
+            {/* زر أيمن: زر التشغيل */}
+            <div className="absolute -right-[5px] top-36 w-[5px] h-16 bg-slate-700 rounded-r-md shadow-xs z-10" title="زر التشغيل" />
 
             {/* Main Phone Chassis */}
             <div className="w-[340px] sm:w-[350px] p-[10px] rounded-[50px] bg-gradient-to-b from-slate-700 via-slate-900 to-black shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8),0_0_40px_rgba(16,185,129,0.2)] border-2 border-slate-600/70 relative">
@@ -922,10 +922,10 @@ export const QrDeskOrderManager: React.FC<QrDeskOrderManagerProps> = ({
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-1 text-[11px] font-bold text-emerald-300">
                       <Sparkles className="w-3 h-3 text-yellow-300 animate-pulse" />
-                      <span>بوفه آنلاین {clubName}</span>
+                      <span>بوفيه مباشر {clubName}</span>
                     </div>
 
-                    {/* دکمه لایت مود / دارک مود داخل صفحه گوشی */}
+                    {/* زر الوضع الفاتح / الداكن داخل صفحة الجوال */}
                     <button
                       type="button"
                       onClick={() => setSimTheme(simTheme === 'dark' ? 'light' : 'dark')}
@@ -934,17 +934,17 @@ export const QrDeskOrderManager: React.FC<QrDeskOrderManagerProps> = ({
                           ? 'bg-amber-400/20 text-amber-300 border-amber-400/50 hover:bg-amber-400/30'
                           : 'bg-white/25 text-white border-white/40 hover:bg-white/35'
                       }`}
-                      title="سویچ تم لایت و دارک"
+                      title="تبديل الوضع الفاتح والداكن"
                     >
                       {simTheme === 'dark' ? (
                         <>
                           <Sun className="w-3 h-3 text-amber-300 spin-slow" />
-                          <span>لایت</span>
+                          <span>فاتح</span>
                         </>
                       ) : (
                         <>
                           <Moon className="w-3 h-3 text-indigo-200" />
-                          <span>دارک</span>
+                          <span>داكن</span>
                         </>
                       )}
                     </button>
@@ -957,7 +957,7 @@ export const QrDeskOrderManager: React.FC<QrDeskOrderManagerProps> = ({
                     </span>
                   </div>
                   <div className="text-[10px] text-emerald-200/90 mt-0.5">
-                    سفارشتان مستقیماً پای بازی تحویل داده می‌شود
+                    يتم تسليم طلبك مباشرة إلى مكان اللعب
                   </div>
                 </div>
 

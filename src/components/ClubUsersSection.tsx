@@ -69,19 +69,19 @@ export const ClubUsersSection: React.FC<ClubUsersSectionProps> = ({
         return (
           <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-yellow-500/15 text-yellow-300 border border-yellow-500/35">
             <Award className="w-3 h-3 text-yellow-400" />
-            عضو طلایی
+            عضو ذهبي
           </span>
         );
       case 'فضي':
         return (
           <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-zinc-800 text-zinc-300 border border-zinc-700">
-            عضو نقره‌ای
+            عضو فضي
           </span>
         );
       default:
         return (
           <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-zinc-800/80 text-zinc-400 border border-zinc-700/80">
-            عضو برنز
+            عضو برونزي
           </span>
         );
     }
@@ -102,14 +102,14 @@ export const ClubUsersSection: React.FC<ClubUsersSectionProps> = ({
           <div>
             <div className="flex items-center gap-2">
               <h2 className="text-lg font-black text-zinc-100">
-                کارت‌های بازیکنان و اعضای کلوپ
+                بطاقات اللاعبين وأعضاء النادي
               </h2>
               <span className="px-2.5 py-0.5 text-xs font-bold rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/35">
-                {customers.length} بازیکن ثبت‌شده
+                {customers.length} لاعب مسجل
               </span>
             </div>
             <p className="text-xs text-zinc-400">
-              مدیریت پین‌کد اختصاصی، موجودی کیف پول به دینار، سطح کاربری و سوابق زمان بازی
+              إدارة الرمز المخصص، رصيد المحفظة بالدينار، مستوى المستخدم وسجلات وقت اللعب
             </p>
           </div>
         </div>
@@ -120,7 +120,7 @@ export const ClubUsersSection: React.FC<ClubUsersSectionProps> = ({
             <Search className="w-4 h-4 text-zinc-400 absolute right-3 top-2.5" />
             <input
               type="text"
-              placeholder="جستجو با نام، تلفن یا کد PIN..."
+              placeholder="البحث بالاسم، الهاتف أو رمز PIN..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pr-9 pl-3 py-2 rounded-xl text-xs bg-zinc-900 border border-amber-500/25 text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-amber-400 w-48 sm:w-60 shadow-xs"
@@ -133,7 +133,7 @@ export const ClubUsersSection: React.FC<ClubUsersSectionProps> = ({
             className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-black text-slate-950 bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 hover:brightness-110 shadow-md shadow-amber-500/25 transition"
           >
             <UserPlus className="w-3.5 h-3.5 stroke-[2.5]" />
-            <span>+ بازیکن جدید</span>
+            <span>+ لاعب جديد</span>
           </motion.button>
         </div>
       </div>
@@ -181,7 +181,7 @@ export const ClubUsersSection: React.FC<ClubUsersSectionProps> = ({
                   <div className="flex items-center justify-between">
                     <span className="text-zinc-400 flex items-center gap-1">
                       <KeyRound className="w-3.5 h-3.5 text-amber-400" />
-                      رمز عبور (PIN):
+                      رمز الدخول (PIN):
                     </span>
                     <div className="flex items-center gap-2">
                       <span className="font-mono font-bold text-amber-300 bg-black/60 px-2 py-0.5 rounded border border-amber-500/30 text-xs tracking-wider">
@@ -191,7 +191,7 @@ export const ClubUsersSection: React.FC<ClubUsersSectionProps> = ({
                         type="button"
                         onClick={() => togglePin(customer.id)}
                         className="text-zinc-400 hover:text-amber-400 p-0.5 transition"
-                        title={isPinRevealed ? 'مخفی کردن کد' : 'نمایش کد'}
+                        title={isPinRevealed ? 'إخفاء الرمز' : 'إظهار الرمز'}
                       >
                         {isPinRevealed ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5 text-amber-400" />}
                       </button>
@@ -202,7 +202,7 @@ export const ClubUsersSection: React.FC<ClubUsersSectionProps> = ({
                   <div className="flex items-center justify-between pt-1 border-t border-zinc-800">
                     <span className="text-zinc-400 flex items-center gap-1">
                       <Wallet className="w-3.5 h-3.5 text-emerald-400" />
-                      موجودی کیف پول:
+                      رصيد المحفظة:
                     </span>
                     <span className="font-mono font-bold text-emerald-400 text-sm">
                       {formatCurrency(customer.balance)}
@@ -213,7 +213,7 @@ export const ClubUsersSection: React.FC<ClubUsersSectionProps> = ({
                   <div className="flex items-center justify-between pt-1 border-t border-zinc-800">
                     <span className="text-zinc-400 flex items-center gap-1">
                       <Clock className="w-3.5 h-3.5 text-zinc-500" />
-                      زمان بازی ثبت شده:
+                      وقت اللعب المسجل:
                     </span>
                     <span className="font-mono text-zinc-300 font-semibold text-[11px]">
                       {formatDuration(customer.totalPlayMinutes)}
@@ -230,7 +230,7 @@ export const ClubUsersSection: React.FC<ClubUsersSectionProps> = ({
                     onClick={() => setRechargeModalCustomer(customer)}
                     className="py-2 px-2.5 rounded-xl text-xs font-bold text-amber-300 bg-zinc-900 hover:bg-zinc-800 border border-amber-500/30 transition text-center shadow-xs"
                   >
-                    + شارژ کیف پول
+                    + شحن المحفظة
                   </motion.button>
 
                   <motion.button
@@ -240,7 +240,7 @@ export const ClubUsersSection: React.FC<ClubUsersSectionProps> = ({
                     className="py-2 px-2.5 rounded-xl text-xs font-black text-slate-950 bg-gradient-to-r from-amber-400 to-yellow-500 hover:brightness-110 shadow-md shadow-amber-500/20 transition flex items-center justify-center gap-1"
                   >
                     <ArrowUpRight className="w-3.5 h-3.5 stroke-[2.5]" />
-                    <span>ورود به بازی</span>
+                    <span>دخول اللعب</span>
                   </motion.button>
                 </div>
 
@@ -266,7 +266,7 @@ export const ClubUsersSection: React.FC<ClubUsersSectionProps> = ({
                     <Wallet className="w-5 h-5" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-zinc-100 text-sm">شارژ کیف پول بازیکن</h3>
+                    <h3 className="font-bold text-zinc-100 text-sm">شحن محفظة اللاعب</h3>
                     <p className="text-xs text-zinc-400">{rechargeModalCustomer.name}</p>
                   </div>
                 </div>
@@ -282,7 +282,7 @@ export const ClubUsersSection: React.FC<ClubUsersSectionProps> = ({
               <form onSubmit={handleRechargeSubmit} className="space-y-4">
                 <div className="space-y-1.5">
                   <label className="text-xs font-bold text-zinc-300">
-                    مبلغ شارژ مورد نظر (دینار):
+                    مبلغ الشحن المطلوب (دينار):
                   </label>
                   <div className="grid grid-cols-3 gap-2 mb-2">
                     {[5000, 10000, 25000].map((amt) => (
@@ -316,14 +316,14 @@ export const ClubUsersSection: React.FC<ClubUsersSectionProps> = ({
                     onClick={() => setRechargeModalCustomer(null)}
                     className="px-4 py-2 rounded-xl text-xs text-zinc-400 hover:text-zinc-200"
                   >
-                    انصراف
+                    إلغاء
                   </button>
                   <motion.button
                     whileTap={{ scale: 0.95 }}
                     type="submit"
                     className="px-5 py-2 rounded-xl text-xs font-black text-slate-950 bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 hover:brightness-110 shadow-md shadow-amber-500/25"
                   >
-                    تأیید شارژ کیف پول
+                    تأكيد شحن المحفظة
                   </motion.button>
                 </div>
               </form>

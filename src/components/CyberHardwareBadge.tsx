@@ -72,10 +72,10 @@ export const CyberHardwareBadge: React.FC<CyberHardwareBadgeProps> = ({
         <div className="text-right">
           <div className="flex items-center gap-1.5">
             <span className="px-1.5 py-0.5 rounded-md text-[10px] font-black tracking-wider bg-blue-500/15 text-blue-400 border border-blue-500/30">
-              SONY PS5
+              سوني بلايستيشن 5
             </span>
             <span className="text-[10px] font-mono font-bold text-slate-400">
-              DualSense™ 4K
+              تحكم مزدوج 4K
             </span>
           </div>
         </div>
@@ -119,7 +119,7 @@ export const CyberHardwareBadge: React.FC<CyberHardwareBadgeProps> = ({
         <div className="text-right">
           <div className="flex items-center gap-1.5">
             <span className="px-1.5 py-0.5 rounded-md text-[10px] font-black tracking-wider bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
-              ESPORTS PC
+              حاسوب رياضات إلكترونية
             </span>
             <span className="text-[10px] font-mono font-bold text-slate-400">
               240Hz • RTX
@@ -147,10 +147,10 @@ export const CyberHardwareBadge: React.FC<CyberHardwareBadgeProps> = ({
         <div className="text-right">
           <div className="flex items-center gap-1.5">
             <span className="px-1.5 py-0.5 rounded-md text-[10px] font-black tracking-wider bg-amber-500/15 text-amber-400 border border-amber-500/30">
-              VIP SIMULATOR
+              محاكي VIP
             </span>
             <span className="text-[10px] font-mono font-bold text-slate-400">
-              Force Feedback
+              قوة ردود الفعل
             </span>
           </div>
         </div>

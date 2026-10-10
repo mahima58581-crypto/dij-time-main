@@ -145,15 +145,6 @@ export const CyberDigitalTimer: React.FC<CyberDigitalTimerProps> = ({
           style.bg
         } ${size === 'lg' ? 'text-2xl sm:text-3xl' : size === 'sm' ? 'text-base' : 'text-xl'}`}
       >
-        {/* Ghost background digits (88:88:88) */}
-        <div
-          dir="ltr"
-          aria-hidden="true"
-          className={`absolute inset-0 flex items-center justify-center font-['Chakra_Petch',monospace] tracking-widest font-black pointer-events-none opacity-20 [direction:ltr] ${style.ghost}`}
-        >
-          88:88:88
-        </div>
-
         {/* Live Active LED Glowing Digits: Exactly [Hours] : [Minutes] : [Seconds] */}
         <div 
           dir="ltr" 

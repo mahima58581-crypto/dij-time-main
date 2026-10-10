@@ -33,6 +33,7 @@ import {
   playSnackSound,
   playCoinSound,
   speakVoiceAlert,
+  preloadAudioSamples,
   unlockAudioContext
 } from '../utils/audioAlerts';
 
@@ -94,6 +95,11 @@ export const SoundAlertsController: React.FC<SoundAlertsControllerProps> = ({
       window.removeEventListener('click', handleFirstUserInteraction);
       window.removeEventListener('keydown', handleFirstUserInteraction);
     };
+  }, []);
+
+  // Preload custom audio files so the first alert has no fetch latency
+  useEffect(() => {
+    preloadAudioSamples();
   }, []);
 
   const handleUpdate = (patch: Partial<SoundSettings>) => {
@@ -322,7 +328,7 @@ export const SoundAlertsController: React.FC<SoundAlertsControllerProps> = ({
                     <Clock className="w-3.5 h-3.5 text-teal-600 dark:text-teal-400" />
                     <div>
                       <div className="text-xs font-bold text-slate-800 dark:text-slate-200">هشدار ۱۰ دقیقه مانده به پایان</div>
-                      <div className="text-[10px] text-slate-500 dark:text-slate-400">تون دوگانه نرم</div>
+                      <div className="text-[10px] text-slate-500 dark:text-slate-400">فایل صوتی اختصاصی (audio-1)</div>
                     </div>
                   </div>
                   <div className="flex items-center gap-1.5">

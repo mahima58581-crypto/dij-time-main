@@ -1279,7 +1279,7 @@ export default function App() {
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
               <div className="flex items-center gap-2 text-center sm:text-right">
                 <span className="font-bold text-slate-600 dark:text-slate-300 font-['Chakra_Petch']">
-                  DIJ-TIEM GAMING CLUB
+                  ديج تايم لنادي الألعاب
                 </span>
                 <span>• كافة العمليات المالية والحسابات بالدينار العراقي (د.ع)</span>
               </div>

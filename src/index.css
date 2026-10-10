@@ -1,4 +1,4 @@
-@import "tailwindcss";
+﻿@import "tailwindcss";
 
 @custom-variant dark (&:is(.dark, .dark *));
 
@@ -142,6 +142,293 @@ html.dark,
   color: #ffffff !important;
 }
 
+/* ============================================================================
+   LIGHT-SURFACE TEXT GUARD
+   ----------------------------------------------------------------------------
+   Several chips and badges in this codebase declare a light background with
+   NO `dark:` variant (e.g. `bg-slate-100 text-slate-600 border-slate-200`).
+   They therefore stay light in dark mode, but the dark-mode white-text engine
+   forced their label to #ffffff â€” white on near-white = invisible.
+
+   Contract: any element sitting on a LIGHT surface keeps DARK text, in every
+   theme. Surfaces themselves are left untouched, so the dark theme keeps its
+   existing look; only the unreadable labels are repaired.
+
+   Specificity: every rule is prefixed `html.dark body .dark :is(...)`, which
+   outranks the legacy `.dark span` / `.dark .text-slate-*` rules.
+   ========================================================================== */
+
+/* â”€â”€ The light surfaces themselves â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+
+html.dark body .dark :is(
+  [class*="bg-white"],
+  [class*="bg-slate-50"],
+  [class*="bg-slate-100"],
+  [class*="bg-slate-200"],
+  [class*="bg-slate-300"],
+  [class*="bg-gray-50"],
+  [class*="bg-gray-100"],
+  [class*="bg-gray-200"],
+  [class*="bg-zinc-50"],
+  [class*="bg-zinc-100"],
+  [class*="bg-zinc-200"]
+) {
+  color: #0f172a !important;
+}
+
+/* â”€â”€ Neutral label text inside a light surface â†’ dark slate â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+
+html.dark body .dark :is(
+  [class*="bg-white"],
+  [class*="bg-slate-50"],
+  [class*="bg-slate-100"],
+  [class*="bg-slate-200"],
+  [class*="bg-slate-300"],
+  [class*="bg-gray-50"],
+  [class*="bg-gray-100"],
+  [class*="bg-gray-200"],
+  [class*="bg-zinc-50"],
+  [class*="bg-zinc-100"],
+  [class*="bg-zinc-200"],
+  [class*="bg-indigo-50"],
+  [class*="bg-indigo-100"],
+  [class*="bg-emerald-50"],
+  [class*="bg-emerald-100"],
+  [class*="bg-teal-50"],
+  [class*="bg-teal-100"],
+  [class*="bg-cyan-50"],
+  [class*="bg-cyan-100"],
+  [class*="bg-sky-50"],
+  [class*="bg-sky-100"],
+  [class*="bg-blue-50"],
+  [class*="bg-blue-100"],
+  [class*="bg-amber-50"],
+  [class*="bg-amber-100"],
+  [class*="bg-orange-50"],
+  [class*="bg-orange-100"],
+  [class*="bg-rose-50"],
+  [class*="bg-rose-100"],
+  [class*="bg-red-50"],
+  [class*="bg-red-100"],
+  [class*="bg-green-50"],
+  [class*="bg-green-100"],
+  [class*="bg-yellow-50"],
+  [class*="bg-yellow-100"],
+  [class*="bg-purple-50"],
+  [class*="bg-purple-100"],
+  [class*="bg-violet-50"],
+  [class*="bg-violet-100"],
+  [class*="bg-pink-50"],
+  [class*="bg-pink-100"]
+) :is(
+  span,
+  div,
+  p,
+  label,
+  strong,
+  b,
+  a,
+  li,
+  td,
+  th,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6
+):not([class*="text-emerald"])
+:not([class*="text-teal"])
+:not([class*="text-cyan"])
+:not([class*="text-sky"])
+:not([class*="text-blue"])
+:not([class*="text-indigo"])
+:not([class*="text-purple"])
+:not([class*="text-violet"])
+:not([class*="text-pink"])
+:not([class*="text-rose"])
+:not([class*="text-red"])
+:not([class*="text-amber"])
+:not([class*="text-orange"])
+:not([class*="text-yellow"])
+:not([class*="text-green"])
+:not([class*="text-lime"])
+:not([class*="text-white"]) {
+  color: #334155 !important;
+}
+
+/* â”€â”€ Coloured label text inside a light surface â†’ darker, saturated â”€â”€â”€â”€â”€â”€â”€ */
+
+html.dark body .dark :is(
+  [class*="bg-white"],
+  [class*="bg-slate-50"],
+  [class*="bg-slate-100"],
+  [class*="bg-slate-200"],
+  [class*="bg-slate-300"],
+  [class*="bg-gray-50"],
+  [class*="bg-gray-100"],
+  [class*="bg-gray-200"],
+  [class*="bg-zinc-50"],
+  [class*="bg-zinc-100"],
+  [class*="bg-zinc-200"]
+) :is([class*="text-emerald-500"], [class*="text-emerald-600"], [class*="text-emerald-700"], [class*="text-emerald-800"]) { color: #047857 !important; }
+html.dark body .dark :is(
+  [class*="bg-white"],
+  [class*="bg-slate-50"],
+  [class*="bg-slate-100"],
+  [class*="bg-slate-200"],
+  [class*="bg-slate-300"],
+  [class*="bg-gray-50"],
+  [class*="bg-gray-100"],
+  [class*="bg-gray-200"],
+  [class*="bg-zinc-50"],
+  [class*="bg-zinc-100"],
+  [class*="bg-zinc-200"]
+) :is([class*="text-teal-500"], [class*="text-teal-600"], [class*="text-teal-700"], [class*="text-teal-800"]) { color: #0f766e !important; }
+html.dark body .dark :is(
+  [class*="bg-white"],
+  [class*="bg-slate-50"],
+  [class*="bg-slate-100"],
+  [class*="bg-slate-200"],
+  [class*="bg-slate-300"],
+  [class*="bg-gray-50"],
+  [class*="bg-gray-100"],
+  [class*="bg-gray-200"],
+  [class*="bg-zinc-50"],
+  [class*="bg-zinc-100"],
+  [class*="bg-zinc-200"]
+) :is([class*="text-cyan-500"], [class*="text-cyan-600"], [class*="text-cyan-700"], [class*="text-cyan-800"]) { color: #0e7490 !important; }
+html.dark body .dark :is(
+  [class*="bg-white"],
+  [class*="bg-slate-50"],
+  [class*="bg-slate-100"],
+  [class*="bg-slate-200"],
+  [class*="bg-slate-300"],
+  [class*="bg-gray-50"],
+  [class*="bg-gray-100"],
+  [class*="bg-gray-200"],
+  [class*="bg-zinc-50"],
+  [class*="bg-zinc-100"],
+  [class*="bg-zinc-200"]
+) :is([class*="text-sky-500"], [class*="text-sky-600"], [class*="text-sky-700"], [class*="text-sky-800"]) { color: #0369a1 !important; }
+html.dark body .dark :is(
+  [class*="bg-white"],
+  [class*="bg-slate-50"],
+  [class*="bg-slate-100"],
+  [class*="bg-slate-200"],
+  [class*="bg-slate-300"],
+  [class*="bg-gray-50"],
+  [class*="bg-gray-100"],
+  [class*="bg-gray-200"],
+  [class*="bg-zinc-50"],
+  [class*="bg-zinc-100"],
+  [class*="bg-zinc-200"]
+) :is([class*="text-blue-500"], [class*="text-blue-600"], [class*="text-blue-700"], [class*="text-blue-800"]) { color: #1d4ed8 !important; }
+html.dark body .dark :is(
+  [class*="bg-white"],
+  [class*="bg-slate-50"],
+  [class*="bg-slate-100"],
+  [class*="bg-slate-200"],
+  [class*="bg-slate-300"],
+  [class*="bg-gray-50"],
+  [class*="bg-gray-100"],
+  [class*="bg-gray-200"],
+  [class*="bg-zinc-50"],
+  [class*="bg-zinc-100"],
+  [class*="bg-zinc-200"]
+) :is([class*="text-indigo-500"], [class*="text-indigo-600"], [class*="text-indigo-700"], [class*="text-indigo-800"]) { color: #4338ca !important; }
+html.dark body .dark :is(
+  [class*="bg-white"],
+  [class*="bg-slate-50"],
+  [class*="bg-slate-100"],
+  [class*="bg-slate-200"],
+  [class*="bg-slate-300"],
+  [class*="bg-gray-50"],
+  [class*="bg-gray-100"],
+  [class*="bg-gray-200"],
+  [class*="bg-zinc-50"],
+  [class*="bg-zinc-100"],
+  [class*="bg-zinc-200"]
+) :is([class*="text-purple-500"], [class*="text-purple-600"], [class*="text-purple-700"], [class*="text-purple-800"], [class*="text-violet-600"], [class*="text-violet-700"]) { color: #7e22ce !important; }
+html.dark body .dark :is(
+  [class*="bg-white"],
+  [class*="bg-slate-50"],
+  [class*="bg-slate-100"],
+  [class*="bg-slate-200"],
+  [class*="bg-slate-300"],
+  [class*="bg-gray-50"],
+  [class*="bg-gray-100"],
+  [class*="bg-gray-200"],
+  [class*="bg-zinc-50"],
+  [class*="bg-zinc-100"],
+  [class*="bg-zinc-200"]
+) :is([class*="text-pink-500"], [class*="text-pink-600"], [class*="text-pink-700"], [class*="text-pink-800"]) { color: #be185d !important; }
+html.dark body .dark :is(
+  [class*="bg-white"],
+  [class*="bg-slate-50"],
+  [class*="bg-slate-100"],
+  [class*="bg-slate-200"],
+  [class*="bg-slate-300"],
+  [class*="bg-gray-50"],
+  [class*="bg-gray-100"],
+  [class*="bg-gray-200"],
+  [class*="bg-zinc-50"],
+  [class*="bg-zinc-100"],
+  [class*="bg-zinc-200"]
+) :is([class*="text-rose-500"], [class*="text-rose-600"], [class*="text-rose-700"], [class*="text-rose-800"]) { color: #be123c !important; }
+html.dark body .dark :is(
+  [class*="bg-white"],
+  [class*="bg-slate-50"],
+  [class*="bg-slate-100"],
+  [class*="bg-slate-200"],
+  [class*="bg-slate-300"],
+  [class*="bg-gray-50"],
+  [class*="bg-gray-100"],
+  [class*="bg-gray-200"],
+  [class*="bg-zinc-50"],
+  [class*="bg-zinc-100"],
+  [class*="bg-zinc-200"]
+) :is([class*="text-red-500"], [class*="text-red-600"], [class*="text-red-700"], [class*="text-red-800"]) { color: #b91c1c !important; }
+html.dark body .dark :is(
+  [class*="bg-white"],
+  [class*="bg-slate-50"],
+  [class*="bg-slate-100"],
+  [class*="bg-slate-200"],
+  [class*="bg-slate-300"],
+  [class*="bg-gray-50"],
+  [class*="bg-gray-100"],
+  [class*="bg-gray-200"],
+  [class*="bg-zinc-50"],
+  [class*="bg-zinc-100"],
+  [class*="bg-zinc-200"]
+) :is([class*="text-amber-500"], [class*="text-amber-600"], [class*="text-amber-700"], [class*="text-amber-800"], [class*="text-yellow-500"], [class*="text-yellow-600"], [class*="text-yellow-700"]) { color: #b45309 !important; }
+html.dark body .dark :is(
+  [class*="bg-white"],
+  [class*="bg-slate-50"],
+  [class*="bg-slate-100"],
+  [class*="bg-slate-200"],
+  [class*="bg-slate-300"],
+  [class*="bg-gray-50"],
+  [class*="bg-gray-100"],
+  [class*="bg-gray-200"],
+  [class*="bg-zinc-50"],
+  [class*="bg-zinc-100"],
+  [class*="bg-zinc-200"]
+) :is([class*="text-orange-500"], [class*="text-orange-600"], [class*="text-orange-700"], [class*="text-orange-800"]) { color: #c2410c !important; }
+html.dark body .dark :is(
+  [class*="bg-white"],
+  [class*="bg-slate-50"],
+  [class*="bg-slate-100"],
+  [class*="bg-slate-200"],
+  [class*="bg-slate-300"],
+  [class*="bg-gray-50"],
+  [class*="bg-gray-100"],
+  [class*="bg-gray-200"],
+  [class*="bg-zinc-50"],
+  [class*="bg-zinc-100"],
+  [class*="bg-zinc-200"]
+) :is([class*="text-green-500"], [class*="text-green-600"], [class*="text-green-700"], [class*="text-green-800"], [class*="text-lime-600"], [class*="text-lime-700"]) { color: #15803d !important; }
+
 @layer base {
   body {
     @apply bg-slate-50 text-slate-900 antialiased selection:bg-emerald-500 selection:text-white transition-colors duration-200;
@@ -237,7 +524,7 @@ html.dark ::-webkit-scrollbar-track {
 }
 
 /* Cyber LED Segment Bezel */
-/* Cyber dot grid — adapts to theme */
+/* Cyber dot grid â€” adapts to theme */
 .cyber-grid {
   background-image: radial-gradient(circle at 1px 1px, rgba(15, 23, 42, 0.55) 1px, transparent 0);
   background-size: 24px 24px;
@@ -291,7 +578,7 @@ html.dark .led-bezel {
   box-shadow: 0 0 15px -3px rgba(16, 185, 129, 0.2), inset 0 0 15px -3px rgba(16, 185, 129, 0.05);
 }
 
-/* ─── Ultra-vibrant animated gradient & shimmer effects ─── */
+/* â”€â”€â”€ Ultra-vibrant animated gradient & shimmer effects â”€â”€â”€ */
 @keyframes gradient-x {
   0%, 100% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
@@ -364,7 +651,7 @@ html.dark .led-bezel {
   animation: spin-slow 8s linear infinite;
 }
 
-/* مخفی کردن اسپینرهای پیش‌فرض اینپوت عدد */
+/* Ù…Ø®ÙÛŒ Ú©Ø±Ø¯Ù† Ø§Ø³Ù¾ÛŒÙ†Ø±Ù‡Ø§ÛŒ Ù¾ÛŒØ´â€ŒÙØ±Ø¶ Ø§ÛŒÙ†Ù¾ÙˆØª Ø¹Ø¯Ø¯ */
 .no-spinner::-webkit-outer-spin-button,
 .no-spinner::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -373,4 +660,137 @@ html.dark .led-bezel {
 .no-spinner {
   -moz-appearance: textfield;
   appearance: textfield;
+}
+
+/* ============================================================================
+   LIGHT MODE POLISH
+   ----------------------------------------------------------------------------
+   Refinements that make the light theme feel considered rather than flat:
+   a soft ambient background, layered shadows, accessible focus rings and a
+   gentle cross-fade when the theme flips.
+   ========================================================================== */
+
+/* Ambient background — a faint emerald/teal wash instead of flat grey */
+body {
+  background:
+    radial-gradient(1200px 620px at 88% -12%, rgba(16, 185, 129, 0.07), transparent 62%),
+    radial-gradient(900px 520px at -12% 112%, rgba(20, 184, 166, 0.06), transparent 58%),
+    #f8fafc;
+  background-attachment: fixed;
+}
+
+/* Layered soft shadows for light surfaces */
+.shadow-soft {
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 10px 28px -14px rgba(15, 23, 42, 0.14);
+}
+
+.shadow-soft-lg {
+  box-shadow:
+    0 2px 4px rgba(15, 23, 42, 0.05),
+    0 24px 48px -18px rgba(15, 23, 42, 0.18);
+}
+
+.shadow-soft-xl {
+  box-shadow:
+    0 4px 8px rgba(15, 23, 42, 0.05),
+    0 32px 64px -20px rgba(15, 23, 42, 0.22);
+}
+
+/* Accessible focus ring */
+:focus-visible {
+  outline: 2px solid #10b981;
+  outline-offset: 2px;
+}
+
+/* Gentle cross-fade when the theme flips */
+html,
+body,
+main,
+aside,
+header,
+footer,
+nav {
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease;
+}
+
+/* Light-mode scrollbar — neutral track, emerald thumb */
+::-webkit-scrollbar-track {
+  background: #eef2f7;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #10b981;
+}
+
+/* ── Status pill blink (نشط / معطل) ─────────────────────────────────────── */
+@keyframes statusBlink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.45; }
+}
+
+.animate-status-blink {
+  animation: statusBlink 1.5s ease-in-out infinite;
+}
+
+/* ── Operator card: rotating conic sweep ─────────────────────────────────── */
+@keyframes operatorSweep {
+  to { transform: rotate(360deg); }
+}
+
+.operator-card {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.operator-card::before {
+  content: '';
+  position: absolute;
+  inset: -60%;
+  z-index: 0;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    transparent 250deg,
+    rgba(16, 185, 129, 0.28) 300deg,
+    rgba(6, 182, 212, 0.28) 320deg,
+    transparent 360deg
+  );
+  animation: operatorSweep 5s linear infinite;
+  pointer-events: none;
+}
+
+.dark .operator-card::before {
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    transparent 250deg,
+    rgba(16, 185, 129, 0.45) 300deg,
+    rgba(6, 182, 212, 0.45) 320deg,
+    transparent 360deg
+  );
+}
+
+.operator-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Pulsing online dot */
+@keyframes onlinePulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.55); }
+  60%      { box-shadow: 0 0 0 5px rgba(16, 185, 129, 0); }
+}
+
+.online-dot {
+  animation: onlinePulse 2s ease-out infinite;
 }
