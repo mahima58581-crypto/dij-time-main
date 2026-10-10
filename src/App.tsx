@@ -636,6 +636,26 @@ export default function App() {
     );
   };
 
+  // هشدار دستی ۵ دقیقه قبل از پایان
+  const handleAlert5Min = (session: Session) => {
+    triggerAudioNotification(
+      'هشدار ۵ دقیقه',
+      `${session.stationName} - باقي 5 دقائق`,
+      play5MinWarningSound,
+      `باقي 5 دقائق من وقتك على ${session.stationName}`
+    );
+  };
+
+  // هشدار دستی اتمام وقت
+  const handleAlertTimeUp = (session: Session) => {
+    triggerAudioNotification(
+      'اتمام وقت',
+      `${session.stationName} - انتهى الوقت المخصص`,
+      playTimeOverAlarmSound,
+      `انتهى وقتك على ${session.stationName}`
+    );
+  };
+
   const handleRechargeBalance = (customerId: string, amount: number) => {
     setCustomers((prev) =>
       prev.map((c) => (c.id === customerId ? { ...c, balance: c.balance + amount } : c))
@@ -1183,6 +1203,8 @@ export default function App() {
                     onStartNewSession={(stId) => handleOpenStartSession(stId)}
                     onAddTime={(sess) => setAddTimeSession(sess)}
                     onForceLock={(sess) => setForceLockSession(sess)}
+                    onAlert5Min={(sess) => handleAlert5Min(sess)}
+                    onAlertTimeUp={(sess) => handleAlertTimeUp(sess)}
                   />
                 </div>
               )}
