@@ -359,7 +359,7 @@ export const SoundAlertsController: React.FC<SoundAlertsControllerProps> = ({
                     <Clock className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                     <div>
                       <div className="text-xs font-bold text-slate-800 dark:text-slate-200">هشدار ۵ دقیقه مانده به پایان</div>
-                      <div className="text-[10px] text-slate-500 dark:text-slate-400">زنگ هشدار سه‌گانه</div>
+                      <div className="text-[10px] text-slate-500 dark:text-slate-400">فایل صوتی اختصاصی (audio-5min)</div>
                     </div>
                   </div>
                   <div className="flex items-center gap-1.5">
@@ -390,7 +390,7 @@ export const SoundAlertsController: React.FC<SoundAlertsControllerProps> = ({
                     <Bell className="w-3.5 h-3.5 text-rose-500 dark:text-rose-400" />
                     <div>
                       <div className="text-xs font-bold text-slate-800 dark:text-slate-200">زنگ اتمام وقت و شروع اضافه کاری</div>
-                      <div className="text-[10px] text-slate-500 dark:text-slate-400">بوق دیجیتال پایان جلسه</div>
+                      <div className="text-[10px] text-slate-500 dark:text-slate-400">فایل صوتی اختصاصی (audio-timeup)</div>
                     </div>
                   </div>
                   <div className="flex items-center gap-1.5">

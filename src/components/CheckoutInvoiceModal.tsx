@@ -38,7 +38,12 @@ export const CheckoutInvoiceModal: React.FC<CheckoutInvoiceModalProps> = ({
   if (!isOpen || !session) return null;
 
   const isActive = session.status === 'active';
-  const checkOutTime = session.checkOutTime || new Date().toISOString();
+  // عند القفل الإجباري يُحتسب الوقت حتى لحظة القفل فقط (لا يُحتسب ما بعدها)
+  const checkOutTime =
+    session.checkOutTime ||
+    (session.locked && session.lockedAt
+      ? session.lockedAt
+      : new Date().toISOString());
 
   // هویت بصری پلتفرم مربوطه (رنگ و لوگوی اختصاصی)
   const meta = PLATFORM_META[session.stationType] || PLATFORM_META.PC;

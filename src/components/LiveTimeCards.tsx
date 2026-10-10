@@ -11,7 +11,7 @@ import { GamingPcIcon } from './GamingPcIcon';
 import { CyberSectionIcon } from './CyberSectionIcon';
 import { PlaystationIcon } from './PlaystationIcon';
 import { XboxIcon } from './XboxIcon';
-import { Activity, AlertTriangle, Badge, Bell, Brackets, Clock, Coffee, Eye, EyeOff, Flame, Gamepad2, Grid, Icon, Info, Phone, Pill, PlayCircle, Receipt, Timer, Tv, User, Volume2, Zap } from 'lucide-react';
+import { Activity, AlarmClock, AlertTriangle, Badge, Bell, Brackets, Clock, Coffee, Eye, EyeOff, Flame, Gamepad2, Grid, Icon, Info, Lock, Phone, Pill, PlayCircle, Receipt, Timer, Tv, User, Volume2, Zap } from 'lucide-react';
 import { VipSimulatorIcon } from './VipSimulatorIcon';
 
 interface LiveTimeCardsProps {
@@ -21,6 +21,8 @@ interface LiveTimeCardsProps {
   onEditGames: (session: Session) => void;
   onCheckoutSession: (session: Session) => void;
   onStartNewSession: (stationId?: string) => void;
+  onAddTime: (session: Session) => void;
+  onForceLock: (session: Session) => void;
 }
 
 // Ultra-badass Cyber Esports Live Chrono & Match Timer Icon
@@ -60,6 +62,8 @@ export const LiveTimeCards: React.FC<LiveTimeCardsProps> = ({
   onEditGames,
   onCheckoutSession,
   onStartNewSession,
+  onAddTime,
+  onForceLock,
 }) => {
   const [nowSec, setNowSec] = useState<number>(Date.now());
   const [showPins, setShowPins] = useState<Record<string, boolean>>({});
@@ -267,7 +271,15 @@ export const LiveTimeCards: React.FC<LiveTimeCardsProps> = ({
           <AnimatePresence>
             {activeSessions.map((session) => {
               const startMs = new Date(session.checkInTime).getTime();
-              const elapsedSeconds = Math.max(0, Math.floor((nowSec - startMs) / 1000));
+              // عند القفل الإجباري يتجمد المؤقت عند وقت القفل ولا يُحتسب وقت إضافي
+              const effectiveEndMs =
+                session.locked && session.lockedAt
+                  ? new Date(session.lockedAt).getTime()
+                  : nowSec;
+              const elapsedSeconds = Math.max(
+                0,
+                Math.floor((effectiveEndMs - startMs) / 1000)
+              );
               const elapsedMinutes = elapsedSeconds / 60;
               const currentPlayCost = calculatePlayCost(elapsedMinutes, session.hourlyRate);
               const snacksCost = session.snacks.reduce((acc, it) => acc + it.totalPrice, 0);
@@ -326,7 +338,12 @@ export const LiveTimeCards: React.FC<LiveTimeCardsProps> = ({
 
                     {/* Status Pill */}
                     <div className="shrink-0">
-                      {isOvertime ? (
+                      {session.locked ? (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[9px] font-black bg-slate-700/20 text-slate-500 dark:text-slate-300 border border-slate-500/40 uppercase tracking-wide">
+                          <Lock className="w-3 h-3" />
+                          <span>النظام مقفل</span>
+                        </span>
+                      ) : isOvertime ? (
                         <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[9px] font-black bg-rose-500/15 text-rose-500 border border-rose-500/40 uppercase tracking-wide animate-pulse">
                           <Flame className="w-3 h-3" />
                           <span>إضافي!</span>
@@ -450,39 +467,61 @@ export const LiveTimeCards: React.FC<LiveTimeCardsProps> = ({
                         </div>
                       </div>
 
-                      {/* Line 2: Phone & Games / Buffet Quick Summary */}
-                      <div className="flex items-center justify-between text-[10px] text-slate-500 dark:text-slate-400 pt-1 border-t border-slate-200/60 dark:border-slate-800/60">
-                        <div className="flex items-center gap-1">
-                          <Phone className={`w-2.5 h-2.5 ${theme.accentText}`} />
-                          <span dir="ltr" className={`font-mono ${theme.accentText} font-bold font-mono-digits`}>
-                            {session.customerPhone}
-                          </span>
-                        </div>
-
-                        <div className="flex items-center gap-1.5">
-                          {/* Quick Snacks Pill */}
-                          <button
-                            onClick={() => onAddSnack(session)}
-                            className={`flex items-center gap-1 px-1.5 py-0.5 rounded border ${theme.snackBtn} text-[9px] font-bold cursor-pointer transition`}
-                            title="إضافة طلب بوفيه"
-                          >
-                            <Coffee className="w-2.5 h-2.5" />
-                            <span>{session.snacks.length > 0 ? `${session.snacks.length} بوفيه` : '+ بوفيه'}</span>
-                          </button>
-
-                          {/* Quick Games Pill */}
-                          <button
-                            onClick={() => onEditGames(session)}
-                            className="flex items-center gap-1 px-1.5 py-0.5 rounded border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 text-[9px] font-bold cursor-pointer hover:border-slate-400 transition"
-                            title="تعديل الألعاب الجارية"
-                          >
-                            <Gamepad2 className="w-2.5 h-2.5" />
-                            <span>{session.gamesPlayed.length} ألعاب</span>
-                          </button>
-                        </div>
+                      {/* Line 2: Phone (clean) */}
+                      <div className="flex items-center text-[10px] text-slate-500 dark:text-slate-400 pt-1 border-t border-slate-200/60 dark:border-slate-800/60">
+                        <Phone className={`w-2.5 h-2.5 ${theme.accentText}`} />
+                        <span dir="ltr" className={`font-mono ${theme.accentText} font-bold font-mono-digits`}>
+                          {session.customerPhone}
+                        </span>
                       </div>
                     </div>
 
+                    {/* Action Bar: uniform, clean quick actions */}
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      <button
+                        type="button"
+                        onClick={() => onAddTime(session)}
+                        title="إضافة وقت إضافي للجلسة"
+                        className="flex items-center justify-center gap-1 h-8 px-2.5 rounded-lg text-[10px] font-bold text-cyan-700 dark:text-cyan-300 bg-cyan-50 dark:bg-cyan-950/60 border border-cyan-200 dark:border-cyan-800/70 hover:border-cyan-400 dark:hover:border-cyan-600 hover:bg-cyan-100 dark:hover:bg-cyan-900/50 transition cursor-pointer"
+                      >
+                        <AlarmClock className="w-3 h-3" />
+                        <span>إضافة وقت</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => onAddSnack(session)}
+                        title="إضافة طلب بوفيه"
+                        className="flex items-center justify-center gap-1 h-8 px-2.5 rounded-lg text-[10px] font-bold text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-800/70 hover:border-amber-400 dark:hover:border-amber-600 hover:bg-amber-100 dark:hover:bg-amber-900/50 transition cursor-pointer"
+                      >
+                        <Coffee className="w-3 h-3" />
+                        <span>{session.snacks.length > 0 ? `تسالي ${session.snacks.length}` : 'تسالي'}</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => onEditGames(session)}
+                        title="تعديل الألعاب الجارية"
+                        className="flex items-center justify-center gap-1 h-8 px-2.5 rounded-lg text-[10px] font-bold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-slate-400 dark:hover:border-slate-500 hover:bg-slate-200 dark:hover:bg-slate-700 transition cursor-pointer"
+                      >
+                        <Gamepad2 className="w-3 h-3" />
+                        <span>ألعاب {session.gamesPlayed.length}</span>
+                      </button>
+
+                      {isOvertime && !session.locked && (
+                        <motion.button
+                          type="button"
+                          whileTap={{ scale: 0.94 }}
+                          whileHover={{ scale: 1.04 }}
+                          onClick={() => onForceLock(session)}
+                          title="الوقت انتهى — قفل الجهاز وإيقاف اللعب"
+                          className="flex items-center justify-center gap-1 h-8 px-3 rounded-lg text-[10px] font-black text-white bg-gradient-to-r from-rose-600 to-orange-600 hover:from-rose-500 hover:to-orange-500 shadow-sm shadow-rose-500/30 transition cursor-pointer animate-pulse"
+                        >
+                          <Lock className="w-3 h-3" />
+                          <span>قفل إجباري</span>
+                        </motion.button>
+                      )}
+                    </div>
                   </div>
 
                   {/* 3. Integrated Live Cost & Checkout Footer */}
@@ -500,7 +539,7 @@ export const LiveTimeCards: React.FC<LiveTimeCardsProps> = ({
                       whileTap={{ scale: 0.96 }}
                       whileHover={{ scale: 1.02 }}
                       onClick={() => onCheckoutSession(session)}
-                      className={`py-2 px-3 rounded-xl text-xs font-black text-white bg-gradient-to-r ${theme.checkoutBtn} hover:brightness-110 shadow-sm transition-all flex items-center gap-1.5 font-gaming cursor-pointer shrink-0`}
+                      className={`py-2 px-3.5 rounded-xl text-xs font-black text-white bg-gradient-to-r ${theme.checkoutBtn} hover:brightness-110 shadow-sm transition-all flex items-center gap-1.5 font-gaming cursor-pointer shrink-0`}
                     >
                       <Receipt className="w-3.5 h-3.5 text-white stroke-[2.5]" />
                       <span>تسوية الفاتورة</span>

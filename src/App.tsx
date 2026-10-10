@@ -76,6 +76,8 @@ import { NewCustomerModal } from './components/NewCustomerModal';
 import { EditGamesModal } from './components/EditGamesModal';
 import { SecurityPinModal } from './components/SecurityPinModal';
 import { ActivePlayersLiveModal } from './components/ActivePlayersLiveModal';
+import { AddTimeModal } from './components/AddTimeModal';
+import { ForceLockModal } from './components/ForceLockModal';
 import { AppEntryLockScreen } from './components/AppEntryLockScreen';
 import { QuranicWelcomeScreen } from './components/QuranicWelcomeScreen';
 import { Badge, Clock, Code, Component, Copyright, Fullscreen, Gamepad2, Grid, Group, Hamburger, Home, KeyRound, Layout, Lock, Menu, Moon, Navigation, Option, Play, Plus, Save, Section, Settings, Sun, Timer, Unlock, View } from 'lucide-react';
@@ -247,6 +249,8 @@ export default function App() {
   const [snackModalSession, setSnackModalSession] = useState<Session | null>(null);
   const [invoiceModalSession, setInvoiceModalSession] = useState<Session | null>(null);
   const [editGamesSession, setEditGamesSession] = useState<Session | null>(null);
+  const [addTimeSession, setAddTimeSession] = useState<Session | null>(null);
+  const [forceLockSession, setForceLockSession] = useState<Session | null>(null);
 
   // Live clock for top bar
   const [currentTimeStr, setCurrentTimeStr] = useState('');
@@ -569,6 +573,66 @@ export default function App() {
       `المجموع: ${formatCurrency(grandTotal)}`,
       playCheckoutSound,
       'تم تسوية الفاتورة بنجاح'
+    );
+  };
+
+  // إضافة وقت إضافي إلى جلسة لعب نشطة
+  const handleAddTimeToSession = (sessionId: string, extraMinutes: number) => {
+    const target = sessions.find((s) => s.id === sessionId);
+    if (!target) return;
+
+    setSessions((prev) =>
+      prev.map((s) => {
+        if (s.id !== sessionId) return s;
+        const wasFixed = s.sessionType === 'fixed' && !!s.allocatedMinutes;
+        const prevAllocated = s.allocatedMinutes ?? 0;
+        const newAllocated = wasFixed ? prevAllocated + extraMinutes : extraMinutes;
+        return {
+          ...s,
+          sessionType: 'fixed' as const,
+          allocatedMinutes: newAllocated,
+          notes: [s.notes, `أُضيف ${extraMinutes} دقيقة إضافية`]
+            .filter(Boolean)
+            .join(' — '),
+        };
+      })
+    );
+
+    triggerAudioNotification(
+      'إضافة وقت',
+      `تمت إضافة ${extraMinutes} دقيقة إلى ${target.stationName}`,
+      playCoinSound,
+      `تمت إضافة ${extraMinutes} دقيقة للجلسة`
+    );
+  };
+
+  // قفل إجباري عند انتهاء الوقت مع بقاء اللاعب — يُقفل النظام فقط وتبقى الجلسة للتسوية
+  const handleForceLockSession = (sessionId: string) => {
+    const target = sessions.find((s) => s.id === sessionId);
+    if (!target) return;
+
+    const lockTime = new Date().toISOString();
+
+    setSessions((prev) =>
+      prev.map((s) =>
+        s.id === sessionId
+          ? {
+              ...s,
+              locked: true,
+              lockedAt: lockTime,
+              notes: [s.notes, 'قفل إجباري — توقف النظام وشاشة اللعبة مقفلة']
+                .filter(Boolean)
+                .join(' — '),
+            }
+          : s
+      )
+    );
+
+    triggerAudioNotification(
+      'قفل إجباري',
+      `توقف النظام في ${target.stationName}`,
+      playTimeOverAlarmSound,
+      'تم قفل النظام إجبارياً لانتهاء الوقت'
     );
   };
 
@@ -1117,6 +1181,8 @@ export default function App() {
                     onEditGames={(sess) => setEditGamesSession(sess)}
                     onCheckoutSession={(sess) => setInvoiceModalSession(sess)}
                     onStartNewSession={(stId) => handleOpenStartSession(stId)}
+                    onAddTime={(sess) => setAddTimeSession(sess)}
+                    onForceLock={(sess) => setForceLockSession(sess)}
                   />
                 </div>
               )}
@@ -1330,6 +1396,18 @@ export default function App() {
         onClose={() => setInvoiceModalSession(null)}
         session={invoiceModalSession}
         onCompleteCheckout={handleCompleteCheckout}
+      />
+
+      <AddTimeModal
+        session={addTimeSession}
+        onClose={() => setAddTimeSession(null)}
+        onConfirm={handleAddTimeToSession}
+      />
+
+      <ForceLockModal
+        session={forceLockSession}
+        onClose={() => setForceLockSession(null)}
+        onConfirm={handleForceLockSession}
       />
 
       <NewCustomerModal

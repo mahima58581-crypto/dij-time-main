@@ -74,6 +74,8 @@ export interface Session {
   status: 'active' | 'completed' | 'paused';
   sessionType: 'open' | 'fixed'; // وقت مفتوح أو محدد مسبقاً
   allocatedMinutes?: number; // إذا كان محدد
+  locked?: boolean; // النظام مقفل (شاشة اللعبة متوقفة) — تبقى الجلسة نشطة للتسوية
+  lockedAt?: string; // وقت القفل الإجباري
   gamesPlayed: GameRecord[];
   snacks: SnackOrder[];
   hourlyRate: number;

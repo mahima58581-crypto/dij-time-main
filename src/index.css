@@ -651,7 +651,7 @@ html.dark .led-bezel {
   animation: spin-slow 8s linear infinite;
 }
 
-/* Ù…Ø®ÙÛŒ Ú©Ø±Ø¯Ù† Ø§Ø³Ù¾ÛŒÙ†Ø±Ù‡Ø§ÛŒ Ù¾ÛŒØ´â€ŒÙØ±Ø¶ Ø§ÛŒÙ†Ù¾ÙˆØª Ø¹Ø¯Ø¯ */
+/* مخفی کردن اسپینرهای پیش‌فرض اینپوت عدد */
 .no-spinner::-webkit-outer-spin-button,
 .no-spinner::-webkit-inner-spin-button {
   -webkit-appearance: none;

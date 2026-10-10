@@ -11,7 +11,7 @@ import { CyberSectionIcon } from './CyberSectionIcon';
 import { GamingPcIcon } from './GamingPcIcon';
 import { XboxIcon } from './XboxIcon';
 import { PlaystationIcon } from './PlaystationIcon';
-import { Badge, Box, Clock, Coffee, Cpu, Eye, EyeOff, Gamepad2, Icon, Monitor, Play, Receipt, Tv, User } from 'lucide-react';
+import { AlarmClock, Badge, Box, Clock, Coffee, Cpu, Eye, EyeOff, Gamepad2, Icon, Lock, Monitor, Play, Receipt, Tv, User } from 'lucide-react';
 import { VipSimulatorIcon } from './VipSimulatorIcon';
 
 interface StationsGridProps {
@@ -21,6 +21,8 @@ interface StationsGridProps {
   onAddSnack: (session: Session) => void;
   onEditGames: (session: Session) => void;
   onCheckoutSession: (session: Session) => void;
+  onAddTime: (session: Session) => void;
+  onForceLock: (session: Session) => void;
 }
 
 // Ultra-badass Esports Gaming BattleStation Controller Icon
@@ -68,6 +70,8 @@ export const StationsGrid: React.FC<StationsGridProps> = ({
   onStartSession,
   onAddSnack,
   onCheckoutSession,
+  onAddTime,
+  onForceLock,
 }) => {
   const [filterType, setFilterType] = useState<'all' | StationType>('all');
   const [filterStatus, setFilterStatus] = useState<'all' | 'available' | 'in-use'>('all');
@@ -394,29 +398,55 @@ export const StationsGrid: React.FC<StationsGridProps> = ({
                 </div>
 
                 {/* 3. Bottom Action Buttons */}
-                <div className="p-5 pt-0">
+                <div className="p-5 pt-0 space-y-2">
                   {activeSession ? (
-                    <div className="flex items-center gap-2">
-                      <button
-                        type="button"
-                        id={`btn-snack-action-${station.id}`}
-                        onClick={() => onAddSnack(activeSession)}
-                        className="h-10 px-3.5 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-200 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 transition flex items-center gap-1.5 shrink-0 cursor-pointer"
-                      >
-                        <Coffee className="w-4 h-4 text-amber-500" />
-                        <span>طلب تسالي</span>
-                      </button>
+                    <>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <button
+                          type="button"
+                          id={`btn-addtime-action-${station.id}`}
+                          onClick={() => onAddTime(activeSession)}
+                          title="إضافة وقت إضافي للجلسة"
+                          className="h-10 px-3 rounded-xl text-xs font-bold text-cyan-700 dark:text-cyan-300 bg-cyan-50 hover:bg-cyan-100 dark:bg-cyan-950/60 dark:hover:bg-cyan-900/50 border border-cyan-200 dark:border-cyan-800/70 transition flex items-center gap-1.5 shrink-0 cursor-pointer"
+                        >
+                          <AlarmClock className="w-4 h-4 text-cyan-500" />
+                          <span>إضافة وقت</span>
+                        </button>
+
+                        <button
+                          type="button"
+                          id={`btn-snack-action-${station.id}`}
+                          onClick={() => onAddSnack(activeSession)}
+                          className="h-10 px-3 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-200 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 transition flex items-center gap-1.5 shrink-0 cursor-pointer"
+                        >
+                          <Coffee className="w-4 h-4 text-amber-500" />
+                          <span>طلب تسالي</span>
+                        </button>
+
+                        {isOvertime && (
+                          <button
+                            type="button"
+                            id={`btn-forcelock-action-${station.id}`}
+                            onClick={() => onForceLock(activeSession)}
+                            title="الوقت انتهى — قفل الجهاز وإيقاف اللعب"
+                            className="h-10 px-3 rounded-xl text-xs font-black text-white bg-gradient-to-r from-rose-600 to-orange-600 hover:from-rose-500 hover:to-orange-500 shadow-sm shadow-rose-500/30 transition flex items-center gap-1.5 shrink-0 cursor-pointer animate-pulse"
+                          >
+                            <Lock className="w-4 h-4" />
+                            <span>قفل إجباري</span>
+                          </button>
+                        )}
+                      </div>
 
                       <button
                         type="button"
                         id={`btn-checkout-action-${station.id}`}
                         onClick={() => onCheckoutSession(activeSession)}
-                        className="flex-1 h-10 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 shadow-sm shadow-emerald-500/20 transition flex items-center justify-center gap-1.5 cursor-pointer"
+                        className="w-full h-10 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 shadow-sm shadow-emerald-500/20 transition flex items-center justify-center gap-1.5 cursor-pointer"
                       >
                         <Receipt className="w-4 h-4" />
                         <span>إنهاء وحساب الجلسة</span>
                       </button>
-                    </div>
+                    </>
                   ) : (
                     <button
                       type="button"

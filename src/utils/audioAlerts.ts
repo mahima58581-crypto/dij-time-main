@@ -50,7 +50,7 @@ function getAudioContext(): AudioContext | null {
 export const AUDIO_SAMPLES = {
   tenMin: `${import.meta.env.BASE_URL}audio-1.wav`,
   fiveMin: `${import.meta.env.BASE_URL}audio-5min.wav`,
-  timeUp: `${import.meta.env.BASE_URL}audio-5min.wav`,
+  timeUp: `${import.meta.env.BASE_URL}audio-timeup.wav`,
 } as const;
 
 // Decoded buffers are cached so each file is fetched/decoded only once
@@ -214,20 +214,29 @@ export function play10MinWarningSound() {
 
 /**
  * 2. 5 Minutes Warning Sound
- * Distinct triple urgent chime (A5 -> D6 -> A5)
+ * Custom recorded alert (public/audio-5min.wav), synth tone as fallback
  */
 export function play5MinWarningSound() {
   if (!currentSettings.alert5MinEnabled) return;
-  // Notes: A5 (880Hz) -> D6 (1174Hz) -> A5 (880Hz)
-  playToneBurst([880, 1174, 880], [0.15, 0.18, 0.3], 'sine', 0.32);
+  playAudioSample(AUDIO_SAMPLES.fiveMin, 0.95, () => {
+    // Notes: A5 (880Hz) -> D6 (1174Hz) -> A5 (880Hz)
+    playToneBurst([880, 1174, 880], [0.15, 0.18, 0.3], 'sine', 0.32);
+  });
 }
 
 /**
  * 3. Time Over Alarm Sound
- * High-tech alarm pulse (3 rapid clear beeps)
+ * Custom recorded alarm (public/audio-timeup.wav), synth pulse as fallback
  */
 export function playTimeOverAlarmSound() {
   if (!currentSettings.alertTimeUpEnabled) return;
+  playAudioSample(AUDIO_SAMPLES.timeUp, 1, () => {
+    playTimeOverSynthFallback();
+  });
+}
+
+/** High-tech alarm pulse (3 rapid clear beeps) used if the file is missing */
+function playTimeOverSynthFallback() {
   if (currentSettings.isMuted || currentSettings.volume <= 0) return;
   const ctx = getAudioContext();
   if (!ctx) return;
