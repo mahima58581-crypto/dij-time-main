@@ -288,7 +288,7 @@ export const SoundAlertsController: React.FC<SoundAlertsControllerProps> = ({
                     disabled={settings.isMuted}
                     value={settings.volume}
                     onChange={(e) => handleUpdate({ volume: parseFloat(e.target.value), isMuted: false })}
-                    className="w-full accent-emerald-600 cursor-pointer disabled:opacity-40"
+                    className="w-full accent-emerald-600 dark:accent-emerald-400 cursor-pointer disabled:opacity-40"
                   />
                   <span className="text-xs font-mono font-mono-digits font-bold text-slate-700 dark:text-slate-300 w-9 text-left">
                     {Math.round(settings.volume * 100)}%
@@ -311,7 +311,7 @@ export const SoundAlertsController: React.FC<SoundAlertsControllerProps> = ({
                   type="checkbox"
                   checked={settings.voiceEnabled}
                   onChange={(e) => handleUpdate({ voiceEnabled: e.target.checked })}
-                  className="w-4 h-4 accent-emerald-600 rounded cursor-pointer"
+                  className="w-4 h-4 accent-emerald-600 dark:accent-emerald-400 rounded cursor-pointer"
                 />
               </div>
 
@@ -348,7 +348,7 @@ export const SoundAlertsController: React.FC<SoundAlertsControllerProps> = ({
                       type="checkbox"
                       checked={settings.alert10MinEnabled}
                       onChange={(e) => handleUpdate({ alert10MinEnabled: e.target.checked })}
-                      className="w-3.5 h-3.5 accent-emerald-600"
+                      className="w-3.5 h-3.5 accent-emerald-600 dark:accent-emerald-400"
                     />
                   </div>
                 </div>
@@ -379,7 +379,7 @@ export const SoundAlertsController: React.FC<SoundAlertsControllerProps> = ({
                       type="checkbox"
                       checked={settings.alert5MinEnabled}
                       onChange={(e) => handleUpdate({ alert5MinEnabled: e.target.checked })}
-                      className="w-3.5 h-3.5 accent-emerald-600"
+                      className="w-3.5 h-3.5 accent-emerald-600 dark:accent-emerald-400"
                     />
                   </div>
                 </div>
@@ -410,7 +410,7 @@ export const SoundAlertsController: React.FC<SoundAlertsControllerProps> = ({
                       type="checkbox"
                       checked={settings.alertTimeUpEnabled}
                       onChange={(e) => handleUpdate({ alertTimeUpEnabled: e.target.checked })}
-                      className="w-3.5 h-3.5 accent-emerald-600"
+                      className="w-3.5 h-3.5 accent-emerald-600 dark:accent-emerald-400"
                     />
                   </div>
                 </div>
@@ -441,7 +441,7 @@ export const SoundAlertsController: React.FC<SoundAlertsControllerProps> = ({
                       type="checkbox"
                       checked={settings.checkoutSoundEnabled}
                       onChange={(e) => handleUpdate({ checkoutSoundEnabled: e.target.checked })}
-                      className="w-3.5 h-3.5 accent-emerald-600"
+                      className="w-3.5 h-3.5 accent-emerald-600 dark:accent-emerald-400"
                     />
                   </div>
                 </div>
@@ -472,7 +472,7 @@ export const SoundAlertsController: React.FC<SoundAlertsControllerProps> = ({
                       type="checkbox"
                       checked={settings.reservationSoundEnabled}
                       onChange={(e) => handleUpdate({ reservationSoundEnabled: e.target.checked })}
-                      className="w-3.5 h-3.5 accent-emerald-600"
+                      className="w-3.5 h-3.5 accent-emerald-600 dark:accent-emerald-400"
                     />
                   </div>
                 </div>
@@ -503,7 +503,7 @@ export const SoundAlertsController: React.FC<SoundAlertsControllerProps> = ({
                       type="checkbox"
                       checked={settings.sessionStartSoundEnabled}
                       onChange={(e) => handleUpdate({ sessionStartSoundEnabled: e.target.checked })}
-                      className="w-3.5 h-3.5 accent-emerald-600"
+                      className="w-3.5 h-3.5 accent-emerald-600 dark:accent-emerald-400"
                     />
                   </div>
                 </div>

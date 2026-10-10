@@ -295,8 +295,6 @@ export const LiveTimeCards: React.FC<LiveTimeCardsProps> = ({
               const totalAllocatedSec = (session.allocatedMinutes || 60) * 60;
               const remainingSec = Math.max(0, totalAllocatedSec - elapsedSeconds);
               const isOvertime = isFixed && elapsedSeconds > totalAllocatedSec;
-              const isUnder10Min = isFixed && !isOvertime && remainingSec <= 600;
-              const isUnder5Min = isFixed && !isOvertime && remainingSec <= 300;
               const theme = getSessionTheme(session.stationType, isOvertime);
 
               return (
@@ -394,55 +392,6 @@ export const LiveTimeCards: React.FC<LiveTimeCardsProps> = ({
                         <span className={`${theme.accentText} font-mono font-bold`}>{formatCurrency(session.hourlyRate)} / س</span>
                       </div>
                     </div>
-
-                    {/* Fixed Session Countdown Alert */}
-                    {isFixed && (
-                      <div className={`px-2 py-1.5 rounded-lg border flex items-center justify-between text-[10px] transition-all ${
-                        isOvertime
-                          ? 'bg-rose-950/40 border-rose-800 text-rose-300 animate-pulse'
-                          : isUnder5Min
-                          ? 'bg-amber-950/40 border-amber-800 text-amber-300 animate-pulse'
-                          : isUnder10Min
-                          ? 'bg-amber-950/20 border-amber-900/60 text-amber-300'
-                          : 'bg-slate-50 dark:bg-slate-900/70 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300'
-                      }`}>
-                        <div className="flex items-center gap-1.5 font-mono-digits truncate">
-                          {isOvertime ? (
-                            <AlertTriangle className="w-3 h-3 text-rose-400 shrink-0" />
-                          ) : (
-                            <Bell className={`w-3 h-3 shrink-0 ${isUnder5Min ? 'text-amber-400' : 'text-slate-400'}`} />
-                          )}
-                          <span className="font-bold truncate">
-                            {isOvertime 
-                              ? `+${Math.floor((elapsedSeconds - totalAllocatedSec) / 60)} د إضافي`
-                              : `متبقي: ${Math.ceil(remainingSec / 60)} دقيقة`}
-                          </span>
-                        </div>
-
-                        <button
-                          type="button"
-                          onClick={() => {
-                            unlockAudioContext();
-                            play10MinWarningSound();
-                            const mins = Math.ceil(remainingSec / 60);
-                            const minsLabel =
-                              mins === 1
-                                ? 'دقيقة واحدة'
-                                : mins === 2
-                                ? 'دقيقتان'
-                                : mins <= 10
-                                ? `${mins} دقائق`
-                                : `${mins} دقيقة`;
-                            speakVoiceAlert(`باقي ${minsLabel} من وقتك على ${session.stationName}`);
-                          }}
-                          className="px-1.5 py-0.5 rounded bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-[9px] font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1 shadow-2xs transition cursor-pointer shrink-0"
-                          title="اعلان صوتی هشدار زمان به بازیکن"
-                        >
-                          <Volume2 className={`w-2.5 h-2.5 ${theme.accentText}`} />
-                          <span>نداء</span>
-                        </button>
-                      </div>
-                    )}
 
                     {/* Compact Player & PIN Information Grid */}
                     <div className="bg-slate-50 dark:bg-[#0c1222] p-2.5 rounded-xl border border-slate-200/80 dark:border-slate-800/80 space-y-1.5 text-xs">

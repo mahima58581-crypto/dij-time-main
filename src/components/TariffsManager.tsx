@@ -878,7 +878,7 @@ export const TariffsManager: React.FC<TariffsManagerProps> = ({
                   type="checkbox"
                   checked={calcIsPeak}
                   onChange={(e) => setCalcIsPeak(e.target.checked)}
-                  className="w-4 h-4 rounded accent-amber-500 cursor-pointer"
+                  className="w-4 h-4 rounded accent-amber-500 dark:accent-amber-400 cursor-pointer"
                 />
               </label>
 
@@ -901,7 +901,7 @@ export const TariffsManager: React.FC<TariffsManagerProps> = ({
                   type="checkbox"
                   checked={calcIsOnline}
                   onChange={(e) => setCalcIsOnline(e.target.checked)}
-                  className="w-4 h-4 rounded accent-cyan-500 cursor-pointer"
+                  className="w-4 h-4 rounded accent-cyan-500 dark:accent-cyan-400 cursor-pointer"
                 />
               </label>
             </div>
@@ -1099,7 +1099,7 @@ export const TariffsManager: React.FC<TariffsManagerProps> = ({
                           type="checkbox"
                           checked={isPackage}
                           onChange={(e) => setIsPackage(e.target.checked)}
-                          className="rounded accent-emerald-600"
+                          className="rounded accent-emerald-600 dark:accent-emerald-400"
                         />
                         <span>باقة محددة الساعات</span>
                       </label>
