@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Session } from '../types';
 import { formatCurrency, calculatePlayCost, formatDurationDigital } from '../utils/formatters';
+import { PLATFORM_META } from './platformMeta';
 import { CalendarClock, Clock, Plus, X, Sparkles, Timer } from 'lucide-react';
 
 interface AddTimeModalProps {
@@ -21,6 +22,10 @@ export const AddTimeModal: React.FC<AddTimeModalProps> = ({
   const [selected, setSelected] = useState<number>(60);
 
   const now = Date.now();
+
+  // هویت بصری پلتفرم مربوطه — هم‌رنگ اسلاید خودش (PC آبی، XBOX سبز، ...)
+  const meta = PLATFORM_META[session?.stationType ?? 'PC'] ?? PLATFORM_META.PC;
+  const PlatformIcon = meta.icon;
 
   const elapsedMinutes = useMemo(() => {
     if (!session) return 0;
@@ -56,18 +61,27 @@ export const AddTimeModal: React.FC<AddTimeModalProps> = ({
             exit={{ opacity: 0, scale: 0.95, y: 8 }}
             transition={{ type: 'spring', stiffness: 320, damping: 26 }}
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-md rounded-2xl bg-white dark:bg-slate-900 border border-emerald-200/80 dark:border-emerald-500/30 shadow-2xl shadow-emerald-500/10 overflow-hidden"
+            className={`w-full max-w-md rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 ${meta.ring} shadow-2xl overflow-hidden`}
           >
+            {/* خط الألوان المميز للمنصة */}
+            <div className={`h-1.5 w-full bg-gradient-to-r ${meta.accent}`} />
+
             {/* Header */}
-            <div className="flex items-center justify-between gap-3 px-5 py-4 bg-gradient-to-l from-emerald-500/10 via-transparent to-cyan-500/10 border-b border-emerald-100 dark:border-slate-800">
+            <div className={`flex items-center justify-between gap-3 px-5 py-4 border-b ${meta.softBg}`}>
               <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-xl bg-emerald-500/15 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+                <div className={`w-9 h-9 rounded-xl border flex items-center justify-center ${meta.chip}`}>
                   <CalendarClock className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="text-base font-black text-slate-900 dark:text-white">
-                    إضافة وقت إضافي
-                  </h3>
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-base font-black text-slate-900 dark:text-white">
+                      إضافة وقت إضافي
+                    </h3>
+                    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md border text-[10px] font-black ${meta.chip}`}>
+                      <PlatformIcon className="w-3 h-3" />
+                      {meta.label}
+                    </span>
+                  </div>
                   <p className="text-[11px] text-slate-500 dark:text-slate-400">
                     تمديد جلسة اللعب للاعب
                   </p>
@@ -75,7 +89,8 @@ export const AddTimeModal: React.FC<AddTimeModalProps> = ({
               </div>
               <button
                 onClick={onClose}
-                className="w-8 h-8 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center justify-center transition"
+                title="إغلاق"
+                className={`w-8 h-8 rounded-lg border flex items-center justify-center transition hover:brightness-95 active:scale-95 ${meta.chip}`}
               >
                 <X className="w-4.5 h-4.5" />
               </button>
@@ -86,7 +101,7 @@ export const AddTimeModal: React.FC<AddTimeModalProps> = ({
               <div className="rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/70 dark:border-slate-700/60 p-3.5 space-y-2">
                 <div className="flex items-center justify-between text-xs">
                   <span className="text-slate-500 dark:text-slate-400 font-bold">المحطة:</span>
-                  <span className="font-black text-slate-900 dark:text-white">{session.stationName}</span>
+                  <span className={`font-black ${meta.text}`}>{session.stationName}</span>
                 </div>
                 <div className="flex items-center justify-between text-xs">
                   <span className="text-slate-500 dark:text-slate-400 font-bold">اللاعب:</span>
@@ -94,7 +109,7 @@ export const AddTimeModal: React.FC<AddTimeModalProps> = ({
                 </div>
                 <div className="flex items-center justify-between text-xs">
                   <span className="text-slate-500 dark:text-slate-400 font-bold flex items-center gap-1">
-                    <Timer className="w-3.5 h-3.5" />
+                    <Timer className={`w-3.5 h-3.5 ${meta.text}`} />
                     الوقت المنقضي:</span>
                   <span className="font-mono font-black text-slate-900 dark:text-white font-mono-digits">
                     {formatDurationDigital(Math.floor(elapsedMinutes * 60))}
@@ -103,9 +118,9 @@ export const AddTimeModal: React.FC<AddTimeModalProps> = ({
                 {session.sessionType === 'fixed' && (
                   <div className="flex items-center justify-between text-xs">
                     <span className="text-slate-500 dark:text-slate-400 font-bold flex items-center gap-1">
-                      <Clock className="w-3.5 h-3.5" />
+                      <Clock className={`w-3.5 h-3.5 ${meta.text}`} />
                       المتبقي من الوقت:</span>
-                    <span className={`font-mono font-black font-mono-digits ${remaining <= 0 ? 'text-rose-500' : 'text-emerald-600 dark:text-emerald-400'}`}>
+                    <span className={`font-mono font-black font-mono-digits ${remaining <= 0 ? 'text-rose-500' : meta.text}`}>
                       {formatDurationDigital(Math.floor(remaining * 60))}
                     </span>
                   </div>
@@ -120,7 +135,7 @@ export const AddTimeModal: React.FC<AddTimeModalProps> = ({
               {/* Preset buttons */}
               <div>
                 <div className="text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-2 flex items-center gap-1.5">
-                  <Plus className="w-3.5 h-3.5" />
+                  <Plus className={`w-3.5 h-3.5 ${meta.text}`} />
                   اختر مدة الإضافة:
                 </div>
                 <div className="grid grid-cols-5 gap-1.5">
@@ -129,10 +144,10 @@ export const AddTimeModal: React.FC<AddTimeModalProps> = ({
                       key={m}
                       type="button"
                       onClick={() => { setSelected(m); setCustom(''); }}
-                      className={`py-2 rounded-xl text-xs font-black transition-all ${
+                      className={`py-2 rounded-xl text-xs font-black transition-all border ${
                         custom === '' && selected === m
-                          ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/30 scale-[1.03]'
-                          : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-emerald-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700'
+                          ? `bg-gradient-to-b ${meta.accent} text-white border-transparent shadow-md scale-[1.03]`
+                          : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 border-slate-200 dark:border-slate-700'
                       }`}
                     >
                       +{m}
@@ -154,21 +169,21 @@ export const AddTimeModal: React.FC<AddTimeModalProps> = ({
                     value={custom}
                     onChange={(e) => setCustom(e.target.value)}
                     placeholder="مثال: 45"
-                    className="no-spinner w-full px-3.5 py-2.5 text-sm font-mono font-bold bg-white dark:bg-white border border-slate-200 dark:border-slate-300 rounded-xl text-slate-900 dark:text-slate-900 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none transition font-mono-digits"
+                    className={`no-spinner w-full px-3.5 py-2.5 text-sm font-mono font-bold border rounded-xl focus:ring-2 focus:outline-none transition font-mono-digits ${meta.chip} ${meta.focusRing}`}
                   />
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400">
+                  <span className={`absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold ${meta.text}`}>
                     دقيقة
                   </span>
                 </div>
               </div>
 
               {/* Cost preview */}
-              <div className="flex items-center justify-between rounded-xl bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-800/60 px-3.5 py-2.5">
-                <span className="text-xs font-bold text-emerald-700 dark:text-emerald-300 flex items-center gap-1.5">
+              <div className={`flex items-center justify-between rounded-xl border px-3.5 py-2.5 ${meta.softBg}`}>
+                <span className={`text-xs font-bold flex items-center gap-1.5 ${meta.text}`}>
                   <Sparkles className="w-4 h-4" />
                   تكلفة الوقت الإضافي:
                 </span>
-                <span className="text-lg font-black font-mono text-emerald-600 dark:text-emerald-400 font-mono-digits">
+                <span className={`text-lg font-black font-mono font-mono-digits ${meta.text}`}>
                   {formatCurrency(extraCost)}
                 </span>
               </div>
@@ -179,7 +194,7 @@ export const AddTimeModal: React.FC<AddTimeModalProps> = ({
               <button
                 type="button"
                 onClick={onClose}
-                className="flex-1 h-10 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 transition"
+                className={`flex-1 h-10 rounded-xl text-xs font-bold border transition hover:brightness-95 ${meta.softBg} ${meta.text}`}
               >
                 إلغاء
               </button>
@@ -187,7 +202,7 @@ export const AddTimeModal: React.FC<AddTimeModalProps> = ({
                 type="button"
                 onClick={handleConfirm}
                 disabled={extraMinutes <= 0}
-                className="flex-1 h-10 rounded-xl text-xs font-black text-white bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 shadow-md shadow-emerald-500/25 transition flex items-center justify-center gap-1.5 disabled:opacity-40 disabled:cursor-not-allowed"
+                className={`flex-1 h-10 rounded-xl text-xs font-black text-white bg-gradient-to-r ${meta.accent} hover:brightness-110 shadow-md transition flex items-center justify-center gap-1.5 disabled:opacity-40 disabled:cursor-not-allowed`}
               >
                 <Plus className="w-4 h-4" />
                 تأكيد وإضافة الوقت

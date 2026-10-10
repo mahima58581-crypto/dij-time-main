@@ -121,7 +121,8 @@ export const CheckoutInvoiceModal: React.FC<CheckoutInvoiceModalProps> = ({
             </motion.button>
             <button
               onClick={onClose}
-              className="p-1 rounded-xl text-slate-400 hover:text-slate-700 dark:text-white dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition cursor-pointer"
+              title="إغلاق"
+              className={`p-1.5 rounded-lg border transition cursor-pointer hover:brightness-95 active:scale-95 ${meta.chip}`}
             >
               <X className="w-4.5 h-4.5" />
             </button>
@@ -208,7 +209,7 @@ export const CheckoutInvoiceModal: React.FC<CheckoutInvoiceModalProps> = ({
                 </div>
                 <div className="flex flex-wrap gap-1">
                   {session.gamesPlayed.map((g, i) => (
-                    <span key={i} className="text-[11px] px-2 py-0.5 rounded bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300">
+                    <span key={i} className={`text-[11px] px-2 py-0.5 rounded border font-bold ${meta.chip}`}>
                       {g.gameName} ({g.mode === 'online' ? '🌐 أونلاين' : '🎮 أوفلاين'})
                     </span>
                   ))}
@@ -261,7 +262,7 @@ export const CheckoutInvoiceModal: React.FC<CheckoutInvoiceModalProps> = ({
                       step="500"
                       value={discount}
                       onChange={(e) => setDiscount(Number(e.target.value))}
-                      className="w-24 px-2 py-1 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-xs font-mono font-bold text-slate-900 dark:text-white text-left focus:outline-none focus:border-emerald-500 font-mono-digits"
+                      className={`w-24 px-2 py-1 rounded-lg border text-xs font-mono font-bold text-left focus:outline-none focus:ring-2 font-mono-digits ${meta.chip} ${meta.focusRing}`}
                     />
                     <span>د.ع</span>
                   </div>
@@ -293,7 +294,7 @@ export const CheckoutInvoiceModal: React.FC<CheckoutInvoiceModalProps> = ({
                       className={`py-2 px-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1 transition border cursor-pointer ${
                         paymentMethod === m.id
                           ? `bg-gradient-to-r ${meta.accent} text-white font-black border-transparent shadow-md`
-                          : 'bg-slate-50 dark:bg-[#080e1b] text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-600'
+                          : `${meta.softBg} ${meta.text} hover:brightness-95`
                       }`}
                     >
                       {m.icon}

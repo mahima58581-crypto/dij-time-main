@@ -262,7 +262,7 @@ export const NewSessionModal: React.FC<NewSessionModalProps> = ({
                 }`}
               >
                 <span>الكل</span>
-                <span className="px-1 py-0.2 rounded text-[9px] bg-black/10 dark:bg-white/10 font-mono font-mono-digits">
+                <span className="px-1 py-0.2 rounded text-[9px] bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-mono font-mono-digits">
                   {availableStations.length}
                 </span>
               </button>
@@ -278,7 +278,7 @@ export const NewSessionModal: React.FC<NewSessionModalProps> = ({
               >
                 <GamingPcIcon className="w-3 h-3" />
                 <span>حاسوب</span>
-                <span className="px-1 py-0.2 rounded text-[9px] bg-black/10 dark:bg-white/10 font-mono font-mono-digits">
+                <span className="px-1 py-0.2 rounded text-[9px] bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-mono font-mono-digits">
                   {availableStations.filter(s => s.type === 'PC').length}
                 </span>
               </button>
@@ -294,7 +294,7 @@ export const NewSessionModal: React.FC<NewSessionModalProps> = ({
               >
                 <Gamepad2 className="w-3 h-3" />
                 <span>بلايستيشن 5</span>
-                <span className="px-1 py-0.2 rounded text-[9px] bg-black/10 dark:bg-white/10 font-mono font-mono-digits">
+                <span className="px-1 py-0.2 rounded text-[9px] bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-mono font-mono-digits">
                   {availableStations.filter(s => s.type === 'PS5').length}
                 </span>
               </button>
@@ -310,7 +310,7 @@ export const NewSessionModal: React.FC<NewSessionModalProps> = ({
               >
                 <Tv className="w-3 h-3" />
                 <span>إكس بوكس</span>
-                <span className="px-1 py-0.2 rounded text-[9px] bg-black/10 dark:bg-white/10 font-mono font-mono-digits">
+                <span className="px-1 py-0.2 rounded text-[9px] bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-mono font-mono-digits">
                   {availableStations.filter(s => s.type === 'XBOX').length}
                 </span>
               </button>
@@ -326,7 +326,7 @@ export const NewSessionModal: React.FC<NewSessionModalProps> = ({
               >
                 <VipSimulatorIcon className="w-3 h-3" />
                 <span>محاكي VIP</span>
-                <span className="px-1 py-0.2 rounded text-[9px] bg-black/10 dark:bg-white/10 font-mono font-mono-digits">
+                <span className="px-1 py-0.2 rounded text-[9px] bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-mono font-mono-digits">
                   {availableStations.filter(s => s.type === 'VIP_SIM').length}
                 </span>
               </button>
@@ -361,7 +361,7 @@ export const NewSessionModal: React.FC<NewSessionModalProps> = ({
                       </div>
 
                       <div className="flex items-center justify-between mt-auto pt-1 border-t border-slate-200/60 dark:border-slate-700/60">
-                        <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-slate-200/70 dark:bg-slate-700/70 text-slate-600 dark:text-slate-300">
+                        <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-600 dark:text-emerald-400">
                           {st.type}
                         </span>
                         <span className="text-xs font-mono font-black text-emerald-600 dark:text-emerald-400 font-mono-digits">
@@ -730,7 +730,7 @@ export const NewSessionModal: React.FC<NewSessionModalProps> = ({
                         const next = Math.max(0.5, current - 0.5);
                         setCustomHoursInput(next.toString());
                       }}
-                      className="w-8 h-8 rounded-xl bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 flex items-center justify-center hover:bg-emerald-50 dark:hover:bg-slate-600 transition shadow-xs active:scale-95"
+                      className="w-8 h-8 rounded-xl bg-white dark:bg-slate-700 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/40 flex items-center justify-center hover:bg-emerald-50 dark:hover:bg-emerald-950/40 transition shadow-xs active:scale-95"
                       title="إنقاص نصف ساعة"
                     >
                       <Minus className="w-3.5 h-3.5" />
@@ -760,7 +760,7 @@ export const NewSessionModal: React.FC<NewSessionModalProps> = ({
                         const next = current + 0.5;
                         setCustomHoursInput(next.toString());
                       }}
-                      className="w-8 h-8 rounded-xl bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 flex items-center justify-center hover:bg-emerald-50 dark:hover:bg-slate-600 transition shadow-xs active:scale-95"
+                      className="w-8 h-8 rounded-xl bg-white dark:bg-slate-700 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/40 flex items-center justify-center hover:bg-emerald-50 dark:hover:bg-emerald-950/40 transition shadow-xs active:scale-95"
                       title="زيادة نصف ساعة"
                     >
                       <Plus className="w-3.5 h-3.5" />
@@ -814,7 +814,7 @@ export const NewSessionModal: React.FC<NewSessionModalProps> = ({
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-2.5 rounded-xl text-xs font-bold text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+                className="px-4 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition"
               >
                 إلغاء
               </button>

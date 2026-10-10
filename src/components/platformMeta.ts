@@ -16,6 +16,7 @@ export const PLATFORM_META: Record<
     accent: string;
     chip: string;
     ring: string;
+    focusRing: string;
     softBg: string;
     tabActive: string;
   }
@@ -30,6 +31,7 @@ export const PLATFORM_META: Record<
     chip:
       'bg-cyan-50 dark:bg-cyan-950/70 text-cyan-700 dark:text-cyan-300 border-cyan-200 dark:border-cyan-800',
     ring: 'ring-1 ring-cyan-500/30 shadow-lg shadow-cyan-500/10',
+    focusRing: 'focus:border-cyan-500 focus:ring-cyan-500/40',
     softBg:
       'bg-cyan-50/70 dark:bg-cyan-950/40 border-cyan-100 dark:border-cyan-900/60',
     tabActive:
@@ -45,6 +47,7 @@ export const PLATFORM_META: Record<
     chip:
       'bg-blue-50 dark:bg-indigo-950/70 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-800',
     ring: 'ring-1 ring-blue-500/30 shadow-lg shadow-blue-500/10',
+    focusRing: 'focus:border-blue-500 focus:ring-blue-500/40',
     softBg:
       'bg-blue-50/70 dark:bg-indigo-950/40 border-blue-100 dark:border-indigo-900/60',
     tabActive:
@@ -60,6 +63,7 @@ export const PLATFORM_META: Record<
     chip:
       'bg-emerald-50 dark:bg-emerald-950/70 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800',
     ring: 'ring-1 ring-emerald-500/30 shadow-lg shadow-emerald-500/10',
+    focusRing: 'focus:border-emerald-500 focus:ring-emerald-500/40',
     softBg:
       'bg-emerald-50/70 dark:bg-emerald-950/40 border-emerald-100 dark:border-emerald-900/60',
     tabActive:
@@ -75,6 +79,7 @@ export const PLATFORM_META: Record<
     chip:
       'bg-amber-50 dark:bg-amber-950/70 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-800',
     ring: 'ring-1 ring-amber-500/30 shadow-lg shadow-amber-500/10',
+    focusRing: 'focus:border-amber-500 focus:ring-amber-500/40',
     softBg:
       'bg-amber-50/70 dark:bg-amber-950/40 border-amber-100 dark:border-amber-900/60',
     tabActive:

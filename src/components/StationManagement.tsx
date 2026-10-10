@@ -245,7 +245,7 @@ export const StationManagement: React.FC<StationManagementProps> = ({
                   {st.name}
                 </h3>
                 <div className="flex items-center gap-1.5 mt-0.5 text-[11px]">
-                  <span className="font-mono font-black text-slate-900 dark:text-white bg-slate-100 dark:bg-slate-800 px-1.5 py-0.2 rounded text-[10px] border border-slate-300 dark:border-slate-700">
+                  <span className={`font-mono font-black px-1.5 py-0.2 rounded text-[10px] border ${meta.badge}`}>
                     #{st.id}
                   </span>
                   <span className="text-slate-400">•</span>
