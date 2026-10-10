@@ -11,7 +11,7 @@ import { GamingPcIcon } from './GamingPcIcon';
 import { CyberSectionIcon } from './CyberSectionIcon';
 import { PlaystationIcon } from './PlaystationIcon';
 import { XboxIcon } from './XboxIcon';
-import { Activity, AlarmClock, AlarmClockOff, AlertTriangle, Badge, Bell, Brackets, Clock, Coffee, Eye, EyeOff, Flame, Gamepad2, Grid, Icon, Info, Lock, Phone, Pill, PlayCircle, Receipt, Timer, Tv, User, Volume2, Zap } from 'lucide-react';
+import { Activity, AlarmClock, AlertTriangle, Badge, Bell, Brackets, Clock, Coffee, Eye, EyeOff, Flame, Gamepad2, Grid, Icon, Info, Lock, Phone, Pill, PlayCircle, Receipt, Timer, TimerOff, Tv, User, Volume2, Zap } from 'lucide-react';
 import { VipSimulatorIcon } from './VipSimulatorIcon';
 
 interface LiveTimeCardsProps {
@@ -528,7 +528,7 @@ export const LiveTimeCards: React.FC<LiveTimeCardsProps> = ({
                         title="تشغيل هشدار اتمام وقت"
                         className="flex items-center justify-center gap-1 h-8 px-2.5 rounded-lg text-[10px] font-bold text-rose-700 dark:text-rose-300 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800/70 hover:border-rose-400 dark:hover:border-rose-600 hover:bg-rose-100 dark:hover:bg-rose-900/50 transition cursor-pointer"
                       >
-                        <AlarmClockOff className="w-3 h-3" />
+                        <TimerOff className="w-3 h-3" />
                         <span>اتمام وقت</span>
                       </button>
 
